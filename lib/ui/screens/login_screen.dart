@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hero_premier/core/view_models/login_view_model.dart';
 import 'package:hero_premier/router.dart';
+import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,65 +18,72 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   BuildContext _buildContext;
+  LoginViewModel _model;
 
   @override
   Widget build(BuildContext context) {
     _buildContext = context;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+      body: BaseWidget<LoginViewModel>(
+        model: LoginViewModel(navigationService: Provider.of(context)),
+        builder: (context, model, child) {
+          _model = model;
+          return SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    getHeaderWidget(),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(48, 48, 48, 24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Let\'s start with \nlogin",
-                            style: TextStyles.Heading1,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        getHeaderWidget(),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(48, 48, 48, 24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Let\'s start with \nlogin",
+                                style: TextStyles.Heading1,
+                              ),
+                              SizedBox(height: 24),
+                              getEmailTextField(),
+                              SizedBox(height: 32),
+                              getPasswordTextField(),
+                              SizedBox(height: 24),
+                              Text(
+                                "Forgot password ?",
+                                style: TextStyles.Subtitle2,
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 24),
-                          getEmailTextField(),
-                          SizedBox(height: 32),
-                          getPasswordTextField(),
-                          SizedBox(height: 24),
-                          Text(
-                            "Forgot password ?",
-                            style: TextStyles.Subtitle2,
+                        ),
+                        SizedBox(height: 32),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 48),
+                          child: PrimaryButton(
+                            label: "SIGN IN",
+                            onPress: _handleLogin,
                           ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
-                    SizedBox(height: 32),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 48),
-                      child: PrimaryButton(
-                        label: "SIGN IN",
-                        onPress: _handleLogin,
-                      ),
-                    )
+                    getFooterWidget(),
                   ],
                 ),
-                getFooterWidget(),
+                Positioned(
+                  top: 190,
+                  child: SvgPicture.asset(
+                    AssetPaths.LOGIN_GRADIENT,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ],
             ),
-            Positioned(
-              top: 190,
-              child: SvgPicture.asset(
-                AssetPaths.LOGIN_GRADIENT,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -174,6 +184,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _handleLogin() {
-    Navigator.of(_buildContext).pushNamed(RoutePaths.HOME);
+    _model.login(_emailController.text, _passwordController.text);
   }
 }

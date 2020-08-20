@@ -21,7 +21,7 @@ class SourceAuthor extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
           ),
-          child:SvgPicture.asset(AssetPaths.IC_NEWS),
+          child: SvgPicture.asset(AssetPaths.IC_GOAL),
         ),
         Column(
           children: <Widget>[
@@ -34,7 +34,8 @@ class SourceAuthor extends StatelessWidget {
                 ? Text(
                     'Author, Aug 10',
                     style: TextStyles.Subcaption.copyWith(
-                        color: Theme.of(context).hintColor),
+                      color: Theme.of(context).hintColor,
+                    ),
                   )
                 : SizedBox.shrink(),
           ],

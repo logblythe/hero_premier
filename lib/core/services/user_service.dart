@@ -1,13 +1,9 @@
-class UserService{
-  /*ApiProvider _provider=ApiProvider();
+import 'package:hero_premier/core/services/api_helper.dart';
 
-  Future<ChuchCategories> getCategories() async{
-    final response = await _provider.get("jokes/categories");
-    return ChuchCategories.fromJson(response);
-  }
+class UserService {
+  final ApiBaseHelper _api;
 
-  Future<Jokes> fetchChuckJoke(String category) async {
-    final response = await _provider.get("jokes/random?category=" + category);
-    return Jokes.fromJson(response);
-  }*/
+  UserService({ApiBaseHelper api}) : _api = api;
+
+  login() => _api.get("login");
 }

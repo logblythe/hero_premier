@@ -16,7 +16,12 @@ class PrimaryButton extends StatelessWidget {
           ScaleTransition(child: child, scale: animation),
       duration: Duration(milliseconds: 250),
       child: loading
-          ? CircularProgressIndicator()
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(),
+              ),
+            )
           : RaisedButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

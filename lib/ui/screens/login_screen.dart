@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/view_models/login_view_model.dart';
-import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
+import 'package:hero_premier/utils/api_response.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,15 +17,16 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  BuildContext _buildContext;
   LoginViewModel _model;
 
   @override
   Widget build(BuildContext context) {
-    _buildContext = context;
     return Scaffold(
       body: BaseWidget<LoginViewModel>(
-        model: LoginViewModel(navigationService: Provider.of(context)),
+        model: LoginViewModel(
+          navigationService: Provider.of(context),
+          userService: Provider.of(context),
+        ),
         builder: (context, model, child) {
           _model = model;
           return SingleChildScrollView(
@@ -64,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 48),
                           child: PrimaryButton(
+                            loading: model.status == Status.LOADING,
                             label: "SIGN IN",
                             onPress: _handleLogin,
                           ),
@@ -162,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          _model.error != null ? Text(_model.error.toString()) : Container(),
           Text(
             "Don\'t have an account? ",
             style: TextStyles.Body.copyWith(color: Theme.of(context).hintColor),
@@ -180,10 +183,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleRegister() {
-    Navigator.of(_buildContext).pushNamed(RoutePaths.REGISTER);
+    _model.register();
   }
 
-  _handleLogin() {
+  void _handleLogin() {
     _model.login(_emailController.text, _passwordController.text);
   }
 }

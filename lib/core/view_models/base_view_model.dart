@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/utils/api_response.dart';
 
 enum AppState { BUSY, IDLE, ERROR }
 
 class BaseViewModel extends ChangeNotifier {
   bool _isDisposed = false;
-  AppState _appState = AppState.IDLE;
+  Status status;
+  dynamic _error;
 
-  bool get busy => _appState == AppState.BUSY;
+  get error => _error;
 
-  bool get error => _appState == AppState.ERROR;
-
-  String _errorMessage;
-
-  String get errorMessage => _errorMessage;
-
-  void setBusy(bool value) {
-    _appState = value ? AppState.BUSY : AppState.IDLE;
+  setLoading() {
+    status = Status.LOADING;
     if (!_isDisposed) notifyListeners();
   }
 
-  void setError(String message) {
-    _errorMessage = message;
-    _appState = AppState.ERROR;
+  setCompleted() {
+    status = Status.COMPLETED;
+    if (!_isDisposed) notifyListeners();
+  }
+
+  setError(error) {
+    _error = error;
+    status = Status.ERROR;
     if (!_isDisposed) notifyListeners();
   }
 

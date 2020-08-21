@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       providers: providers,
       child: MaterialApp(
         title: 'Premier Hero',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: "Levenim MT",
           primaryColor: Color(0xFF37003D),

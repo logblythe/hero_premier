@@ -41,50 +41,52 @@ class _WinnerScreenState extends State<WinnerScreen>
               height: MediaQuery.of(context).size.height,
               child: _getTabBarView(
                 <Widget>[
-                  Container(
-                    child: Column(
-                      children: [
-                        WinnerCard(
-                          name: "Suman Sapkota",
-                          week: "38",
-                          weekPoint: "60",
-                          totalPoints: "9100",
-                          url: "assets/images/ic_person_1.png",
-                          onTap: _handlePress,
-                        ),
-                        WinnerCard(
-                          name: "Sunil Mahat",
-                          week: "37",
-                          weekPoint: "60",
-                          totalPoints: "120",
-                          url: "assets/images/ic_person_2.png",
-                          onTap: _handlePress,
-                        ),
-                        WinnerCard(
-                          name: "Waiba Kaier",
-                          week: "36",
-                          weekPoint: "60",
-                          totalPoints: "300",
-                          url: "assets/images/ic_person_3.png",
-                          onTap: _handlePress,
-                        ),
-                        WinnerCard(
-                          name: "Moshafir Hon",
-                          week: "35",
-                          weekPoint: "60",
-                          totalPoints: "125",
-                          url: "assets/images/ic_person_4.png",
-                          onTap: _handlePress,
-                        ),
-                        WinnerCard(
-                          name: "Kaeiren Maie",
-                          week: "34",
-                          weekPoint: "60",
-                          totalPoints: "20",
-                          url: "assets/images/ic_person_5.png",
-                          onTap: _handlePress,
-                        ),
-                      ],
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          WinnerCard(
+                            name: "Suman Sapkota",
+                            week: "38",
+                            weekPoint: "60",
+                            totalPoints: "9100",
+                            url: "assets/images/ic_person_1.png",
+                            onTap: _handlePress,
+                          ),
+                          WinnerCard(
+                            name: "Sunil Mahat",
+                            week: "37",
+                            weekPoint: "60",
+                            totalPoints: "120",
+                            url: "assets/images/ic_person_2.png",
+                            onTap: _handlePress,
+                          ),
+                          WinnerCard(
+                            name: "Waiba Kaier",
+                            week: "36",
+                            weekPoint: "60",
+                            totalPoints: "300",
+                            url: "assets/images/ic_person_3.png",
+                            onTap: _handlePress,
+                          ),
+                          WinnerCard(
+                            name: "Moshafir Hon",
+                            week: "35",
+                            weekPoint: "60",
+                            totalPoints: "125",
+                            url: "assets/images/ic_person_4.png",
+                            onTap: _handlePress,
+                          ),
+                          WinnerCard(
+                            name: "Kaeiren Maie",
+                            week: "34",
+                            weekPoint: "60",
+                            totalPoints: "20",
+                            url: "assets/images/ic_person_5.png",
+                            onTap: _handlePress,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Icon(Icons.settings),

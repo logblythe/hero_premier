@@ -106,6 +106,9 @@ class WinnerCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizedBox(
+                                height: 24.0,
+                              ),
                               Text(
                                 name,
                                 style: TextStyles.TitleTextNormalBoldStyle,
@@ -155,7 +158,7 @@ class WinnerCard extends StatelessWidget {
                                   ),
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width /
-                                        double.parse(getLength(totalPoints)),
+                                        double.parse(getLength(totalPoints))*0.4,
                                   ),
                                   Row(
                                     crossAxisAlignment:
@@ -200,16 +203,16 @@ class WinnerCard extends StatelessWidget {
     String length;
     switch (points.length) {
       case 5:
-        length = "5.5";
+        length = "5";
         break;
       case 4:
-        length = "5.5";
+        length = "5";
         break;
       case 3:
-        length = "5.5";
+        length = "5";
         break;
       case 2:
-        length = "5.5";
+        length = "5";
         break;
       default:
         length = "0";

@@ -37,27 +37,10 @@ class ApiBaseHelper {
           body: params);
       responseJson = _returnResponse(response);
     } on SocketException {
-      throw FetchDataException('No Internet connection');
+      throw FetchDataException({"message": 'No Internet connection'});
     }
     return responseJson;
   }
-
-/*  Future<dynamic> postWithToken(
-      String url, Map<String, dynamic> requestBody, String token) async {
-    var responseJSON;
-    try {
-      final response =
-          await http.post(_baseUrl + url, body: requestBody, headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': token,
-      });
-      responseJSON = _returnResponse(response);
-    } on Exception catch (_) {
-      throw FetchDataException('No Internet connection');
-    }
-    return responseJSON;
-  }*/
 
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {
@@ -72,8 +55,10 @@ class ApiBaseHelper {
         throw UnauthorisedException(json.decode(response.body.toString()));
       case 500:
       default:
-        throw FetchDataException(
-            'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
+        throw FetchDataException({
+          "message":
+              'Error occurred while Communication with Server with StatusCode : ${response.statusCode}'
+        });
     }
   }
 }

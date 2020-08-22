@@ -4,13 +4,17 @@ class AppException implements Exception {
 
   AppException([this._message, this._prefix]);
 
+  Map<String, dynamic> toJson() {
+    return _message;
+  }
+
   String toString() {
-    return _message["email"] ?? _message["message"];
+    return '$_prefix: $_message';
   }
 }
 
 class FetchDataException extends AppException {
-  FetchDataException([String message])
+  FetchDataException([message])
       : super(message, "Error During Communication: ");
 }
 

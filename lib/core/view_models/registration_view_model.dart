@@ -20,7 +20,7 @@ class RegisterViewModel extends BaseViewModel {
       await _userService.checkUniqueMail(email);
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 
@@ -31,7 +31,7 @@ class RegisterViewModel extends BaseViewModel {
       setCompleted();
       setDialogContent('Registration Successful. Verify your email and login.');
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 

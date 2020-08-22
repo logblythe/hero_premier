@@ -30,7 +30,7 @@ class LoginViewModel extends BaseViewModel {
       setCompleted();
       _navigationService.navigateTo(RoutePaths.HOME);
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 

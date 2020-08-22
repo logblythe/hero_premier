@@ -4,7 +4,7 @@ import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
 
 class ErrorCard extends StatelessWidget {
-  final String error;
+  final dynamic error;
   final Function onPress;
 
   const ErrorCard({Key key, this.error, this.onPress}) : super(key: key);
@@ -24,7 +24,7 @@ class ErrorCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(error.toString(),style: TextStyles.Subtitle2,),
+              dynamicErrorSection(),
               UIHelper.verticalSpaceMedium,
               SecondaryButton(label: 'Ok', onPress: onPress),
             ],
@@ -32,5 +32,19 @@ class ErrorCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  dynamicErrorSection() {
+    if (error is String) {
+      return Text(
+        error.toString(),
+        style: TextStyles.Subtitle2,
+      );
+    } else if (error is Map<String, dynamic>) {
+      return Text(
+        error["email"]??error["message"],
+        style: TextStyles.Subtitle2,
+      );
+    }
   }
 }

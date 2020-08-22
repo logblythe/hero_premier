@@ -6,7 +6,7 @@ import 'package:hero_premier/ui/widgets/primary_button.dart';
 import 'package:hero_premier/ui/widgets/text_button.dart';
 import 'package:hero_premier/validator_mixin.dart';
 
-class RegisterFirst extends StatefulWidget  {
+class RegisterFirst extends StatefulWidget {
   final Function(User) onNext;
   final Function() onBack;
 
@@ -16,8 +16,8 @@ class RegisterFirst extends StatefulWidget  {
   _RegisterFirstState createState() => _RegisterFirstState();
 }
 
-class _RegisterFirstState extends State<RegisterFirst> with AutomaticKeepAliveClientMixin,ValidationMixing {
-
+class _RegisterFirstState extends State<RegisterFirst>
+    with AutomaticKeepAliveClientMixin, ValidationMixing {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
@@ -25,6 +25,10 @@ class _RegisterFirstState extends State<RegisterFirst> with AutomaticKeepAliveCl
   final passwordConfirmController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  bool obscurePassword = true;
+  bool obscureConfirmPassword = true;
+  bool matchPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -96,15 +100,33 @@ class _RegisterFirstState extends State<RegisterFirst> with AutomaticKeepAliveCl
   getPasswordTextField() => FloatingInput(
         title: "Password",
         controller: passwordController,
-        obscureText: true,
+        obscureText: obscurePassword,
+        suffixIcon: InkWell(
+          child: Icon(Icons.remove_red_eye),
+          onTap: () {
+            setState(() {
+              obscurePassword = !obscurePassword;
+            });
+          },
+        ),
         validator: validatePassword,
+        errorText: matchPassword ? null : "Password did not match",
       );
 
   getConfirmPasswordTextField() => FloatingInput(
         title: "Confirm Password",
         controller: passwordConfirmController,
-        obscureText: true,
+        obscureText: obscureConfirmPassword,
+        suffixIcon: InkWell(
+          child: Icon(Icons.remove_red_eye),
+          onTap: () {
+            setState(() {
+              obscureConfirmPassword = !obscureConfirmPassword;
+            });
+          },
+        ),
         validator: validatePassword,
+        errorText: matchPassword ? null : "Password did not match",
       );
 
   Widget getFooterWidget() {
@@ -135,11 +157,13 @@ class _RegisterFirstState extends State<RegisterFirst> with AutomaticKeepAliveCl
         );
         widget.onNext(user);
       } else {
-        //todo set password incorrect error
+        setState(() {
+          matchPassword = false;
+        });
       }
     }
   }
 
   @override
-  bool get wantKeepAlive =>true;
+  bool get wantKeepAlive => true;
 }

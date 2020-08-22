@@ -1,32 +1,35 @@
 import 'dart:convert';
-import 'dart:math';
 
+import 'package:hero_premier/core/helpers/api_helper.dart';
+import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
 import 'package:hero_premier/core/models/login/login_model.dart';
-import 'package:hero_premier/core/services/api_helper.dart';
-import 'package:hero_premier/core/services/shared_pref_helper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+//The related functionalities should be grouped into one service.
+//Example: logout functionality is related to user
+//so, deleted settings service and moved the logout functionality to user service
+
+//One viewModel can have multiple services
 class UserService {
   final ApiBaseHelper _api;
+  final SharedPrefHelper _prefHelper;
 
-  UserService({ApiBaseHelper api}) : _api = api;
-
-  login() => _api.get("login");
+  UserService({ApiBaseHelper api, SharedPrefHelper prefHelper})
+      : _api = api,
+        _prefHelper = prefHelper;
 
   checkUniqueMail(email) =>
-      _api.post("/user/checkUniqueEmail", {"email": email});
+      _api.post("/user/checkUniqueEmail", params: {"email": email});
 
-  registerUser(user) => _api.post("/user/localSignup", user.toJson());
-  login(postParams) {
-    return _api.post("user/localLogin", postParams).then((value) {
-      print('error $value');
-        Map<String, dynamic> map = value;
-        LoginModel loginModel = LoginModel.fromJson(map);
-        SharedPrefHelper.sharedPreferences;
+  registerUser(user) => _api.post("/user/localSignup", params: user.toJson());
 
-        SharedPrefHelper.setString(KEY_TOKEN, loginModel.token);
-        SharedPrefHelper.setString(KEY_LOGIN, map.toString());
-        SharedPrefHelper.setBool(KEY_SESSION, true);
-    });
-  }
+  login(params) => _api.post("/user/localLogin", params: params).then((value) {
+        LoginModel loginModel = LoginModel.fromJson(value);
+        _prefHelper.setString(KEY_TOKEN, loginModel.token);
+        _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));
+        _prefHelper.setBool(KEY_SESSION, true);
+      });
+
+  logout() => _api.post("/user/logout").then((value) {
+        _prefHelper.clear();
+      });
 }

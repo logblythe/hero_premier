@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hero_premier/core/services/shared_pref_helper.dart';
 import 'package:hero_premier/core/view_models/setting_view_model.dart';
 import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/base_widget.dart';
@@ -18,7 +17,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _switchValue = true;
   BuildContext _context;
   SettingViewModel _settingViewModel;
-  String token;
 
   void onChanged(bool value) {
     setState(() {
@@ -29,15 +27,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    SharedPrefHelper.sharedPreferences.then((value) => token=value.getString(KEY_TOKEN));
-
     return BaseWidget<SettingViewModel>(
       model: SettingViewModel(
         navigationService: Provider.of(context),
-        settingService: Provider.of(context),
+        userService: Provider.of(context),
       ),
-      builder: (context,model,child){
-        _settingViewModel=model;
+      builder: (context, model, child) {
+        _settingViewModel = model;
         return SingleChildScrollView(
           child: Container(
             child: Column(
@@ -48,7 +44,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         );
-
       },
     );
   }
@@ -510,8 +505,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   _handleLogout() {
-//    Navigator.of(context).popUntil((route) => route.isFirst);
-  _settingViewModel.logout(token);
+    _settingViewModel.logout();
   }
 
   _handleProfileClick() {

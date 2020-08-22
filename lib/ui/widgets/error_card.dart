@@ -24,7 +24,7 @@ class ErrorCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(error,style: TextStyles.Subtitle2,),
+              Text(error.toString(),style: TextStyles.Subtitle2,),
               UIHelper.verticalSpaceMedium,
               SecondaryButton(label: 'Ok', onPress: onPress),
             ],

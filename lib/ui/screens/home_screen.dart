@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/services/shared_pref_helper.dart';
+import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
+import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:hero_premier/ui/screens/history/history_screen.dart';
 import 'package:hero_premier/ui/screens/leaderboard/leaderboard_screen.dart';
@@ -7,6 +8,7 @@ import 'package:hero_premier/ui/screens/settings/settings_screen.dart';
 import 'package:hero_premier/ui/screens/winner/winner_screen.dart';
 import 'package:hero_premier/ui/widgets/custom_appbar.dart';
 import 'package:hero_premier/ui/widgets/custom_bottom_navbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,10 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _selectWidget = DashboardScreen();
   String title = "";
 
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((value) {
+      if (! (value.getBool(KEY_SESSION) ?? false)) {
+        Navigator.of(context).pushReplacementNamed(RoutePaths.LOGIN);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    SharedPrefHelper.sharedPreferences.then((value) =>print("data of session "+value.getBool(KEY_SESSION).toString()));
     return Scaffold(
       appBar: _selectedItem != 0
           ? CustomAppBar.getAppBarGeneral(title)

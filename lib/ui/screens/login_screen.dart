@@ -7,6 +7,7 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
 import 'package:hero_premier/utils/api_response.dart';
+import 'package:hero_premier/validator_mixin.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,7 +15,8 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
+  final _formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   LoginViewModel _model;
@@ -42,23 +44,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         getHeaderWidget(),
                         Container(
                           padding: const EdgeInsets.fromLTRB(48, 48, 48, 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Let\'s start with \nlogin",
-                                style: TextStyles.Heading1,
-                              ),
-                              SizedBox(height: 24),
-                              getEmailTextField(),
-                              SizedBox(height: 32),
-                              getPasswordTextField(),
-                              SizedBox(height: 24),
-                              Text(
-                                "Forgot password ?",
-                                style: TextStyles.Subtitle2,
-                              ),
-                            ],
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Let\'s start with \nlogin",
+                                  style: TextStyles.Heading1,
+                                ),
+                                SizedBox(height: 24),
+                                getEmailTextField(),
+                                SizedBox(height: 32),
+                                getPasswordTextField(),
+                                SizedBox(height: 24),
+                                Text(
+                                  "Forgot password ?",
+                                  style: TextStyles.Subtitle2,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(height: 32),
@@ -147,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: "Email",
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
+      validator: validateEmail,
     );
   }
 
@@ -155,6 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: "Password",
       controller: _passwordController,
       obscureText: true,
+      validator: validatePassword,
     );
   }
 
@@ -187,6 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin() {
-    _model.login(_emailController.text, _passwordController.text);
+    if(_formKey.currentState.validate()){
+      _model.login(_emailController.text, _passwordController.text);
+    }
   }
 }

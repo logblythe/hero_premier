@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/core/services/shared_pref_helper.dart';
 import 'package:hero_premier/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:hero_premier/ui/screens/history/history_screen.dart';
 import 'package:hero_premier/ui/screens/leaderboard/leaderboard_screen.dart';
@@ -17,8 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _selectWidget = DashboardScreen();
   String title = "";
 
+
   @override
   Widget build(BuildContext context) {
+    SharedPrefHelper.sharedPreferences.then((value) =>print("data of session "+value.getBool(KEY_SESSION).toString()));
     return Scaffold(
       appBar: _selectedItem != 0
           ? CustomAppBar.getAppBarGeneral(title)

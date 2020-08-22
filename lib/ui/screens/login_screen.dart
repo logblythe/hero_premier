@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hero_premier/core/services/shared_pref_helper.dart';
 import 'package:hero_premier/core/view_models/login_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
@@ -77,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
                         )
                       ],
                     ),
+                    _model.error != null ? Text(_model.error.toString()) : Container(),
                     getFooterWidget(),
                   ],
                 ),
@@ -171,7 +173,6 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          _model.error != null ? Text(_model.error.toString()) : Container(),
           Text(
             "Don\'t have an account? ",
             style: TextStyles.Body.copyWith(color: Theme.of(context).hintColor),

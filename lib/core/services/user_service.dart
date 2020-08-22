@@ -8,6 +8,5 @@ class UserService {
 
   login(postParams) {
     var response=_api.post("user/localLogin", postParams);
-//    LoginModel loginModel=LoginModel.fromJson(response);
   }
 }

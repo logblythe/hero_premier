@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
@@ -24,23 +26,6 @@ class LoginViewModel extends BaseViewModel {
 
   LoginModel get loginModel => _loginModel;
 
-  String validateEmail(String value) {
-    bool emailValid = RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value);
-    if (!emailValid) {
-      return "Not a valid email address";
-    }
-    notifyListeners();
-  }
-
-  String validatePassword(String value) {
-    if (value.isEmpty && value == null) {
-      return "Password shouldn't be empty";
-    }
-    notifyListeners();
-  }
-
   void toggleObscureText() {
     _obscureText = !_obscureText;
     notifyListeners();
@@ -51,6 +36,8 @@ class LoginViewModel extends BaseViewModel {
       Map<String, dynamic> postParams = Map();
       postParams['email'] = email;
       postParams['password'] = password;
+      log('data $postParams');
+      print('data $postParams');
       setLoading();
       _loginModel = await _userService.login(postParams);
       setCompleted();

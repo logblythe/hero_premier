@@ -5,7 +5,7 @@ import 'package:hero_premier/utils/api_exceptions.dart';
 import 'package:http/http.dart' as http;
 
 class ApiBaseHelper {
-  final String _baseUrl = "";
+  final String _baseUrl = "https://dev.premierhero.com/";
 
   Future<dynamic> get(String url) async {
     return Future.delayed(Duration(seconds: 3)).then((value) {

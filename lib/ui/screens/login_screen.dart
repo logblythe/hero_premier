@@ -147,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: "Email",
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
+      /*validator: _model.validateEmail,*/
     );
   }
 
@@ -155,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: "Password",
       controller: _passwordController,
       obscureText: true,
+      /*validator: _model.validatePassword,*/
     );
   }
 

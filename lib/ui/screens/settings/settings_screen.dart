@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hero_premier/core/services/shared_pref_helper.dart';
+import 'package:hero_premier/core/view_models/setting_view_model.dart';
 import 'package:hero_premier/router.dart';
+import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -13,6 +17,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _switchValue = true;
   BuildContext _context;
+  SettingViewModel _settingViewModel;
+  String token;
 
   void onChanged(bool value) {
     setState(() {
@@ -23,15 +29,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: [
-            getTopWidget(),
-            getBottomWidget(),
-          ],
-        ),
+    SharedPrefHelper.sharedPreferences.then((value) => token=value.getString(KEY_TOKEN));
+
+    return BaseWidget<SettingViewModel>(
+      model: SettingViewModel(
+        navigationService: Provider.of(context),
+        settingService: Provider.of(context),
       ),
+      builder: (context,model,child){
+        _settingViewModel=model;
+        return SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                getTopWidget(),
+                getBottomWidget(),
+              ],
+            ),
+          ),
+        );
+
+      },
     );
   }
 
@@ -492,7 +510,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   _handleLogout() {
-    Navigator.of(context).popUntil((route) => route.isFirst);
+//    Navigator.of(context).popUntil((route) => route.isFirst);
+  _settingViewModel.logout(token);
   }
 
   _handleProfileClick() {

@@ -23,9 +23,9 @@ class SharedPrefHelper {
     sharedPref.setString(key, value);
   }
 
- static getString(String key) async {
+ static Future<String> getString(String key) async {
     var sharedPref = await sharedPreferences;
-    return sharedPref.get(key) ?? Future.value(null);
+    return sharedPref.get(key) ?? Future.value("");
   }
 
  static setInt(String key, int value) async {

@@ -32,6 +32,21 @@ class ApiBaseHelper {
     return responseJson;
   }
 
+  Future<dynamic> postWithToken(String url, Map<String,dynamic> requestBody,String token) async{
+    var responseJSON;
+    try{
+     final response=await http.post(_baseUrl+url,body: requestBody, headers: {
+       'Content-type':'application/json',
+       'Accept':'application/json',
+       'Authorization':token,
+     });
+     responseJSON=_returnResponse(response);
+    }on Exception catch (_){
+      throw FetchDataException('No Internet connection');
+    }
+    return responseJSON;
+  }
+
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:

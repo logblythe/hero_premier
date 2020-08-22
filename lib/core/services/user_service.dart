@@ -11,6 +11,12 @@ class UserService {
 
   UserService({ApiBaseHelper api}) : _api = api;
 
+  login() => _api.get("login");
+
+  checkUniqueMail(email) =>
+      _api.post("/user/checkUniqueEmail", {"email": email});
+
+  registerUser(user) => _api.post("/user/localSignup", user.toJson());
   login(postParams) {
     return _api.post("user/localLogin", postParams).then((value) {
       print('error $value');

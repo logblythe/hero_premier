@@ -5,12 +5,9 @@ import 'package:hero_premier/utils/api_exceptions.dart';
 import 'package:http/http.dart' as http;
 
 class ApiBaseHelper {
-  final String _baseUrl = "https://dev.premierhero.com/";
+  final String _baseUrl = "https://dev.premierhero.com";
 
   Future<dynamic> get(String url) async {
-    return Future.delayed(Duration(seconds: 3)).then((value) {
-//      throw FetchDataException('No Internet connection');
-    });
     var responseJson;
     try {
       final response = await http.get(_baseUrl + url);
@@ -54,14 +51,14 @@ class ApiBaseHelper {
         print(responseJson);
         return responseJson;
       case 400:
-        throw BadRequestException(response.body.toString());
+        throw BadRequestException(json.decode(response.body.toString()));
       case 401:
       case 403:
-        throw UnauthorisedException(response.body.toString());
+        throw UnauthorisedException(json.decode(response.body.toString()));
       case 500:
       default:
         throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+            'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
 }

@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
 import 'package:hero_premier/ui/widgets/text_button.dart';
+import 'package:hero_premier/validator_mixin.dart';
 
-class RegisterThird extends StatelessWidget {
-  final Function() onNext;
+class RegisterThird extends StatefulWidget {
   final Function() onBack;
+  final Function(User) onNext;
 
-  const RegisterThird({Key key, this.onNext, this.onBack}) : super(key: key);
+  RegisterThird({Key key, this.onNext, this.onBack}) : super(key: key);
+
+  @override
+  _RegisterThirdState createState() => _RegisterThirdState();
+}
+
+class _RegisterThirdState extends State<RegisterThird>
+    with AutomaticKeepAliveClientMixin, ValidationMixing {
+  final _formKey = GlobalKey<FormState>();
+
+  final addressController = TextEditingController();
+
+  final phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
@@ -25,14 +40,17 @@ class RegisterThird extends StatelessWidget {
                 getHeaderWidget(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 32.0),
-                      getAddressTextField(),
-                      SizedBox(height: 32.0),
-                      getPhoneTextField(),
-                      SizedBox(height: 32.0),
-                    ],
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 32.0),
+                        getAddressTextField(),
+                        SizedBox(height: 32.0),
+                        getPhoneTextField(),
+                        SizedBox(height: 32.0),
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -90,29 +108,46 @@ class RegisterThird extends StatelessWidget {
 
   getAddressTextField() => FloatingInput(
         title: 'Address',
+        controller: addressController,
+        validator: isEmptyValidation,
       );
 
   getPhoneTextField() => FloatingInput(
         title: "Contact Number",
+        controller: phoneController,
+        validator: isEmptyValidation,
         keyboardType: TextInputType.number,
       );
 
   Widget getFooterWidget() {
     return Padding(
-      padding: const EdgeInsets.only(bottom:32.0,left: 48,right: 48),
+      padding: const EdgeInsets.only(bottom: 32.0, left: 48, right: 48),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton(
             label: 'Back',
-            onPress: onBack,
+            onPress: widget.onBack,
           ),
           SecondaryButton(
             label: 'Done',
-            onPress: onNext,
+            onPress: _handleNext,
           )
         ],
       ),
     );
   }
+
+  _handleNext() {
+    if (_formKey.currentState.validate()) {
+      User user = User(
+        address: addressController.text,
+        phoneNumber: phoneController.text,
+      );
+      widget.onNext(user);
+    }
+  }
+
+  @override
+  bool get wantKeepAlive =>true;
 }

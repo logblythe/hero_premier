@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
 import 'package:hero_premier/ui/widgets/text_button.dart';
+import 'package:hero_premier/validator_mixin.dart';
 
-class RegisterSecond extends StatelessWidget {
-  final Function() onNext;
+class RegisterSecond extends StatefulWidget {
   final Function() onBack;
+  final Function(User) onNext;
 
-  const RegisterSecond({Key key, this.onNext, this.onBack}) : super(key: key);
+  RegisterSecond({Key key, this.onNext, this.onBack}) : super(key: key);
+
+  @override
+  _RegisterSecondState createState() => _RegisterSecondState();
+}
+
+class _RegisterSecondState extends State<RegisterSecond>
+    with AutomaticKeepAliveClientMixin, ValidationMixing {
+  final _formKey = GlobalKey<FormState>();
+
+  final nameController = TextEditingController();
+
+  final dobController = TextEditingController();
+
+  final genderController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
@@ -26,15 +43,18 @@ class RegisterSecond extends StatelessWidget {
                 SizedBox(height: 32.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 48),
-                  child: Column(
-                    children: <Widget>[
-                      getFullNameTextField(),
-                      SizedBox(height: 32.0),
-                      getDateOfBirthTextField(),
-                      SizedBox(height: 32.0),
-                      getGenderTextField(),
-                      SizedBox(height: 32.0),
-                    ],
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        getFullNameTextField(),
+                        SizedBox(height: 32.0),
+                        getDateOfBirthTextField(),
+                        SizedBox(height: 32.0),
+                        getGenderTextField(),
+                        SizedBox(height: 32.0),
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -92,29 +112,51 @@ class RegisterSecond extends StatelessWidget {
 
   getFullNameTextField() => FloatingInput(
         title: 'Full Name',
+        controller: nameController,
+        validator: isEmptyValidation,
       );
 
   getDateOfBirthTextField() => FloatingInput(
         title: "Date of Birth",
+        controller: dobController,
+        validator: isEmptyValidation,
       );
 
   getGenderTextField() => FloatingInput(
         title: "Gender",
+        controller: genderController,
+        validator: isEmptyValidation,
       );
 
   Widget getFooterWidget() {
     return Padding(
-      padding: const EdgeInsets.only(bottom:32.0,left: 48,right: 48),
+      padding: const EdgeInsets.only(bottom: 32.0, left: 48, right: 48),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton(
             label: 'Back',
-            onPress: onBack,
+            onPress: widget.onBack,
           ),
-          PrimaryButton(label: 'Continue',onPress: onNext,)
+          PrimaryButton(
+            label: 'Continue',
+            onPress: _handleNext,
+          )
         ],
       ),
     );
   }
+
+  _handleNext() {
+    if (_formKey.currentState.validate()) {
+      User user = User(
+          name: nameController.text,
+          dob: dobController.text,
+          gender: genderController.text);
+      widget.onNext(user);
+    }
+  }
+
+  @override
+  bool get wantKeepAlive =>true;
 }

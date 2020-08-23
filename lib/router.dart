@@ -3,6 +3,7 @@ import 'package:hero_premier/core/models/news.dart';
 import 'package:hero_premier/ui/screens/club/club_select_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/full_table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_detail_screen.dart';
+import 'package:hero_premier/ui/screens/forgotpassword/forgot_password.dart';
 import 'package:hero_premier/ui/screens/home_screen.dart';
 import 'package:hero_premier/ui/screens/login_screen.dart';
 import 'package:hero_premier/ui/screens/register/register_screen.dart';
@@ -19,6 +20,7 @@ class RoutePaths {
   static const String PROFILE = "/profile";
   static const String FULL_TABLE = "/full-table";
   static const String NEWS_DETAILS = "/news-details";
+  static const String FORGOT_PASSWORD="/forgot-password";
 }
 
 class Router {
@@ -28,6 +30,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case RoutePaths.REGISTER:
         return MaterialPageRoute(builder: (_) => RegisterScreen());
+      case RoutePaths.FORGOT_PASSWORD:
+        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case RoutePaths.SELECT_CLUB:
         return MaterialPageRoute(builder: (_) => ClubSelectScreen());
       case RoutePaths.HOME:

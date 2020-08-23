@@ -39,6 +39,9 @@ class UserService {
         _prefHelper.clear();
       });
 
+  sendEmailForgotPassword(params) =>
+      _api.post("/user/forgotPassword", params: params);
+
   fetchClubs() => _api.get("/club/getList/1/20").then((result) {
         ClubsResponse clubsResponse = ClubsResponse.fromJsonMap(result);
         _clubs = clubsResponse.clubs;

@@ -7,6 +7,7 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
+import 'package:hero_premier/ui/widgets/welcome_modal.dart';
 import 'package:hero_premier/validator_mixin.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +44,14 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
                       onPress: () => {model.setError(null)},
                     )
                   : Container(),
+              model.dialogContent != null
+                  ? WelcomeModal(
+                      onPress: () {
+                        model.setDialogContent(null);
+                        model.navigateHome();
+                      },
+                    )
+                  : Container()
             ],
           );
         },

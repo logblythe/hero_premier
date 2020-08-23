@@ -13,7 +13,8 @@ class CustomAppBar extends AppBar {
           backgroundColor: Colors.white,
         );
 
-  static PreferredSize getAppBar(String title) {
+  static PreferredSize getAppBar(
+      String title, {onNotificationPress, onSearchPress}) {
     return PreferredSize(
       preferredSize: Size.fromHeight(72.0),
       child: AppBar(
@@ -30,14 +31,14 @@ class CustomAppBar extends AppBar {
               Icons.search,
               color: TextColorGrey,
             ),
-            onPressed: () {},
+            onPressed: onSearchPress,
           ),
           IconButton(
             icon: const Icon(
               Icons.notifications,
               color: TextColorGrey,
             ),
-            onPressed: () {},
+            onPressed: onNotificationPress,
           ),
         ],
         leading: IconButton(

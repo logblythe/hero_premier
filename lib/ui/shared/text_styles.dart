@@ -40,6 +40,7 @@ class TextStyles {
     fontSize: 30.0,
     fontWeight: FontWeight.w700,
     color: Colors.black,
+    height: 1,
   );
 
   static const Heading2 = TextStyle(
@@ -103,9 +104,9 @@ class TextStyles {
   );
 }
 
-const TextStyleTable=TextStyle(
-    fontSize: 12.0,
-    color: Color(0xFF9EA6C9),
-    fontWeight: FontWeight.bold,
-    fontStyle: FontStyle.normal,
+const TextStyleTable = TextStyle(
+  fontSize: 12.0,
+  color: Color(0xFF9EA6C9),
+  fontWeight: FontWeight.bold,
+  fontStyle: FontStyle.normal,
 );

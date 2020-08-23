@@ -27,14 +27,14 @@ class LoginViewModel extends BaseViewModel {
     try {
       setLoading();
       await _userService.login({"email": email, "password": password});
+      setDialogContent("username");
       setCompleted();
-      _navigationService.navigateTo(RoutePaths.HOME);
     } catch (e) {
       setError(e.toJson());
     }
   }
 
-  void register() {
-    _navigationService.navigateTo(RoutePaths.REGISTER);
-  }
+  register() => _navigationService.navigateTo(RoutePaths.REGISTER);
+
+  navigateHome() => _navigationService.navigateTo(RoutePaths.HOME);
 }

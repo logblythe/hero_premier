@@ -4,6 +4,7 @@ import 'package:hero_premier/provider_setup.dart';
 import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/screens/club/club_select_screen.dart';
 import 'package:hero_premier/ui/screens/home_screen.dart';
+import 'package:hero_premier/ui/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         ),
         navigatorKey: navigatorKey,
         onGenerateRoute: (settings) => Router.generateRoute(settings),
-        home: ClubSelectScreen(),
+        home: LoginScreen(),
       ),
     );
   }

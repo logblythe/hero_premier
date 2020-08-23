@@ -1,5 +1,6 @@
 class AssetPaths {
   static const LOGO = "assets/images/logo_purple.png";
+  static const LOGO_SVG = "assets/images/logo.svg";
   static const LOGIN_BACKGROUND = "assets/images/background_login.png";
   static const LOGIN_GRADIENT = "assets/images/gradient_login.svg";
   static const ARSENAL = "assets/images/ic_arsenal.svg";

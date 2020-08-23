@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:hero_premier/core/helpers/api_helper.dart';
 import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
+import 'package:hero_premier/core/models/club/club.dart';
+import 'package:hero_premier/core/models/club/clubs_response.dart';
 import 'package:hero_premier/core/models/login/login_model.dart';
 
 //The related functionalities should be grouped into one service.
@@ -17,6 +19,10 @@ class UserService {
       : _api = api,
         _prefHelper = prefHelper;
 
+  List<Club> _clubs;
+
+  get clubs => _clubs;
+
   checkUniqueMail(email) =>
       _api.post("/user/checkUniqueEmail", params: {"email": email});
 
@@ -31,5 +37,10 @@ class UserService {
 
   logout() => _api.post("/user/logout").then((value) {
         _prefHelper.clear();
+      });
+
+  fetchClubs() => _api.get("/club/getList/1/20").then((result) {
+        ClubsResponse clubsResponse = ClubsResponse.fromJsonMap(result);
+        _clubs = clubsResponse.clubs;
       });
 }

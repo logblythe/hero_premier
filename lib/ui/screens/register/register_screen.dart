@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       error: vm.dialogContent,
                       onPress: () {
                         vm.setDialogContent(null);
-                        vm.navigateLogin();
+                        vm.navigateClubSelect();
                       },
                     )
                   : Container(),

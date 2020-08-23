@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/provider_setup.dart';
 import 'package:hero_premier/router.dart';
+import 'package:hero_premier/ui/screens/club/club_select_screen.dart';
 import 'package:hero_premier/ui/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,6 @@ class MyApp extends StatelessWidget {
       providers: providers,
       child: MaterialApp(
         title: 'Premier Hero',
-        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: "Levenim MT",
           primaryColor: Color(0xFF37003D),
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         navigatorKey: navigatorKey,
         onGenerateRoute: (settings) => Router.generateRoute(settings),
-        home: HomeScreen(),
+        home: ClubSelectScreen(),
       ),
     );
   }

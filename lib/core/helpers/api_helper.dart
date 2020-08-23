@@ -53,6 +53,8 @@ class ApiBaseHelper {
       case 401:
       case 403:
         throw UnauthorisedException(json.decode(response.body.toString()));
+      case 404:
+        throw NotFoundException({"message": "Requested url is not available"});
       case 500:
       default:
         throw FetchDataException({

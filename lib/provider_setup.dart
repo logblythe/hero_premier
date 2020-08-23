@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/services/api_helper.dart';
+import 'package:hero_premier/core/helpers/api_helper.dart';
+import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
-import 'package:hero_premier/core/services/shared_pref_helper.dart';
 import 'package:hero_premier/core/services/user_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -19,10 +19,10 @@ List<SingleChildWidget> independentServices = [
 ];
 
 List<SingleChildWidget> dependentServices = [
-  ProxyProvider<ApiBaseHelper, UserService>(
-    update:
-        (BuildContext context, ApiBaseHelper api, UserService userService) =>
-            UserService(api: api),
+  ProxyProvider2<ApiBaseHelper, SharedPrefHelper, UserService>(
+    update: (BuildContext context, ApiBaseHelper api,
+            SharedPrefHelper prefHelper, UserService userService) =>
+        UserService(api: api, prefHelper: prefHelper),
   ),
 ];
 

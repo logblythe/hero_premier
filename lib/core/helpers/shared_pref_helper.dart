@@ -5,6 +5,8 @@ const String KEY_TOKEN = "key_token";
 const String KEY_FREE_QUES_COUNT = "key_free_question_count";
 const String KEY_DARK_MODE_ENABLED = "key_dark_mode_enabled";
 const String KEY_IMAGE_URL = "key_image_url";
+const String KEY_LOGIN = "key_login_json";
+const String KEY_SESSION = "key_session";
 
 class SharedPrefHelper {
   SharedPreferences _sharedPreferences;
@@ -21,9 +23,9 @@ class SharedPrefHelper {
     sharedPref.setString(key, value);
   }
 
-  getString(String key) async {
+  Future<String> getString(String key) async {
     var sharedPref = await sharedPreferences;
-    return sharedPref.get(key);
+    return sharedPref.get(key) ?? Future.value("");
   }
 
   setInt(String key, int value) async {
@@ -33,7 +35,7 @@ class SharedPrefHelper {
 
   getInteger(String key) async {
     var sharedPref = await sharedPreferences;
-    return sharedPref.getInt(key);
+    return sharedPref.getInt(key) ?? Future.value(0);
   }
 
   setBool(String key, bool value) async {
@@ -41,9 +43,9 @@ class SharedPrefHelper {
     sharedPref.setBool(key, value);
   }
 
-  getBool(String key) async {
+  Future<bool> getBool(String key) async {
     var sharedPref = await sharedPreferences;
-    return sharedPref.getBool(key);
+    return sharedPref.getBool(key) ?? Future.value(false);
   }
 
   void clear() async {

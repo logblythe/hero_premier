@@ -4,37 +4,32 @@ import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
 import 'package:hero_premier/router.dart';
 
-class LoginViewModel extends BaseViewModel {
+class ClubViewModel extends BaseViewModel {
   UserService _userService;
   NavigationService _navigationService;
 
-  LoginViewModel({
+  ClubViewModel({
     @required NavigationService navigationService,
     @required UserService userService,
   })  : this._navigationService = navigationService,
         this._userService = userService;
 
-  bool _obscureText = true;
+  get clubs => _userService.clubs;
 
-  get obscureText => _obscureText;
-
-  void toggleObscureText() {
-    _obscureText = !_obscureText;
-    notifyListeners();
-  }
-
-  login(String email, String password) async {
+  fetchClubs() async {
+    setLoading();
     try {
-      setLoading();
-      await _userService.login({"email": email, "password": password});
-      setDialogContent("username");
+      await _userService.fetchClubs();
       setCompleted();
     } catch (e) {
       setError(e.toJson());
     }
   }
 
-  register() => _navigationService.navigateTo(RoutePaths.REGISTER);
+  selectClub() {
+    //TODO : send selected club to BE
+    navigateLogin();
+  }
 
-  navigateHome() => _navigationService.navigateTo(RoutePaths.HOME);
+  navigateLogin() => _navigationService.replace(RoutePaths.LOGIN);
 }

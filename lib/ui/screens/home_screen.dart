@@ -6,6 +6,7 @@ import 'package:hero_premier/ui/screens/settings/settings_screen.dart';
 import 'package:hero_premier/ui/screens/winner/winner_screen.dart';
 import 'package:hero_premier/ui/widgets/custom_appbar.dart';
 import 'package:hero_premier/ui/widgets/custom_bottom_navbar.dart';
+import 'package:hero_premier/ui/widgets/welcome_modal.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,11 +19,25 @@ class _HomeScreenState extends State<HomeScreen> {
   String title = "";
 
   @override
+  void initState() {
+    super.initState();
+    /*  SharedPreferences.getInstance().then((value) {
+      if (!(value.getBool(KEY_SESSION) ?? false)) {
+        Navigator.of(context).pushReplacementNamed(RoutePaths.LOGIN);
+      }
+    });*/
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _selectedItem != 0
           ? CustomAppBar.getAppBarGeneral(title)
-          : CustomAppBar.getAppBar("Premier Hero"),
+          : CustomAppBar.getAppBar(
+              "Premier Hero",
+              onSearchPress: _handleSearch,
+              onNotificationPress: _handleNotificationPress,
+            ),
       body: _selectWidget != null ? _selectWidget : Container(),
       bottomNavigationBar: CustomBottomNavBar(
         iconList: [
@@ -61,5 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
         defaultSelectedIndex: 0,
       ),
     );
+  }
+
+  _handleSearch() {}
+
+  _handleNotificationPress() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: WelcomeModal(
+              onPress: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          );
+        });
   }
 }

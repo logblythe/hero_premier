@@ -10,6 +10,7 @@ class FloatingInput extends StatelessWidget {
   final FormFieldValidator validator;
   final TextInputType keyboardType;
   final String initialValue = "";
+  final String errorText;
 
   const FloatingInput({
     Key key,
@@ -20,6 +21,7 @@ class FloatingInput extends StatelessWidget {
     this.controller,
     this.validator,
     this.keyboardType,
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -31,23 +33,23 @@ class FloatingInput extends StatelessWidget {
       ),
       validator: validator,
       decoration: InputDecoration(
-        isDense: true,
-        labelText: title,
-        labelStyle: TextStyles.Subtitle1.copyWith(
-          color: Theme.of(context).accentColor,
-          fontWeight: FontWeight.w400,
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(context).hintColor,
+          isDense: true,
+          labelText: title,
+          labelStyle: TextStyles.Subtitle1.copyWith(
+            color: Theme.of(context).accentColor,
+            fontWeight: FontWeight.w400,
           ),
-        ),
-        prefixIcon: prefixIcon,
-        suffix: suffixIcon,
-      ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).primaryColor),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Theme.of(context).hintColor,
+            ),
+          ),
+          prefixIcon: prefixIcon,
+          suffix: suffixIcon,
+          errorText: errorText),
       obscureText: obscureText ?? false,
       controller: controller,
       keyboardType: keyboardType,

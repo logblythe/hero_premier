@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/utils/api_response.dart';
 
-enum AppState { BUSY, IDLE, ERROR }
-
 class BaseViewModel extends ChangeNotifier {
   bool _isDisposed = false;
   Status status;
   dynamic _error;
+  dynamic _dialogContent;
+
+  get dialogContent => _dialogContent;
 
   get error => _error;
+
+  get loading => status == Status.LOADING;
 
   setLoading() {
     status = Status.LOADING;
@@ -24,6 +27,12 @@ class BaseViewModel extends ChangeNotifier {
     _error = error;
     status = Status.ERROR;
     if (!_isDisposed) notifyListeners();
+  }
+
+  setDialogContent(content) {
+    _dialogContent =content;
+    status= Status.DIALOG_CONTENT;
+     notifyListeners();
   }
 
   @override

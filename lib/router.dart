@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/news.dart';
-import 'package:hero_premier/ui/screens/club_select_screen.dart';
+import 'package:hero_premier/ui/screens/club/club_select_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/full_table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_detail_screen.dart';
 import 'package:hero_premier/ui/screens/home_screen.dart';

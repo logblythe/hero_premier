@@ -34,6 +34,10 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
+
+
+  forgotPassword()=>_navigationService.navigateTo(RoutePaths.FORGOT_PASSWORD);
+
   register() => _navigationService.navigateTo(RoutePaths.REGISTER);
 
   navigateHome() => _navigationService.navigateTo(RoutePaths.HOME);

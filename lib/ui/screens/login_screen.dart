@@ -22,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
   TextEditingController _passwordController = TextEditingController();
   LoginViewModel _model;
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
         ),
         builder: (context, model, child) {
           _model = model;
+
           return Stack(
             children: <Widget>[
               IgnorePointer(ignoring: model.loading, child: body(model)),

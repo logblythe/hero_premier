@@ -25,6 +25,7 @@ class RoutePaths {
   static const String FORGOT_PASSWORD="/forgot-password";
   static const String SETTING="/setting";
   static const String CHANGE_PASSWORD="/change-password";
+
 }
 
 class Router {

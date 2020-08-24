@@ -34,7 +34,7 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
-  session()=>_userService.getSession();
+  session() => _userService.getSession();
 
   forgotPassword() => _navigationService.navigateTo(RoutePaths.FORGOT_PASSWORD);
 

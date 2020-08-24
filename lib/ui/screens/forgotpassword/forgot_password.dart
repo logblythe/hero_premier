@@ -34,7 +34,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
 
           return Stack(
             children: [
-              IgnorePointer(ignoring: model.loading,child: body(_model),),
+              IgnorePointer(
+                ignoring: model.loading,
+                child: body(_model),
+              ),
               _model.error != null
                   ? ErrorCard(
                       error: _model.error,

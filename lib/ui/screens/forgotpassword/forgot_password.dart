@@ -160,6 +160,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
 
   void _handleSendEmail() {
     if (_formKey.currentState.validate()) {
+      FocusScope.of(context).requestFocus(FocusNode());
       _model.sendEmailForgotPassword(_emailController.text);
     }
   }

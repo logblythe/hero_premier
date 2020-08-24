@@ -6,15 +6,18 @@ class User {
   String email;
   String password;
   String gender;
+  String image;
 
-  User(
-      {this.name,
-      this.address,
-      this.phoneNumber,
-      this.dob,
-      this.email,
-      this.password,
-      this.gender});
+  User({
+    this.name,
+    this.address,
+    this.phoneNumber,
+    this.dob,
+    this.email,
+    this.password,
+    this.gender,
+    this.image,
+  });
 
   User.fromJsonMap(Map<String, dynamic> map)
       : name = map["name"],
@@ -22,7 +25,8 @@ class User {
         phoneNumber = map["phoneNumber"],
         dob = map["dob"],
         email = map["email"],
-        password = map["password"];
+        password = map["password"],
+        image = map['image'];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -32,6 +36,7 @@ class User {
     data['dob'] = dob;
     data['email'] = email;
     data['password'] = password;
+    data['image'] = this.image;
     return data;
   }
 }

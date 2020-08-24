@@ -22,8 +22,6 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
   TextEditingController _passwordController = TextEditingController();
   LoginViewModel _model;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +32,6 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
         ),
         builder: (context, model, child) {
           _model = model;
-
           return Stack(
             children: <Widget>[
               IgnorePointer(ignoring: model.loading, child: body(model)),
@@ -43,17 +40,17 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
                   : Container(),
               model.error != null
                   ? ErrorCard(
-                      error: model.error,
-                      onPress: () => {model.setError(null)},
-                    )
+                error: model.error,
+                onPress: () => {model.setError(null)},
+              )
                   : Container(),
               model.dialogContent != null
                   ? WelcomeModal(
-                      onPress: () {
-                        model.setDialogContent(null);
-                        model.navigateHome();
-                      },
-                    )
+                onPress: () {
+                  model.setDialogContent(null);
+                  model.navigateHome();
+                },
+              )
                   : Container()
             ],
           );
@@ -231,11 +228,12 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
 
   void _handleLogin() {
     if (_formKey.currentState.validate()) {
+      FocusScope.of(context).requestFocus(FocusNode());
       _model.login(_emailController.text, _passwordController.text);
     }
   }
 
-  void _handleForgotPassword(){
+  void _handleForgotPassword() {
     _model.forgotPassword();
   }
 }

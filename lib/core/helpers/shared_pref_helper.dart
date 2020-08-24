@@ -7,6 +7,7 @@ const String KEY_DARK_MODE_ENABLED = "key_dark_mode_enabled";
 const String KEY_IMAGE_URL = "key_image_url";
 const String KEY_LOGIN = "key_login_json";
 const String KEY_SESSION = "key_session";
+const String KEY_USER="key_user";
 
 class SharedPrefHelper {
   SharedPreferences _sharedPreferences;

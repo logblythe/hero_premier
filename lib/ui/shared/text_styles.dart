@@ -5,6 +5,7 @@ const TextColorGrey = Color(0xFFB2B5C2);
 const ButtonColorPrimary = Color(0xFF541BB7);
 const ColorPrimary = Color(0xFF37003D);
 const BackgroundColor = Color(0xFFF9FAFB);
+const ColorLightPurple=Color(0xFF9EA6C9);
 
 class TextStyles {
   static const HeadingTextStyle = TextStyle(
@@ -72,6 +73,15 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     color: Colors.black,
   );
+
+
+  static const Subtitle1Light = TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w700,
+    color: Color(0xFF9EA6C9),
+  );
+
+
 
   static const Subtitle2 = TextStyle(
     fontSize: 14.0,

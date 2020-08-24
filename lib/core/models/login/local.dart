@@ -25,7 +25,7 @@ class Local {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map();
     data['loginAttempts'] = this.loginAttempts;
-    data['name'] = this.loginAttempts;
+    data['name'] = this.name;
     data['address'] = this.address;
     data['phoneNumber'] = this.phoneNumber;
     data['dob'] = this.dob;

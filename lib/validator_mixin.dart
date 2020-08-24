@@ -12,7 +12,7 @@ class ValidationMixing {
 
   String validatePassword(val) {
     if (val.isEmpty) {
-      return "*Required";
+      return "* Required";
     } else if (val.length < 8) {
       return "Minimum 8 characters required";
     } else {
@@ -23,5 +23,15 @@ class ValidationMixing {
   String isEmptyValidation(val) {
     if (val.isNotEmpty) return null;
     return "* Required";
+  }
+
+  String validateFullName(val){
+    if(val.isEmpty){
+      return "* Required";
+    }else if(val.split(" ").length<1){
+      return "* Required valid name";
+    }else{
+      return null;
+    }
   }
 }

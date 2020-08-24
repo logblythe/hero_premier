@@ -11,6 +11,7 @@ class FloatingInput extends StatelessWidget {
   final TextInputType keyboardType;
   final String initialValue = "";
   final String errorText;
+  final bool isEnable;
 
   const FloatingInput({
     Key key,
@@ -22,19 +23,21 @@ class FloatingInput extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.errorText,
+    this.isEnable=true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       cursorColor: Colors.black,
-      style: TextStyles.Subtitle1.copyWith(
+      style: !isEnable?TextStyles.Subtitle1Light:TextStyles.Subtitle1.copyWith(
         color: Theme.of(context).primaryColor,
       ),
       validator: validator,
       decoration: InputDecoration(
           isDense: true,
           labelText: title,
+          enabled: isEnable,
           labelStyle: TextStyles.Subtitle1.copyWith(
             color: Theme.of(context).accentColor,
             fontWeight: FontWeight.w400,

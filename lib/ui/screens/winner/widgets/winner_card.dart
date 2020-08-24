@@ -30,6 +30,14 @@ class WinnerCard extends StatelessWidget {
           borderRadius: BorderRadius.all(
             Radius.circular(8.0),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 2.0,
+              offset: Offset(0, 0.3),
+              spreadRadius: 0.5,
+            )
+          ],
         ),
         child: Stack(
           children: [

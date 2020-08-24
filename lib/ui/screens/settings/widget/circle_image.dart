@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hero_premier/ui/shared/text_styles.dart';
 
 class CircleImage extends StatelessWidget {
   final Function() onPress;
   final double size;
+  final String path;
 
-  const CircleImage({Key key, this.onPress, this.size}) : super(key: key);
+  const CircleImage({Key key, this.onPress, this.size, this.path})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +21,22 @@ class CircleImage extends StatelessWidget {
         child: Stack(
           children: [
             ClipOval(
-              child: Image.asset(
-                "assets/images/ic_person.png",
-                height: size ?? 90,
-                width: size ?? 90,
-                fit: BoxFit.cover,
-              ),
+              child: path != null
+                  ? Container(
+                      color: ColorLightPurple.withOpacity(0.2),
+                      padding: EdgeInsets.all(16.0),
+                      child: SvgPicture.asset(
+                        path,
+                        width: size ?? 90,
+                        height: size ?? 90,
+                      ),
+                    )
+                  : Image.asset(
+                      "assets/images/ic_person.png",
+                      height: size ?? 90,
+                      width: size ?? 90,
+                      fit: BoxFit.cover,
+                    ),
             ),
             Align(
               alignment: Alignment.bottomRight,

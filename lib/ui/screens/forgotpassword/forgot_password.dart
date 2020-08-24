@@ -34,7 +34,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
 
           return Stack(
             children: [
-              IgnorePointer(ignoring: model.loading,child: body(_model),),
+              IgnorePointer(
+                ignoring: model.loading,
+                child: body(_model),
+              ),
               _model.error != null
                   ? ErrorCard(
                       error: _model.error,
@@ -160,6 +163,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
 
   void _handleSendEmail() {
     if (_formKey.currentState.validate()) {
+      FocusScope.of(context).requestFocus(FocusNode());
       _model.sendEmailForgotPassword(_emailController.text);
     }
   }

@@ -8,6 +8,7 @@ import 'package:hero_premier/ui/screens/home_screen.dart';
 import 'package:hero_premier/ui/screens/login_screen.dart';
 import 'package:hero_premier/ui/screens/register/register_screen.dart';
 import 'package:hero_premier/ui/screens/settings/change_password.dart';
+import 'package:hero_premier/ui/screens/settings/create_group.dart';
 import 'package:hero_premier/ui/screens/settings/profile_screen.dart';
 import 'package:hero_premier/ui/screens/settings/settings_screen.dart';
 import 'package:hero_premier/ui/screens/winner/winner_details_screen.dart';
@@ -25,6 +26,7 @@ class RoutePaths {
   static const String FORGOT_PASSWORD="/forgot-password";
   static const String SETTING="/setting";
   static const String CHANGE_PASSWORD="/change-password";
+  static const String CREATE_GROUP="/create-group";
 
 }
 
@@ -51,6 +53,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => SettingsScreen());
       case RoutePaths.CHANGE_PASSWORD:
         return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
+      case RoutePaths.CREATE_GROUP:
+        return MaterialPageRoute(builder: (_) => CreateGroup());
       case RoutePaths.NEWS_DETAILS:
         {
           var arguments = settings.arguments as List;

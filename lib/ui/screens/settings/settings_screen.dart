@@ -5,6 +5,7 @@ import 'package:hero_premier/core/view_models/setting_view_model.dart';
 import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
+import 'package:hero_premier/ui/screens/settings/widget/create_group_widget.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
@@ -41,6 +42,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               children: [
                 getTopWidget(),
+                CreateGroupWidget(
+                  onPressJoinGroup: _handleJoinGroup,
+                  onPressCreate: _handleCreateGroup,
+                ),
                 getBottomWidget(),
               ],
             ),
@@ -69,6 +74,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               borderRadius: BorderRadius.all(
                 Radius.circular(8.0),
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 2.0,
+                  offset: Offset(0, 0.3),
+                  spreadRadius: 0.5,
+                )
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,6 +264,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         borderRadius: BorderRadius.all(
           Radius.circular(8.0),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            blurRadius: 2.0,
+            offset: Offset(0, 0.3),
+            spreadRadius: 0.5,
+          )
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,15 +545,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Widget groupWidget() {}
+
   _handleLogout() {
     _settingViewModel.logout();
   }
 
   _handleProfileClick() {
-   _settingViewModel.navigateToProfile();
+    _settingViewModel.navigateToProfile();
   }
 
-  _handleChangePassword(){
+  _handleChangePassword() {
     _settingViewModel.navigateToChangePassword();
+  }
+
+  _handleJoinGroup() {
+  }
+
+  _handleCreateGroup() {
+    print("clicked");
+    _settingViewModel.navigateToCreateGroup();
   }
 }

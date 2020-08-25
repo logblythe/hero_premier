@@ -38,4 +38,9 @@ class SettingViewModel extends BaseViewModel {
   navigateToProfile(){
     _navigationService.navigateTo(RoutePaths.PROFILE);
   }
+
+  navigateToCreateGroup(){
+    _navigationService.navigateTo(RoutePaths.CREATE_GROUP);
+  }
+
 }

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/core/models/winner_result.dart';
+import 'package:hero_premier/core/view_models/winner_view_model.dart';
 import 'package:hero_premier/router.dart';
-import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/winner/widgets/winner_card.dart';
+import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:provider/provider.dart';
 
 class WinnerScreen extends StatefulWidget {
   @override
@@ -26,77 +31,53 @@ class _WinnerScreenState extends State<WinnerScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _getTabBar(),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).backgroundColor,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: _getTabBarView(
-                <Widget>[
-                  SingleChildScrollView(
-                    child: Container(
-                      child: Column(
-                        children: [
-                          WinnerCard(
-                            name: "Suman Sapkota",
-                            week: "38",
-                            weekPoint: "60",
-                            totalPoints: "9100",
-                            url: "assets/images/ic_person_1.png",
-                            onTap: _handlePress,
-                          ),
-                          WinnerCard(
-                            name: "Sunil Mahat",
-                            week: "37",
-                            weekPoint: "60",
-                            totalPoints: "120",
-                            url: "assets/images/ic_person_2.png",
-                            onTap: _handlePress,
-                          ),
-                          WinnerCard(
-                            name: "Waiba Kaier",
-                            week: "36",
-                            weekPoint: "60",
-                            totalPoints: "300",
-                            url: "assets/images/ic_person_3.png",
-                            onTap: _handlePress,
-                          ),
-                          WinnerCard(
-                            name: "Moshafir Hon",
-                            week: "35",
-                            weekPoint: "60",
-                            totalPoints: "125",
-                            url: "assets/images/ic_person_4.png",
-                            onTap: _handlePress,
-                          ),
-                          WinnerCard(
-                            name: "Kaeiren Maie",
-                            week: "34",
-                            weekPoint: "60",
-                            totalPoints: "20",
-                            url: "assets/images/ic_person_5.png",
-                            onTap: _handlePress,
-                          ),
-                        ],
-                      ),
+    return BaseWidget<WinnerViewModel>(
+      model: WinnerViewModel(
+        winnerService: Provider.of(context),
+        navigationService: Provider.of(context),
+      ),
+      onModelReady: (model) {
+        model.fetchWinners();
+      },
+      builder: (ctx, model, child) {
+        if (model.loading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (model.error != null) {
+          return ErrorCard(
+            error: model.error,
+            onPress: model.fetchWinners(),
+          );
+        } else {
+          List<WinnerResult> winners = model.winners;
+          return Container(
+            color: Colors.white,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _getTabBar(),
+                Expanded(
+                  child: Container(
+                    color: Theme.of(context).backgroundColor,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: _getTabBarView(
+                      [
+                        currentSeasonWinners(winners, model),
+                        Icon(Icons.settings),
+                        Icon(Icons.settings),
+                      ],
                     ),
                   ),
-                  Icon(Icons.settings),
-                  Icon(Icons.settings),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 
@@ -131,7 +112,23 @@ class _WinnerScreenState extends State<WinnerScreen>
     );
   }
 
-  _handlePress() {
-    Navigator.of(context).pushNamed(RoutePaths.WINNER_DETAIL);
+  _handlePress(String userId) {
+    Navigator.of(context)
+        .pushNamed(RoutePaths.WINNER_DETAIL, arguments: userId);
+  }
+
+  Widget currentSeasonWinners(List<WinnerResult> winners, model) {
+    return ListView(
+      children: winners.map((winner) {
+        return WinnerCard(
+          name: winner.weekInfo.winnerInfo.local.name,
+          week: winner.weekInfo.id.substring(winner.weekInfo.id.length - 1),
+          totalPoints: winner.weekInfo.winnerInfo.points.toString(),
+          weekPoint: winner.obtainedScore.toString(),
+          url: winner.weekInfo.winnerInfo.local.image,
+          onTap: () => model.selectWinner(winner.weekInfo.winnerInfo.id),
+        );
+      }).toList(),
+    );
   }
 }

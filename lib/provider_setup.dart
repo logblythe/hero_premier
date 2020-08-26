@@ -4,6 +4,7 @@ import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
 import 'package:hero_premier/core/services/leaderboard_service.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
+import 'package:hero_premier/core/services/winner_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -27,6 +28,9 @@ List<SingleChildWidget> dependentServices = [
   ),
   ProxyProvider<ApiBaseHelper, LeaderboardService>(
     update: (context, api, service) => LeaderboardService(api: api),
+  ),
+  ProxyProvider<ApiBaseHelper, WinnerService>(
+    update: (context, api, service) => WinnerService(api: api),
   ),
 ];
 

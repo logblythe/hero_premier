@@ -46,11 +46,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               children: [
                 getTopWidget(),
-                /* CreateGroupWidget(
-                  onPressJoinGroup: _handleJoinGroup,
-                  onPressCreate: _handleCreateGroup,
-                ),*/
-
                 InviteFriendWidget(
                   onPressFriend: _handleFriendGroup,
                   onPressInvite: _handleInviteFriends,

@@ -36,7 +36,6 @@ class User {
     data['dob'] = dob;
     data['email'] = email;
     data['password'] = password;
-    data['image'] = this.image;
     return data;
   }
 }

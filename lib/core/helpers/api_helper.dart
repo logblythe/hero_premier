@@ -27,6 +27,7 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> post(String url, {Map<String, dynamic> params}) async {
+    print('the params $params');
     var token = await getToken();
     var responseJson;
     try {

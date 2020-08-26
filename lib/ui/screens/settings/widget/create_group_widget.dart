@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/shared/ui_helpers.dart';
 
 class CreateGroupWidget extends StatelessWidget {
   final Function onPressCreate;
@@ -45,12 +46,7 @@ class CreateGroupWidget extends StatelessWidget {
                       child: Container(
                         width: 3.0,
                         height: 16.0,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(4.0),
-                              bottomRight: Radius.circular(4.0),
-                            ),
-                            color: Theme.of(context).accentColor),
+                        decoration: UIHelper.boxDecorationLine(context),
                       ),
                     ),
                     SizedBox(
@@ -61,18 +57,7 @@ class CreateGroupWidget extends StatelessWidget {
                       child: Container(
                         width: 50.0,
                         height: 50.0,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFFEBEBEB),
-                              Color(0xFF00FFFFFF),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            tileMode: TileMode.clamp,
-                          ),
-                        ),
+                        decoration: UIHelper.boxDecorationCircle(context),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SvgPicture.asset(

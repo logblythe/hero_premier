@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
+import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
 
@@ -48,20 +49,7 @@ class _CreateGroupState extends State<CreateGroup> {
                       margin: EdgeInsets.only(top: 72.0),
                       padding:EdgeInsets.all(16.0),
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.0),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            blurRadius: 2.0,
-                            offset: Offset(0, 0.3),
-                            spreadRadius: 0.5,
-                          )
-                        ],
-                      ),
+                      decoration: UIHelper.boxDecoration(context),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,

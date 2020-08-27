@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/view_models/setting_view_model.dart';
-import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/base_widget.dart';
+
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
+import 'package:hero_premier/ui/screens/settings/widget/invite_dialog_widget.dart';
+import 'package:hero_premier/ui/screens/settings/widget/invite_frients_group.dart';
+import 'package:hero_premier/ui/screens/settings/widget/join_group_dialog_widget.dart';
+
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +46,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               children: [
                 getTopWidget(),
+                InviteFriendWidget(
+                  onPressFriend: _handleFriendGroup,
+                  onPressInvite: _handleInviteFriends,
+                ),
                 getBottomWidget(),
               ],
             ),
@@ -63,13 +72,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         if (user != null) {
           return Container(
             padding: EdgeInsets.all(8.0),
-            margin: EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.0),
-              ),
-            ),
+            margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+            decoration: UIHelper.boxDecoration(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -245,13 +249,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget getBottomWidget() {
     return Container(
-      margin: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(8.0),
-        ),
-      ),
+      margin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+      decoration: UIHelper.boxDecoration(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -524,15 +523,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  _handleLogout() {
-    _settingViewModel.logout();
-  }
+  _handleLogout() => _settingViewModel.logout();
 
-  _handleProfileClick() {
-   _settingViewModel.navigateToProfile();
-  }
+  _handleProfileClick() => _settingViewModel.navigateToProfile();
 
-  _handleChangePassword(){
-    _settingViewModel.navigateToChangePassword();
-  }
+  _handleChangePassword() => _settingViewModel.navigateToChangePassword();
+
+  _handleCreateGroup() => _settingViewModel.navigateToCreateGroup();
+
+  _handleInviteFriends() =>
+      showDialog(context: context, builder: (_) => InviteDialogWidget());
+
+  _handleFriendGroup() =>
+      showDialog(context: context, builder: (_) => JoinGroupDialogWidget());
 }

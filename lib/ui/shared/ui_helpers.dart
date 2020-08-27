@@ -26,6 +26,42 @@ class UIHelper {
   static const Widget horizontalSpaceLarge =
       SizedBox(width: _HorizontalSpaceLarge);
 
+  static BoxDecoration boxDecoration(context) => BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(8.0),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            blurRadius: 2.0,
+            offset: Offset(0, 0.3),
+            spreadRadius: 0.5,
+          )
+        ],
+      );
+
+  static BoxDecoration boxDecorationLine(context) => BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(8.0),
+          bottomRight: Radius.circular(8.0),
+        ),
+      );
+
+  static BoxDecoration boxDecorationCircle(context) => BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFFEBEBEB),
+            Color(0xFF00FFFFFF),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          tileMode: TileMode.clamp,
+        ),
+      );
+
   static ThemeData darkTheme = ThemeData(
     primaryColor: Colors.black,
     backgroundColor: Colors.grey[700],

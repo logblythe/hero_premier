@@ -17,4 +17,6 @@ class AssetPaths {
   static const IC_LINK = "assets/images/ic_link.svg";
   static const IC_AVATAR_MEN = "assets/images/ic-avatar-men.svg";
   static const IC_AVATAR_FEMALE = "assets/images/ic-avatar-female.svg";
+  static const IC_TEAM = "assets/images/ic_team.svg";
+  static const IC_MAIL = "assets/images/ic_letter_link.svg";
 }

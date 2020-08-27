@@ -27,15 +27,13 @@ class SettingViewModel extends BaseViewModel {
     }
   }
 
-  getUserModel() {
-    return _userService.getUserModel();
-  }
+  getUserModel() => _userService.getUserModel();
 
-  navigateToChangePassword(){
-    _navigationService.navigateTo(RoutePaths.CHANGE_PASSWORD);
-  }
+  navigateToChangePassword() =>
+      _navigationService.navigateTo(RoutePaths.CHANGE_PASSWORD);
 
-  navigateToProfile(){
-    _navigationService.navigateTo(RoutePaths.PROFILE);
-  }
+  navigateToProfile() => _navigationService.navigateTo(RoutePaths.PROFILE);
+
+  navigateToCreateGroup() =>
+      _navigationService.navigateTo(RoutePaths.CREATE_GROUP);
 }

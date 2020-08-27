@@ -45,7 +45,7 @@ class TextStyles {
   );
 
   static const Heading2 = TextStyle(
-    fontSize: 20.0,
+    fontSize: 22.0,
     fontWeight: FontWeight.w700,
     color: Colors.black,
   );

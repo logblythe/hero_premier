@@ -43,6 +43,23 @@ class ApiBaseHelper {
     return responseJson;
   }
 
+  Future<dynamic> patch(String url, {Map<String, dynamic> params}) async {
+    print('the params $params');
+    var token = await getToken();
+    var responseJson;
+    try {
+      final response = await http.patch(_baseUrl + url,
+          headers: {
+            'Authorization': token,
+          },
+          body: params);
+      responseJson = _returnResponse(response);
+    } on SocketException {
+      throw FetchDataException({"message": 'No Internet connection'});
+    }
+    return responseJson;
+  }
+
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:

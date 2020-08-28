@@ -213,11 +213,12 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
   }
 
   Widget getListOfGame() {
+    //todo replace with history screen
     return Container(
       margin: EdgeInsets.all(16.0),
       child: Column(
         children: [
-          HistoryCard(
+       /*   HistoryCard(
               gameWeek: "36",
               scoreA: "1",
               scoreB: "2",
@@ -240,7 +241,7 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
               teamA: "Tottenham",
               teamB: "Chelsea",
               urlA: "assets/images/ic_tottenham.svg",
-              urlB: "assets/images/ic_chelsea.svg"),
+              urlB: "assets/images/ic_chelsea.svg"),*/
         ],
       ),
     );

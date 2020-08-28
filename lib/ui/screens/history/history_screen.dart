@@ -3,6 +3,7 @@ import 'package:hero_premier/core/models/history/history_result.dart';
 import 'package:hero_premier/core/view_models/history_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/history/widgets/history_card.dart';
+import 'package:hero_premier/ui/screens/history/widgets/history_default_widget.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:provider/provider.dart';
 
@@ -37,20 +38,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   Widget body(HistoryViewModel model) {
     Map<String, List<HistoryResult>> _gameWeekMap = model.gameWeekMap;
-    return ListView.builder(
-        itemCount: _gameWeekMap.length,
-        itemBuilder: (context, index) {
-          String gameWeek = _gameWeekMap.keys.elementAt(index).split(" ")[1];
-          List<HistoryResult> histories = _gameWeekMap.values.elementAt(index);
-          int totalObtainedScore = 0;
-          histories.forEach((element) {
-            totalObtainedScore = element.obtainedScore + totalObtainedScore;
-          });
-          return HistoryCard(
-            gameWeek: gameWeek,
-            historyResult: histories,
-            totalObtainedScore: totalObtainedScore,
-          );
-        });
+    return _gameWeekMap.length == 0
+        ? HistoryDefaultWidget()
+        : ListView.builder(
+            itemCount: _gameWeekMap.length,
+            itemBuilder: (context, index) {
+              String gameWeek =
+                  _gameWeekMap.keys.elementAt(index).split(" ")[1];
+              List<HistoryResult> histories =
+                  _gameWeekMap.values.elementAt(index);
+              int totalObtainedScore = 0;
+              histories.forEach((element) {
+                totalObtainedScore = element.obtainedScore + totalObtainedScore;
+              });
+              return HistoryCard(
+                gameWeek: gameWeek,
+                historyResult: histories,
+                totalObtainedScore: totalObtainedScore,
+              );
+            });
   }
 }

@@ -45,7 +45,7 @@ class ProfileViewModel extends BaseViewModel {
       setLoading();
       String _userId = userId ?? await _userService.getUserId();
       await _userService.fetchUserDetails(_userId);
-      // await _userService.fetchUserRank(_userId);
+      await _userService.fetchUserRank(_userId);
       setCompleted();
     } catch (e) {
       setError(e.toString());

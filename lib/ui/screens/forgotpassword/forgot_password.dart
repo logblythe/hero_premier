@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/view_models/forgot_password_view_model.dart';
-import 'package:hero_premier/core/view_models/login_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';

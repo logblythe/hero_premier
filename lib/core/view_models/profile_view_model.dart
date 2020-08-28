@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/login/local.dart';
-import 'package:hero_premier/core/models/login/login_model.dart';
 import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
-
-import '../../router.dart';
-import 'base_view_model.dart';
+import 'package:hero_premier/core/view_models/base_view_model.dart';
+import 'package:hero_premier/router.dart';
 
 class ProfileViewModel extends BaseViewModel {
   UserService _userService;
@@ -23,6 +18,8 @@ class ProfileViewModel extends BaseViewModel {
   Future<User> getUserModel() async {
     return _userService.getUserModel();
   }
+
+  User get user => _userService.user;
 
   updateProfile(String name, String dob, String gender, String address,
       String contact) async {
@@ -39,6 +36,19 @@ class ProfileViewModel extends BaseViewModel {
       setCompleted();
     } catch (e) {
       setError(e.toJson());
+    }
+  }
+
+  fetchUserDetails({String userId}) async {
+    userId = "5d4819176f24b26dc40bd48f";
+    try {
+      setLoading();
+      String _userId = userId ?? await _userService.getUserId();
+      await _userService.fetchUserDetails(_userId);
+      // await _userService.fetchUserRank(_userId);
+      setCompleted();
+    } catch (e) {
+      setError(e.toString());
     }
   }
 

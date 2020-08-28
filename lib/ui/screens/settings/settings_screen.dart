@@ -6,7 +6,7 @@ import 'package:hero_premier/ui/base_widget.dart';
 
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
 import 'package:hero_premier/ui/screens/settings/widget/invite_dialog_widget.dart';
-import 'package:hero_premier/ui/screens/settings/widget/invite_frients_group.dart';
+import 'package:hero_premier/ui/screens/settings/widget/invite_friends_group.dart';
 import 'package:hero_premier/ui/screens/settings/widget/join_group_dialog_widget.dart';
 
 import 'package:hero_premier/ui/shared/asset_paths.dart';

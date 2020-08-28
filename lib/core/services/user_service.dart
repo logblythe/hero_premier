@@ -4,7 +4,9 @@ import 'package:hero_premier/core/helpers/api_helper.dart';
 import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
 import 'package:hero_premier/core/models/club/club.dart';
 import 'package:hero_premier/core/models/club/clubs_response.dart';
+import 'package:hero_premier/core/models/individual_detail.dart';
 import 'package:hero_premier/core/models/login/login_model.dart';
+import 'package:hero_premier/core/models/rank.dart';
 import 'package:hero_premier/core/models/user.dart';
 
 //The related functionalities should be grouped into one service.
@@ -27,6 +29,10 @@ class UserService {
   LoginModel _loginModel;
 
   get loginModel => _loginModel;
+
+  User _user = User();
+
+  User get user => _user;
 
   checkUniqueMail(email) =>
       _api.post("/user/checkUniqueEmail", params: {"email": email});
@@ -63,11 +69,25 @@ class UserService {
     return user;
   }
 
-  Future<String> getUserId() async {
+  getUserId() async {
     return await _prefHelper.getString(KEY_USER_ID);
   }
 
   Future<bool> getSession() async {
     return await _prefHelper.getBool(KEY_SESSION);
   }
+
+  fetchUserDetails(String userId) =>
+      _api.get("/user/getSingleUserDetails/$userId").then((value) {
+        IndividualDetail detail = IndividualDetail.fromJsonMap(value);
+        _user.name = detail.result.local.name;
+        _user.image = detail.result.local.image;
+        _user.points = detail.result.points.toString();
+      });
+
+  fetchUserRank(String userId) =>
+      _api.get("/user/individualRank/$userId").then((value) {
+        Rank rank = Rank.fromJsonMap(value);
+        _user.rank = rank.rank.toString();
+      });
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class RankCard extends StatelessWidget {
@@ -40,8 +41,13 @@ class RankCard extends StatelessWidget {
                           child: Row(
                             children: [
                               ClipOval(
-                                child: Image.asset(
-                                  url,
+                                child: CachedNetworkImage(
+                                  placeholder: (context, url) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),                                  imageUrl: url,
                                   height: 60,
                                   width: 60,
                                   fit: BoxFit.cover,

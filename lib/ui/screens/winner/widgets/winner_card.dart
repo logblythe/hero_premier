@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 
@@ -27,9 +28,7 @@ class WinnerCard extends StatelessWidget {
         margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(8.0),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),
@@ -51,18 +50,16 @@ class WinnerCard extends StatelessWidget {
                   Text(
                     "Game\nWeek",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                         fontSize: 12,
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    width: 8.0,
-                  ),
+                  SizedBox(width: 8.0),
                   Container(
-                    height: 37,
-                    width: 64.0,
+                    height: 38,
+                    width: 36,
                     decoration: BoxDecoration(
-                      color: ButtonColorPrimary,
+                      color: Theme.of(context).accentColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(4.0),
                         bottomRight: Radius.circular(4.0),
@@ -88,11 +85,9 @@ class WinnerCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
+                Container(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,30 +95,30 @@ class WinnerCard extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           ClipOval(
-                            child: Image.asset(
-                              url,
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                              imageUrl: url,
                               height: 60,
                               width: 60,
                               fit: BoxFit.cover,
                             ),
                           ),
-                          SizedBox(
-                            width: 16.0,
-                          ),
+                          SizedBox(width: 16.0),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 24.0,
-                              ),
+                              SizedBox(height: 12.0),
                               Text(
                                 name,
                                 style: TextStyles.TitleTextNormalBoldStyle,
                               ),
-                              SizedBox(
-                                height: 8.0,
-                              ),
+                              SizedBox(height: 8.0),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
@@ -166,7 +161,8 @@ class WinnerCard extends StatelessWidget {
                                   ),
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width /
-                                        double.parse(getLength(totalPoints))*0.4,
+                                        double.parse(getLength(totalPoints)) *
+                                        0.4,
                                   ),
                                   Row(
                                     crossAxisAlignment:

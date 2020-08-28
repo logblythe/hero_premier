@@ -1,7 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/core/models/leaderboard/leaderboard.dart';
+import 'package:hero_premier/core/view_models/leaderboard_view_model.dart';
+import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/leaderboard/widgets/rank_card.dart';
+import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:provider/provider.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   @override
@@ -11,64 +17,49 @@ class LeaderboardScreen extends StatefulWidget {
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            getWinnerWidgetMain(),
-            SizedBox(
-              height: 8.0,
-            ),
-            RankCard(
-              name: "Suman Sapkot",
-              pos: "4th",
-              points: "940",
-              url: "assets/images/ic_person_1.png",
-            ),
-            RankCard(
-              name: "Sandeep Chhetri",
-              pos: "5th",
-              points: "870",
-              url: "assets/images/ic_person_2.png",
-            ),
-            RankCard(
-              name: "Roman Shahi",
-              pos: "6th",
-              points: "772",
-              url: "assets/images/ic_person.png",
-            ),
-            RankCard(
-              name: "Sudip Pathak",
-              pos: "7th",
-              points: "718",
-              url: "assets/images/ic_person_3.png",
-            ),
-            RankCard(
-              name: "Naresh Lamgade",
-              pos: "8th",
-              points: "701",
-              url: "assets/images/ic_person_4.png",
-            ),
-            RankCard(
-              name: "Aarab Mishra",
-              pos: "9th",
-              points: "540",
-              url: "assets/images/ic_person_5.png",
-            ),
-            RankCard(
-              name: "Ramesh Thakuri",
-              pos: "45th",
-              points: "165",
-              url: "assets/images/ic_person.png",
-            ),
-          ],
-        ),
+    return BaseWidget<LeaderboardViewModel>(
+      model: LeaderboardViewModel(
+        leaderboardService: Provider.of(context),
       ),
+      onModelReady: (model) {
+        model.fetchLeaderboard();
+      },
+      builder: (context, model, child) {
+        if (model.loading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (model.error != null) {
+          return ErrorCard(
+            error: model.error,
+            onPress: model.fetchLeaderboard,
+          );
+        } else {
+          List<Leaderboard> _leaderboards = model.leaderboards;
+          List<Leaderboard> _top3 = _leaderboards.sublist(0, 3);
+          List<Leaderboard> _rest = _leaderboards.sublist(3);
+          return Container(
+            margin: EdgeInsets.all(16.0),
+            child: ListView(
+                children: [getWinnerWidgetMain(_top3)]..addAll(
+                    _rest.asMap().entries.map(
+                      (entry) {
+                        int index = entry.key;
+                        var leaderboard = entry.value;
+                        return RankCard(
+                          name: leaderboard.local.name,
+                          pos: '${index + 4} th',
+                          points: leaderboard.points.toString(),
+                          url: leaderboard.local.image,
+                        );
+                      },
+                    ).toList(),
+                  )),
+          );
+        }
+      },
     );
   }
 
-  Widget getWinnerWidget() {
+  Widget getWinnerWidget(imageUrl) {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -86,8 +77,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           child: Stack(
             children: [
               ClipOval(
-                child: Image.asset(
-                  "assets/images/ic_profile_1.png",
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  ),
+                  imageUrl:imageUrl,
                   height: 90,
                   width: 90,
                   fit: BoxFit.cover,
@@ -100,7 +97,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     );
   }
 
-  Widget getWinnerWidgetMain() {
+  Widget getWinnerWidgetMain(List<Leaderboard> top3) {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -121,7 +118,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 margin: EdgeInsets.only(bottom: 16.0, top: 24.0),
                 child: Stack(
                   children: [
-                    getWinnerWidget(),
+                    getWinnerWidget(top3[0].local.image),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: GestureDetector(
@@ -176,30 +173,27 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             ],
           ),
           Text(
-            "Sharmila Thapa",
+            top3[0].local.name,
             style: TextStyles.TitleTextNormalBoldStyle,
           ),
-          SizedBox(
-            height: 4.0,
-          ),
+          SizedBox(height: 4.0),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Points ",
-                style: TextStyles.TitleTextNormalStyle,
+                style: TextStyles.Body.copyWith(
+                    color: Theme.of(context).hintColor),
               ),
               Text(
-                "2589",
+                top3[0].points.toString(),
                 style: TextStyles.TitleTextNormalBoldStyle,
               ),
             ],
           ),
-          SizedBox(
-            height: 8.0,
-          ),
-          getSecondThirdWidget(),
+          SizedBox(height: 8.0),
+          getSecondThirdWidget(top3),
           SizedBox(
             height: 16.0,
           ),
@@ -208,7 +202,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     );
   }
 
-  Widget getSecondThirdWidget() {
+  Widget getSecondThirdWidget(List<Leaderboard> top3) {
     return Container(
       margin: EdgeInsets.only(left: 48.0, right: 48.0),
       child: Row(
@@ -227,7 +221,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     child: Container(
                       height: 100,
                       width: 100,
-                      child: getSecondWidget(),
+                      child: getSecondWidget(top3[1].local.image),
                     ),
                   ),
                   Align(
@@ -258,29 +252,26 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 ],
               ),
               Text(
-                "Nirajan Baral",
+                top3[1].local.name,
                 style: TextStyles.TitleTextNormalBoldStyle,
               ),
-              SizedBox(
-                height: 4.0,
-              ),
+              SizedBox(height: 4.0),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Points ",
-                    style: TextStyles.TitleTextNormalStyle,
+                    style: TextStyles.Body.copyWith(
+                        color: Theme.of(context).hintColor),
                   ),
                   Text(
-                    "1401",
+                    top3[1].points.toString(),
                     style: TextStyles.TitleTextNormalBoldStyle,
                   ),
                 ],
               ),
-              SizedBox(
-                height: 8.0,
-              ),
+              SizedBox(height: 8.0),
             ],
           ),
           Column(
@@ -291,7 +282,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   Container(
                     width: 100.0,
                     height: 100.0,
-                    child: getThirdWidget(),
+                    child: getThirdWidget(top3[2].local.image),
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -324,7 +315,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 ],
               ),
               Text(
-                "Rajani Suwal",
+                top3[2].local.name,
                 style: TextStyles.TitleTextNormalBoldStyle,
               ),
               SizedBox(
@@ -336,17 +327,16 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 children: [
                   Text(
                     "Points ",
-                    style: TextStyles.TitleTextNormalStyle,
+                    style: TextStyles.Body.copyWith(
+                        color: Theme.of(context).hintColor),
                   ),
                   Text(
-                    "1052",
+                    top3[2].points.toString(),
                     style: TextStyles.TitleTextNormalBoldStyle,
                   ),
                 ],
               ),
-              SizedBox(
-                height: 8.0,
-              ),
+              SizedBox(height: 8.0),
             ],
           ),
         ],
@@ -354,7 +344,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     );
   }
 
-  Widget getSecondWidget() {
+  Widget getSecondWidget(imageUrl) {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -372,8 +362,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           child: Stack(
             children: [
               ClipOval(
-                child: Image.asset(
-                  "assets/images/ic_profile_2.png",
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  ),
+                  imageUrl: imageUrl,
                   height: 90,
                   width: 90,
                   fit: BoxFit.cover,
@@ -386,7 +382,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     );
   }
 
-  Widget getThirdWidget() {
+  Widget getThirdWidget(imageUrl) {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -404,8 +400,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           child: Stack(
             children: [
               ClipOval(
-                child: Image.asset(
-                  "assets/images/ic_profile_3.png",
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  ),
+                  imageUrl: imageUrl,
                   height: 90,
                   width: 90,
                   fit: BoxFit.cover,

@@ -26,7 +26,7 @@ class ProfileViewModel extends BaseViewModel {
     try {
       setLoading();
       var response = await _userService.updateProfile({
-        "userId": _userService.getUserId(),
+        "userId": await _userService.getUserId(),
         "name": name,
         "address": address,
         "dob": dob,
@@ -35,7 +35,7 @@ class ProfileViewModel extends BaseViewModel {
       setDialogContent(response);
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e.toString());
     }
   }
 

@@ -7,11 +7,13 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 class HistoryCard extends StatelessWidget {
   final String gameWeek;
   final List<HistoryResult> historyResult;
+  final int totalObtainedScore;
 
   const HistoryCard({
     Key key,
     this.gameWeek,
     this.historyResult,
+    this.totalObtainedScore,
   }) : super(key: key);
 
   @override
@@ -73,9 +75,7 @@ class HistoryCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             height: 1.4),
                       ),
-                      SizedBox(
-                        width: 4.0,
-                      ),
+                      SizedBox(width: 4.0),
                       Container(
                         height: 37,
                         width: 64.0,
@@ -91,11 +91,9 @@ class HistoryCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset("assets/images/ic_points.svg"),
-                            SizedBox(
-                              width: 4.0,
-                            ),
+                            SizedBox(width: 4.0),
                             Text(
-                              "20",
+                              totalObtainedScore.toString(),
                               style: TextStyle(
                                   color: Colors.white, fontSize: 12.0),
                             ),

@@ -36,6 +36,7 @@ List<SingleChildWidget> dependentServices = [
   ProxyProvider<ApiBaseHelper, HistoryService>(
     update: (context, api, service) => HistoryService(api: api),
   ),
+
 ];
 
 List<SingleChildWidget> uiConsumableProviders = [];

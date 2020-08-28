@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hero_premier/ui/screens/history/widgets/history_card.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 
 class WinnerDetailsScreen extends StatefulWidget {

@@ -6,6 +6,7 @@ import 'package:hero_premier/ui/screens/history/widgets/history_card.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:provider/provider.dart';
 
+//todo pagination and design fixes
 class HistoryScreen extends StatefulWidget {
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
@@ -32,23 +33,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         }
       },
     );
-   /* return SingleChildScrollView(
-      child: Container(
-        color: Theme.of(context).backgroundColor,
-        child: Column(
-          children: [
-            HistoryCard(
-                gameWeek: "36",
-                scoreA: "1",
-                scoreB: "2",
-                teamA: "Liverpool",
-                teamB: "Arsenal",
-                urlA: "assets/images/ic_liverpool.svg",
-                urlB: "assets/images/ic_arsenal.svg"),
-          ],
-        ),
-      ),
-    );*/
   }
 
   Widget body(HistoryViewModel model) {
@@ -56,9 +40,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return ListView.builder(
         itemCount: _gameWeekMap.length,
         itemBuilder: (context, index) {
+          String gameWeek = _gameWeekMap.keys.elementAt(index).split(" ")[1];
+          List<HistoryResult> histories = _gameWeekMap.values.elementAt(index);
+          int totalObtainedScore = 0;
+          histories.forEach((element) {
+            totalObtainedScore = element.obtainedScore + totalObtainedScore;
+          });
           return HistoryCard(
-            gameWeek: _gameWeekMap.keys.elementAt(index).split(" ")[1],
-            historyResult: _gameWeekMap.values.elementAt(index),
+            gameWeek: gameWeek,
+            historyResult: histories,
+            totalObtainedScore: totalObtainedScore,
           );
         });
   }

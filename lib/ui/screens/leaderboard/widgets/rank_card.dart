@@ -47,7 +47,8 @@ class RankCard extends StatelessWidget {
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
                                     ),
-                                  ),                                  imageUrl: url,
+                                  ),
+                                  imageUrl: url,
                                   height: 60,
                                   width: 60,
                                   fit: BoxFit.cover,

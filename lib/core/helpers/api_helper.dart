@@ -15,10 +15,10 @@ class ApiBaseHelper {
     return sharedPref.getString(KEY_TOKEN);
   }
 
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(String url, {String wholeUrl}) async {
     var responseJson;
     try {
-      final response = await http.get(_baseUrl + url);
+      final response = await http.get(wholeUrl ?? _baseUrl + url);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');

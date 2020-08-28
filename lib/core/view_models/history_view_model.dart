@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/history/game_week.dart';
 import 'package:hero_premier/core/models/history/history_response.dart';
 import 'package:hero_premier/core/models/history/history_result.dart';
 import 'package:hero_premier/core/services/history_service.dart';

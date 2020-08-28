@@ -5,7 +5,6 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
-import 'package:hero_premier/ui/widgets/secondary_button.dart';
 
 class JoinGroupDialogWidget extends StatefulWidget {
   @override

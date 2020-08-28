@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/provider_setup.dart';
 import 'package:hero_premier/router.dart';
-import 'package:hero_premier/ui/screens/login_screen.dart';
+import 'package:hero_premier/ui/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
         navigatorKey: navigatorKey,
         onGenerateRoute: (settings) => Router.generateRoute(settings),
-        home: LoginScreen(),
+        home: HomeScreen(),
       ),
     );
   }

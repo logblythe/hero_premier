@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';

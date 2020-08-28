@@ -7,6 +7,10 @@ class User {
   String password;
   String gender;
   String image;
+  String rank;
+  String points;
+  String favClub;
+  String favClubUrl;
 
   User({
     this.name,
@@ -17,6 +21,10 @@ class User {
     this.password,
     this.gender,
     this.image,
+    this.rank,
+    this.points,
+    this.favClub,
+    this.favClubUrl,
   });
 
   User.fromJsonMap(Map<String, dynamic> map)
@@ -26,7 +34,11 @@ class User {
         dob = map["dob"],
         email = map["email"],
         password = map["password"],
-        image = map['image'];
+        image = map['image'],
+        rank = map['rank'],
+        points = map['points'],
+        favClub = map['favClub'],
+        favClubUrl = map['favClubUrl'];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

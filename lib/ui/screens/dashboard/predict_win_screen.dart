@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/widgets/dead_line_timer.dart';
 
 class PredictWinScreen extends StatefulWidget {
   @override
@@ -8,7 +9,6 @@ class PredictWinScreen extends StatefulWidget {
 }
 
 class _PredictWinScreenState extends State<PredictWinScreen> {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,14 +18,10 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
           padding: EdgeInsets.all(16.0),
           child: Column(
             children: [
-              getNextPredictionWidget(),
-              SizedBox(
-                height: 16.0,
-              ),
+              DeadlineTimer(),
+              SizedBox(height: 16.0),
               getPredictWinWidget(),
-              SizedBox(
-                height: 24.0,
-              ),
+              SizedBox(height: 24.0),
               Text(
                 "Next Prediction",
                 style: TextStyle(
@@ -34,9 +30,7 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.normal),
               ),
-              SizedBox(
-                height: 16.0,
-              ),
+              SizedBox(height: 16.0),
               getNextItemPredictionWidget(
                   "36",
                   "assets/images/ic_liverpool.svg",
@@ -346,7 +340,8 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                                     ),
                                     child: TextField(
                                       cursorColor: Colors.black,
-                                      style: TextStyles.TitleTextNormalBoldStyle,
+                                      style:
+                                          TextStyles.TitleTextNormalBoldStyle,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:
@@ -388,7 +383,8 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                                     ),
                                     child: TextField(
                                       cursorColor: Colors.black,
-                                      style: TextStyles.TitleTextNormalBoldStyle,
+                                      style:
+                                          TextStyles.TitleTextNormalBoldStyle,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:
@@ -605,7 +601,8 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                                           ),
                                           child: TextField(
                                             cursorColor: Colors.black,
-                                            style: TextStyles.TitleTextNormalBoldStyle,
+                                            style: TextStyles
+                                                .TitleTextNormalBoldStyle,
                                             decoration: InputDecoration(
                                                 border: InputBorder.none,
                                                 contentPadding:
@@ -652,7 +649,8 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                                           ),
                                           child: TextField(
                                             cursorColor: Colors.black,
-                                            style: TextStyles.TitleTextNormalBoldStyle,
+                                            style: TextStyles
+                                                .TitleTextNormalBoldStyle,
                                             decoration: InputDecoration(
                                                 border: InputBorder.none,
                                                 contentPadding:

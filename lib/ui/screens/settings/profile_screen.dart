@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
                             onPress: () => {_profileViewModel.setError(null)},
                           )
                         : Container(),
-                    _profileViewModel.dialogContent != null
+                    model.dialogContent != null
                         ? ErrorCard(
                             error: _profileViewModel.setDialogContent(null),
                             onPress: () {

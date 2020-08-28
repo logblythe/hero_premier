@@ -6,7 +6,7 @@ import 'package:hero_premier/core/models/club/club.dart';
 import 'package:hero_premier/core/models/club/clubs_response.dart';
 import 'package:hero_premier/core/models/individual_detail.dart';
 import 'package:hero_premier/core/models/login/login_model.dart';
-import 'package:hero_premier/core/models/rank.dart';
+import 'package:hero_premier/core/models/rank/rank_response.dart';
 import 'package:hero_premier/core/models/user.dart';
 
 //The related functionalities should be grouped into one service.
@@ -87,7 +87,7 @@ class UserService {
 
   fetchUserRank(String userId) =>
       _api.get("/user/individualRank/$userId").then((value) {
-        Rank rank = Rank.fromJsonMap(value);
-        _user.rank = rank.rank.toString();
+        RankResponse rankResponse = RankResponse.fromJsonMap(value);
+        _user.rank = rankResponse.rank[0].rank.toString();
       });
 }

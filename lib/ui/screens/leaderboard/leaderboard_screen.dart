@@ -204,7 +204,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
 
   Widget getSecondThirdWidget(List<Leaderboard> top3) {
     return Container(
-      margin: EdgeInsets.only(left: 48.0, right: 48.0),
+      margin: EdgeInsets.only(left: 32.0, right: 32.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

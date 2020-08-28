@@ -38,6 +38,18 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         navigationService: Provider.of(context),
         userService: Provider.of(context),
       ),
+      onModelReady:(model) async* {
+        User user= await model.getUserModel();
+        _fullNameController = TextEditingController(text: user.name);
+        _fullNameController.text=user.name;
+        _dobController = TextEditingController(text: user.dob);
+        _genderController = TextEditingController();
+        _addressController = TextEditingController(text: user.address);
+        _contactController =
+            TextEditingController(text: user.phoneNumber);
+        _emailAddressController =
+            TextEditingController(text: user.email);
+      },
       builder: (context, model, child) {
         _profileViewModel = model;
 
@@ -66,44 +78,37 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
           body: FutureBuilder(
             future: _profileViewModel.getUserModel(),
             builder: (context, AsyncSnapshot<User> local) {
-              if(local.hasError){
+              if (local.hasError) {
                 return Text("Error");
               }
 
-              if(local.data!=null){
-                User user=local.data;
-                _fullNameController = TextEditingController(text: user.name);
-                _dobController = TextEditingController(text: user.dob);
-                _genderController = TextEditingController();
-                _addressController = TextEditingController(text: user.address);
-                _contactController = TextEditingController(text: user.phoneNumber);
-                _emailAddressController = TextEditingController(text: user.email);
+              if (local.data != null) {
+
                 return Stack(
                   children: [
                     IgnorePointer(
                       ignoring: model.loading,
-                      child: body(user),
+                      child: body(local.data),
                     ),
                     model.error != null
                         ? ErrorCard(
-                      error: _profileViewModel.error,
-                      onPress: () => {_profileViewModel.setError(null)},
-                    )
+                            error: _profileViewModel.error,
+                            onPress: () => {_profileViewModel.setError(null)},
+                          )
                         : Container(),
                     _profileViewModel.dialogContent != null
                         ? ErrorCard(
-                      error: _profileViewModel.setDialogContent(null),
-                      onPress: () {
-                        _profileViewModel.setDialogContent(null);
-                        _profileViewModel.navigateSetting();
-                      },
-                    )
+                            error: _profileViewModel.setDialogContent(null),
+                            onPress: () {
+                              _profileViewModel.setDialogContent(null);
+                              _profileViewModel.navigateSetting();
+                            },
+                          )
                         : Container(),
                   ],
                 );
               }
               return Center(child: CircularProgressIndicator());
-
             },
           ),
         );
@@ -259,4 +264,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       Navigator.of(_context).pop();
     }
   }
+
+
 }

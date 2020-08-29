@@ -109,7 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 size: 18.0,
                               ),
                               Text(
-                                "" + user.address,
+                                "" + user.address == null ? "" : user.address,
                                 style: TextStyle(
                                   color: Color(0xFF9EA6C9),
                                   fontSize: 14.0,

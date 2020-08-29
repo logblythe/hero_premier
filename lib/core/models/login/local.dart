@@ -8,8 +8,8 @@ class Local {
   String image;
   bool isEmailVerified;
 
-  Local(this.loginAttempts, this.name, this.address, this.phoneNumber, this.dob,
-      this.email, this.image, this.isEmailVerified);
+  Local({this.loginAttempts, this.name, this.address, this.phoneNumber, this.dob,
+      this.email, this.image, this.isEmailVerified});
 
   Local.fromJson(Map<String, dynamic> json) {
     loginAttempts = json['loginAttempts'];

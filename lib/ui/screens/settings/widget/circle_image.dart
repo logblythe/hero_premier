@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
@@ -6,8 +7,9 @@ class CircleImage extends StatelessWidget {
   final Function() onPress;
   final double size;
   final String path;
+  final bool isVisible;
 
-  const CircleImage({Key key, this.onPress, this.size, this.path})
+  const CircleImage({Key key, this.onPress, this.size,this.isVisible=true, this.path})
       : super(key: key);
 
   @override
@@ -31,34 +33,37 @@ class CircleImage extends StatelessWidget {
                         height: size ?? 90,
                       ),
                     )
-                  : Image.asset(
-                      "assets/images/ic_person.png",
+                  : SvgPicture.asset(
+                       path,
                       height: size ?? 90,
                       width: size ?? 90,
                       fit: BoxFit.cover,
                     ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: GestureDetector(
-                onTap: onPress,
-                child: Container(
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
-                            blurRadius: 1.0,
-                            offset: Offset(0, 0.5),
-                            spreadRadius: 0.5)
-                      ]),
-                  child: Icon(
-                    Icons.mode_edit,
-                    color: Colors.white,
-                    size: 18.0,
+            Visibility(
+              visible: isVisible,
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: onPress,
+                  child: Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).accentColor,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 1.0,
+                              offset: Offset(0, 0.5),
+                              spreadRadius: 0.5)
+                        ]),
+                    child: Icon(
+                      Icons.mode_edit,
+                      color: Colors.white,
+                      size: 18.0,
+                    ),
                   ),
                 ),
               ),

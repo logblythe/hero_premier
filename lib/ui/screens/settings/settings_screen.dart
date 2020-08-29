@@ -183,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "Overal pts",
+                              "Overall pts",
                               style: TextStyle(
                                   color: Color(0xFF9EA6C9),
                                   fontSize: 12.0,

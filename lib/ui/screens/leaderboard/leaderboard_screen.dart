@@ -7,6 +7,8 @@ import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/leaderboard/widgets/rank_card.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:hero_premier/ui/widgets/paginating_card.dart';
+import 'package:hero_premier/utils/api_response.dart';
 import 'package:provider/provider.dart';
 
 class LeaderboardScreen extends StatefulWidget {
@@ -15,6 +17,8 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget<LeaderboardViewModel>(
@@ -23,6 +27,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       ),
       onModelReady: (model) {
         model.fetchLeaderboard();
+        _controller.addListener(() {
+          if (_controller.position.pixels ==
+              _controller.position.maxScrollExtent) {
+            model.fetchLeaderboardMore();
+          }
+        });
       },
       builder: (context, model, child) {
         if (model.loading) {
@@ -39,16 +49,25 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           return Container(
             margin: EdgeInsets.all(16.0),
             child: ListView(
+                controller: _controller,
                 children: [getWinnerWidgetMain(_top3)]..addAll(
                     _rest.asMap().entries.map(
                       (entry) {
                         int index = entry.key;
                         var leaderboard = entry.value;
-                        return RankCard(
-                          name: leaderboard.local.name,
-                          pos: '${index + 4} th',
-                          points: leaderboard.points.toString(),
-                          url: leaderboard.local.image,
+                        return Column(
+                          children: [
+                            RankCard(
+                              name: leaderboard.local.name,
+                              pos: '${index + 4} th',
+                              points: leaderboard.points.toString(),
+                              url: leaderboard.local.image,
+                            ),
+                            (index == _leaderboards.length - 1 &&
+                                    model.status == Status.PAGINATING)
+                                ? PaginatingCard()
+                                : Container()
+                          ],
                         );
                       },
                     ).toList(),
@@ -84,7 +103,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       strokeWidth: 2,
                     ),
                   ),
-                  imageUrl:imageUrl,
+                  imageUrl: imageUrl,
                   height: 90,
                   width: 90,
                   fit: BoxFit.cover,

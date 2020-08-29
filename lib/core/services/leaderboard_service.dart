@@ -10,7 +10,7 @@ class LeaderboardService {
 
   LeaderboardResponse get leaderboardResponse => _leaderboardResponse;
 
-  fetchLeaderboard() => _api.get("/user/leaderboardRank/1/20").then((res) {
+  fetchLeaderboard(page) => _api.get("/user/leaderboardRank/$page/20").then((res) {
         _leaderboardResponse = LeaderboardResponse.fromJsonMap(res);
       });
 }

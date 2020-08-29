@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/prediction/result.dart';
+import 'package:hero_premier/core/models/prediction/prediction_result.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
@@ -18,6 +18,13 @@ class PredictionCard extends StatefulWidget {
 
 class _PredictionCardState extends State<PredictionCard> {
   bool _edit = false;
+  PredictionResult _prediction;
+
+  @override
+  void initState() {
+    super.initState();
+    _prediction = widget.prediction;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +42,20 @@ class _PredictionCardState extends State<PredictionCard> {
           SizedBox(height: 24),
           Row(
             children: [
-              clubNameImage(),
+              clubNameImage(
+                imageUrl: _prediction.matchId.firstTeamId.image,
+                name: _prediction.matchId.firstTeamId.name,
+              ),
               Expanded(
                 child: Container(
                   margin: EdgeInsets.only(top: 24),
                   child: details(),
                 ),
               ),
-              clubNameImage(),
+              clubNameImage(
+                imageUrl: _prediction.matchId.secondTeamId.image,
+                name: _prediction.matchId.secondTeamId.name,
+              ),
             ],
           ),
           SizedBox(height: 24),
@@ -188,7 +201,7 @@ class _PredictionCardState extends State<PredictionCard> {
         ),
         SizedBox(height: 24),
         Text(
-          "Sat,Sep 12 | 11:00",
+          getFormattedTime(_prediction.matchId.matchTime),
           style: TextStyle(
             color: ButtonColorPrimary,
             fontSize: 10.0,
@@ -232,5 +245,11 @@ class _PredictionCardState extends State<PredictionCard> {
     setState(() {
       _edit = !_edit;
     });
+  }
+
+  String getFormattedTime(String matchTime) {
+    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateUtc, true);
+
+    var date = Duration.
   }
 }

@@ -28,7 +28,9 @@ class ApiBaseHelper {
 
   Future<dynamic> post(String url, {Map<String, dynamic> params}) async {
     print('the params $params');
-    var token = await getToken();
+    // var token = await getToken();
+    var token =
+        "Bearer eyJhbGciOi8ba8b4JIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNDViYzBlNmYyNGIyNmRjNDBiZDQ2MiI8ba8b4sInJvbGUiOiJDTElFTlQiLCJsb2dnZWRGcm9tIjoiTE9DQUwiLCJpYXQiOjE8ba8b41OTg2MTgxMzEsImV4cCI6MTU5ODcwNDUzMX0.vs1ufE73FJd-FMBvZI-IXSYRVkmLaBe4Lm5Cfki97Ng";
     var responseJson;
     try {
       final response = await http.post(_baseUrl + url,

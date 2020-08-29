@@ -1,4 +1,4 @@
-import 'package:hero_premier/core/models/prediction/result.dart';
+import 'package:hero_premier/core/models/prediction/prediction_result.dart';
 
 class PredictionResponse {
 

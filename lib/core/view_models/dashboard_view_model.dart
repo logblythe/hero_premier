@@ -20,6 +20,8 @@ class DashboardViewModel extends BaseViewModel {
 
   Season get season => _dashboardService.tableResponse.season;
 
+  get predictions => _dashboardService.predictionResponse.result;
+
   fetchTables() async {
     if (_dashboardService.tableResponse == null) {
       setLoading();
@@ -29,6 +31,17 @@ class DashboardViewModel extends BaseViewModel {
       } catch (e) {
         setError(e.toJson());
       }
+    }
+  }
+
+  fetchPrediction() async {
+    setLoading();
+    try {
+      await _dashboardService
+          .fetchPrediction({"userId": "5d45bc0e6f24b26dc40bd462"});
+      setCompleted();
+    } catch (e) {
+      setError(e.toJson());
     }
   }
 

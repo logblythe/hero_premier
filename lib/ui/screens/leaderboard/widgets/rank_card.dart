@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
 
 class RankCard extends StatelessWidget {
   final String name;
@@ -40,20 +40,11 @@ class RankCard extends StatelessWidget {
                           margin: EdgeInsets.only(left: 16.0),
                           child: Row(
                             children: [
-                              ClipOval(
-                                child: CachedNetworkImage(
-                                  placeholder: (context, url) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                  imageUrl: url,
-                                  height: 60,
-                                  width: 60,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              CircularCachedNetworkImage(
+                                url: url,
+                                height: 60,
+                                width: 60,
+                              )
                             ],
                           ),
                         ),

@@ -28,9 +28,7 @@ class UIHelper {
 
   static BoxDecoration boxDecoration(context) => BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(8.0),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),

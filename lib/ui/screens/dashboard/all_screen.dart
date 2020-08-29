@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_screen.dart';
-import 'package:hero_premier/ui/screens/dashboard/predict_win_screen.dart';
+import 'package:hero_premier/ui/screens/dashboard/prediction/predict_win_screen.dart';
 
 class AllScreen extends StatelessWidget {
   @override

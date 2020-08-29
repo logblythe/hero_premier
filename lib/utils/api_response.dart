@@ -15,4 +15,4 @@ class ApiResponse<T> {
   }
 }
 
-enum Status { LOADING, COMPLETED, ERROR, DIALOG_CONTENT }
+enum Status { LOADING, PAGINATING, COMPLETED, ERROR, DIALOG_CONTENT }

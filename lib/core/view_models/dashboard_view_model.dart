@@ -20,6 +20,8 @@ class DashboardViewModel extends BaseViewModel {
 
   Season get season => _dashboardService.tableResponse.season;
 
+  get predictions => _dashboardService.predictionResponse.result;
+
   fetchTables() async {
     if (_dashboardService.tableResponse == null) {
       setLoading();
@@ -29,6 +31,43 @@ class DashboardViewModel extends BaseViewModel {
       } catch (e) {
         setError(e.toJson());
       }
+    }
+  }
+
+  postPrediction(String scoreA, String scoreB, String matchId) async {
+    setLoading();
+    try {
+      await _dashboardService.postPrediction({
+        "userId": "5d45bc0e6f24b26dc40bd462",
+        "matchId": matchId,
+        "firstTeamScorePrediction": scoreA,
+        "secondTeamScorePrediction": scoreB
+      });
+      setCompleted();
+    } catch (e) {
+      setError(e.toJson());
+    }
+  }
+
+  fetchCurrentPrediction() async {
+    setLoading();
+    try {
+      await _dashboardService
+          .fetchCurrentPrediction({"userId": "5d45bc0e6f24b26dc40bd462"});
+      setCompleted();
+    } catch (e) {
+      setError(e.toJson());
+    }
+  }
+
+  fetchPastPrediction() async {
+    setLoading();
+    try {
+      await _dashboardService
+          .fetchPastPrediction({"userId": "5d45bc0e6f24b26dc40bd462"});
+      setCompleted();
+    } catch (e) {
+      setError(e.toJson());
     }
   }
 

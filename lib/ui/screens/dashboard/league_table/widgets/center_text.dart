@@ -3,17 +3,20 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 
 class CenterText extends StatelessWidget {
   final String label;
+  final bool focus;
 
-  const CenterText(this.label);
+  CenterText(this.label, {bool focus=false}) : this.focus = focus;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20),
+      padding: EdgeInsets.symmetric(vertical: 16),
       child: Center(
         child: Text(
           label,
-          style: TextStyleTable,
+          style: focus
+              ? TextStyleTable.copyWith(color: Theme.of(context).primaryColor)
+              : TextStyleTable,
         ),
       ),
     );

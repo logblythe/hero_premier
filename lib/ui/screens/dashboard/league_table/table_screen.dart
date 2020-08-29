@@ -102,55 +102,74 @@ class _TableScreenState extends State<TableScreen> {
   Widget getTableWidget() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Container(
-        child: Table(
-          children: [
-            TableRow(
-              children: [
-                CenterText('Pos'),
-                CenterText('Club'),
-                CenterText(''),
-                CenterText('P'),
-                CenterText('W'),
-                CenterText('D'),
-                CenterText('L'),
-                CenterText('GD'),
-                CenterText('Pts'),
-              ],
-            ),
-          ]..addAll(
-              _table
-                  .map(
-                    (data) => TableRow(
-                      children: [
-                        CenterText(data.position.toString()),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: SvgPicture.network(
-                            data.team.crestUrl,
-                            height: 60,
-                            width: 60,
-                            placeholderBuilder: (context) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
+      child: Table(
+        columnWidths: {
+          0: FractionColumnWidth(.1),
+          1: FractionColumnWidth(.1),
+          2: FractionColumnWidth(.26),
+          3: FractionColumnWidth(.1),
+          4: FractionColumnWidth(.09),
+          5: FractionColumnWidth(.09),
+          6: FractionColumnWidth(.09),
+          7: FractionColumnWidth(.09),
+          8: FractionColumnWidth(.09),
+          9: FractionColumnWidth(.09),
+        },
+        children: [
+          TableRow(
+            children: [
+              CenterText('Pos'),
+              CenterText('Club'),
+              CenterText(''),
+              CenterText('P'),
+              CenterText('W'),
+              CenterText('D'),
+              CenterText('L'),
+              CenterText('GD'),
+              CenterText('Pts'),
+            ],
+          ),
+        ]..addAll(
+            _table
+                .map(
+                  (data) => TableRow(
+                    children: [
+                      CenterText(data.position.toString(),focus: true,),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: SvgPicture.network(
+                          data.team.crestUrl,
+                          height: 30,
+                          width: 30,
+                          placeholderBuilder: (context) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
                             ),
                           ),
                         ),
-                        CenterText(''),
-                        CenterText(data.points.toString()),
-                        CenterText(data.won.toString()),
-                        CenterText(data.draw.toString()),
-                        CenterText(data.lost.toString()),
-                        CenterText(data.goalDifference.toString()),
-                        CenterText(data.points.toString()),
-                      ],
-                    ),
-                  )
-                  .toList(),
-            ),
-        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, top: 14),
+                        child: Text(
+                          data.team.name,
+                          style: TextStyleTable.copyWith(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                      CenterText(data.playedGames.toString()),
+                      CenterText(data.won.toString()),
+                      CenterText(data.draw.toString()),
+                      CenterText(data.lost.toString()),
+                      CenterText(data.goalDifference.toString()),
+                      CenterText(
+                        data.points.toString(),
+                        focus: true,
+                      ),
+                    ],
+                  ),
+                )
+                .toList(),
+          ),
       ),
     );
   }
@@ -184,13 +203,13 @@ class _TableScreenState extends State<TableScreen> {
                   .map(
                     (data) => TableRow(
                       children: [
-                        CenterText(data.position.toString()),
+                        CenterText(data.position.toString(),focus: true,),
                         Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child:SvgPicture.network(
+                          padding: const EdgeInsets.only(top: 12, bottom: 12),
+                          child: SvgPicture.network(
                             data.team.crestUrl,
-                            height: 60,
-                            width: 60,
+                            height: 30,
+                            width: 30,
                             placeholderBuilder: (context) => Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: CircularProgressIndicator(
@@ -200,15 +219,23 @@ class _TableScreenState extends State<TableScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 8.0, top: 20),
+                          padding: const EdgeInsets.only(
+                            left: 16.0,
+                            right: 40,
+                            top: 14,
+                            bottom: 12,
+                          ),
                           child: Text(
                             data.team.name,
-                            style: TextStyleTable,
+                            style: TextStyleTable.copyWith(color: Theme.of(context).primaryColor),
                           ),
                         ),
-                        CenterText(data.points.toString()),
+                        CenterText(data.playedGames.toString()),
                         CenterText(data.goalDifference.toString()),
-                        CenterText(data.points.toString()),
+                        CenterText(
+                          data.points.toString(),
+                          focus: true,
+                        ),
                       ],
                     ),
                   )

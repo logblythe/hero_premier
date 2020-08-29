@@ -94,7 +94,9 @@ class UserService {
 
   updateProfile(params) {
     print("params" + params.toString());
-    _api.patch("/user/updateLocalUser", params: params).then((value) {
+
+    _api.patch("/user/updateLocalUser", params: params
+    ).then((value){
       LoginModel loginModel = LoginModel.fromJson(value);
       _prefHelper.setString(
           KEY_USER, jsonEncode(loginModel.result.local.toJson()));

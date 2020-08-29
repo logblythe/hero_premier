@@ -12,9 +12,10 @@ class HistoryViewModel extends BaseViewModel {
   HistoryViewModel({
     @required HistoryService historyService,
     @required UserService userService,
-  })
-      : this._historyService = historyService,
+  })  : this._historyService = historyService,
         this._userService = userService;
+
+  int _page = 1;
 
   HistoryResponse get historyResponse => _historyService.historyResponse;
 
@@ -22,14 +23,15 @@ class HistoryViewModel extends BaseViewModel {
       _historyService.historyResponse.historyResult;
 
   Map<String, List<HistoryResult>> _gameWeekMap = {};
-  Map<String, List<HistoryResult>> get gameWeekMap=>_gameWeekMap;
+
+  Map<String, List<HistoryResult>> get gameWeekMap => _gameWeekMap;
 
   calculateGameWeek() {
     historyResult.forEach((e) {
       if (_gameWeekMap.containsKey(e.matchId.weekNo)) {
         _gameWeekMap[e.matchId.weekNo].add(e);
       } else {
-        _gameWeekMap[e.matchId.weekNo]=[];
+        _gameWeekMap[e.matchId.weekNo] = [];
         _gameWeekMap[e.matchId.weekNo].add(e);
       }
     });
@@ -40,7 +42,21 @@ class HistoryViewModel extends BaseViewModel {
     try {
       // var _userId = userId ?? await _userService.getUserId();
       var _userId = "5d4819176f24b26dc40bd48f";
-      await _historyService.fetchHistory({"userId": _userId});
+      await _historyService.fetchHistory(1, {"userId": _userId});
+      calculateGameWeek();
+      setCompleted();
+    } catch (e) {
+      setError(e.toString());
+    }
+  }
+
+  fetchHistoryMore() async {
+    _page = _page + 1;
+    setPaginating();
+    try {
+      // var _userId = userId ?? await _userService.getUserId();
+      var _userId = "5d4819176f24b26dc40bd48f";
+      await _historyService.fetchHistory(_page, {"userId": _userId});
       calculateGameWeek();
       setCompleted();
     } catch (e) {

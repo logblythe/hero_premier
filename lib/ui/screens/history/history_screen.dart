@@ -5,20 +5,36 @@ import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/history/widgets/history_card.dart';
 import 'package:hero_premier/ui/screens/history/widgets/history_default_widget.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:hero_premier/ui/widgets/paginating_card.dart';
+import 'package:hero_premier/utils/api_response.dart';
 import 'package:provider/provider.dart';
 
-//todo pagination and design fixes
+//design fixes
 class HistoryScreen extends StatefulWidget {
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget<HistoryViewModel>(
       onModelReady: (model) {
         model.fetchHistory();
+        _controller.addListener(() {
+          if (_controller.position.pixels ==
+              _controller.position.maxScrollExtent) {
+            model.fetchHistoryMore();
+          }
+        });
       },
       model: HistoryViewModel(
         historyService: Provider.of(context),
@@ -41,6 +57,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return _gameWeekMap.length == 0
         ? HistoryDefaultWidget()
         : ListView.builder(
+            controller: _controller,
             itemCount: _gameWeekMap.length,
             itemBuilder: (context, index) {
               String gameWeek =
@@ -51,10 +68,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
               histories.forEach((element) {
                 totalObtainedScore = element.obtainedScore + totalObtainedScore;
               });
-              return HistoryCard(
-                gameWeek: gameWeek,
-                historyResult: histories,
-                totalObtainedScore: totalObtainedScore,
+              return Column(
+                children: [
+                  HistoryCard(
+                    gameWeek: gameWeek,
+                    historyResult: histories,
+                    totalObtainedScore: totalObtainedScore,
+                  ),
+                  (index == _gameWeekMap.length - 1 &&
+                          model.status == Status.PAGINATING)
+                      ? PaginatingCard()
+                      : Container()
+                ],
               );
             });
   }

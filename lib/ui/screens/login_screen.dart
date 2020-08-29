@@ -261,7 +261,6 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken accessToken = result.accessToken;
-        print("Token ${accessToken.token}");
         _model.fbLogin(accessToken.token);
 
         break;

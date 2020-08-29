@@ -65,9 +65,7 @@ class UserService {
         "image": facebookResponse.picture.data.url,
         "facebookId": facebookResponse.id,
       }).then((value) {
-        print("json" + value.toString());
         LoginModel loginModel = LoginModel.fromJson(value);
-        print("value" + loginModel.result.facebook.toJson().toString());
 
         _prefHelper.setString(KEY_TOKEN, loginModel.token);
         _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));

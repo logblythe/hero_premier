@@ -5,6 +5,7 @@ import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
 import 'package:hero_premier/core/models/club/club.dart';
 import 'package:hero_premier/core/models/club/clubs_response.dart';
 import 'package:hero_premier/core/models/individual_detail.dart';
+import 'package:hero_premier/core/models/login/facebook_response.dart';
 import 'package:hero_premier/core/models/login/login_model.dart';
 import 'package:hero_premier/core/models/rank/rank_response.dart';
 import 'package:hero_premier/core/models/user.dart';
@@ -39,7 +40,8 @@ class UserService {
 
   registerUser(user) => _api.post("/user/localSignup", params: user.toJson());
 
-  login(params) => _api.post("/user/localLogin", params: params).then((value) {
+  login(params) =>
+      _api.post("/user/localLogin", params: params).then((value) {
         LoginModel loginModel = LoginModel.fromJson(value);
         _prefHelper.setString(KEY_TOKEN, loginModel.token);
         _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));
@@ -49,22 +51,52 @@ class UserService {
         _prefHelper.setString(KEY_USER_ID, loginModel.result.sId);
       });
 
-  logout() => _api.post("/user/logout").then((value) {
+  fbLogin(token) {
+    _api
+        .get(null,
+        wholeUrl:
+        "https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=" +
+            token)
+        .then((value) {
+      FacebookResponse facebookResponse = FacebookResponse.fromJsonMap(value);
+      _api.post("/user/facebookLogin", params: {
+        "name": facebookResponse.name,
+        "email": facebookResponse.email,
+        "image": facebookResponse.picture.data.url,
+        "facebookId": facebookResponse.id,
+      }).then((value) {
+        print("json" + value.toString());
+        LoginModel loginModel = LoginModel.fromJson(value);
+        print("value" + loginModel.result.facebook.toJson().toString());
+
+        _prefHelper.setString(KEY_TOKEN, loginModel.token);
+        _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));
+        _prefHelper.setBool(KEY_SESSION, true);
+        _prefHelper.setBool(KEY_SOCIAL, true);
+        _prefHelper.setString(
+            KEY_USER, jsonEncode(loginModel.result.facebook.toJson()));
+        _prefHelper.setString(KEY_USER_ID, loginModel.result.sId);
+      });
+    });
+  }
+
+  logout() =>
+      _api.post("/user/logout").then((value) {
         _prefHelper.clear();
       });
 
   sendEmailForgotPassword(params) =>
       _api.post("/user/forgotPassword", params: params);
 
-  fetchClubs() => _api.get("/club/getList/1/20").then((result) {
+  fetchClubs() =>
+      _api.get("/club/getList/1/20").then((result) {
         ClubsResponse clubsResponse = ClubsResponse.fromJsonMap(result);
         _clubs = clubsResponse.clubs;
       });
 
   updateProfile(params) {
     print("params" + params.toString());
-    _api.patch("/user/updateLocalUser", params: params
-    ).then((value){
+    _api.patch("/user/updateLocalUser", params: params).then((value) {
       LoginModel loginModel = LoginModel.fromJson(value);
       _prefHelper.setString(
           KEY_USER, jsonEncode(loginModel.result.local.toJson()));
@@ -74,6 +106,7 @@ class UserService {
 
   Future<User> getUserModel() async {
     final jsonResponse = json.decode(await _prefHelper.getString(KEY_USER));
+    print("Response " + jsonResponse.toString());
     User user = User.fromJsonMap(jsonResponse);
     return user;
   }

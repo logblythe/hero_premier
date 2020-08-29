@@ -7,9 +7,11 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
+import 'package:hero_premier/ui/widgets/social_button.dart';
 import 'package:hero_premier/ui/widgets/welcome_modal.dart';
 import 'package:hero_premier/validator_mixin.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,10 +20,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController(text: "sikshyamaharjan123@gmail.com");
-  TextEditingController _passwordController = TextEditingController(text:"12345678");
+  TextEditingController _emailController =
+      TextEditingController(text: "sikshyamaharjan123@gmail.com");
+  TextEditingController _passwordController =
+      TextEditingController(text: "12345678");
   LoginViewModel _model;
-
+  final facebookLogin = FacebookLogin();
 
 
   @override
@@ -43,17 +47,17 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
                   : Container(),
               model.error != null
                   ? ErrorCard(
-                error: model.error,
-                onPress: () => {model.setError(null)},
-              )
+                      error: model.error,
+                      onPress: () => {model.setError(null)},
+                    )
                   : Container(),
               model.dialogContent != null
                   ? WelcomeModal(
-                onPress: () {
-                  model.setDialogContent(null);
-                  model.navigateHome();
-                },
-              )
+                      onPress: () {
+                        model.setDialogContent(null);
+                        model.navigateHome();
+                      },
+                    )
                   : Container()
             ],
           );
@@ -108,7 +112,17 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
                       label: "SIGN IN",
                       onPress: _handleLogin,
                     ),
-                  )
+                  ),
+                  SizedBox(height: 32),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 48),
+                    child: SocialButton(
+                      imagePath: AssetPaths.IC_FACEBOOK,
+                      label: "LOGIN WITH FACEBOOK",
+                      color: Color(0xFF285CE3),
+                      onPress: _handleFacebookLogin,
+                    ),
+                  ),
                 ],
               ),
               getFooterWidget(),
@@ -238,5 +252,26 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
 
   void _handleForgotPassword() {
     _model.forgotPassword();
+  }
+
+  Future<Null> _handleFacebookLogin() async {
+    facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly ;
+    final FacebookLoginResult result = await facebookLogin.logIn(['email']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final FacebookAccessToken accessToken = result.accessToken;
+        print("Token ${accessToken.token}");
+        _model.fbLogin(accessToken.token);
+
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        print('Login cancelled by the user.');
+        break;
+      case FacebookLoginStatus.error:
+        print('Something went wrong with the login process.\n'
+            'Here\'s the error Facebook gave us: ${result.errorMessage}');
+        break;
+    }
   }
 }

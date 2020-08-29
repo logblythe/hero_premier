@@ -8,6 +8,7 @@ const String KEY_IMAGE_URL = "key_image_url";
 const String KEY_LOGIN = "key_login_json";
 const String KEY_SESSION = "key_session";
 const String KEY_USER="key_user";
+const String KEY_SOCIAL="key_social";
 
 class SharedPrefHelper {
   SharedPreferences _sharedPreferences;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
@@ -34,6 +35,19 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
+  fbLogin(String token) async{
+
+    try {
+      setLoading();
+      await _userService.fbLogin(token);
+      setDialogContent("username");
+      setCompleted();
+    } catch (e) {
+      setError(e.toString());
+    }
+
+  }
+
 
   session() => _userService.getSession();
 
@@ -42,4 +56,6 @@ class LoginViewModel extends BaseViewModel {
   register() => _navigationService.navigateTo(RoutePaths.REGISTER);
 
   navigateHome() => _navigationService.navigateTo(RoutePaths.HOME);
+
+
 }

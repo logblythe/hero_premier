@@ -5,7 +5,7 @@ class LoginModel {
   String message;
   String token;
 
-  LoginModel(this.result, this.message, this.token);
+  LoginModel({this.result, this.message, this.token});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     result = json['result'] != null ? Result.fromJson(json['result']) : null;

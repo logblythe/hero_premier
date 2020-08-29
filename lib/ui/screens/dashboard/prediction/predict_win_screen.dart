@@ -20,7 +20,7 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
           userService: Provider.of(context),
           navigationService: Provider.of(context)),
       onModelReady: (model) {
-        model.fetchPrediction();
+        model.fetchCurrentPrediction();
       },
       builder: (context, model, child) {
         if (model.loading) {
@@ -38,11 +38,13 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                 SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: DeadlineTimer(),
+                  child: DeadlineTimer(
+                    DateTime.parse(_firstPrediction.matchId.matchTime),
+                  ),
                 ),
                 PredictionCard(
                   prediction: _firstPrediction,
-                  current: true,
+                  editable: true,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),

@@ -4,14 +4,14 @@ import 'package:hero_premier/core/models/prediction/league_category_id.dart';
 
 class MatchId {
 
-  String _id;
+  String id;
   FirstTeamId firstTeamId;
   SecondTeamId secondTeamId;
   String matchTime;
   LeagueCategoryId leagueCategoryId;
 
 	MatchId.fromJsonMap(Map<String, dynamic> map): 
-		_id = map["_id"],
+		id = map["_id"],
 		firstTeamId = FirstTeamId.fromJsonMap(map["firstTeamId"]),
 		secondTeamId = SecondTeamId.fromJsonMap(map["secondTeamId"]),
 		matchTime = map["matchTime"],
@@ -19,7 +19,7 @@ class MatchId {
 
 	Map<String, dynamic> toJson() {
 		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['_id'] = _id;
+		data['_id'] = id;
 		data['firstTeamId'] = firstTeamId == null ? null : firstTeamId.toJson();
 		data['secondTeamId'] = secondTeamId == null ? null : secondTeamId.toJson();
 		data['matchTime'] = matchTime;

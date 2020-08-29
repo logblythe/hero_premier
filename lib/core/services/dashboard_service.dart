@@ -20,8 +20,20 @@ class DashboardService {
         _tableResponse = TableResponse.fromJsonMap(value);
       });
 
-  fetchPrediction(params) => _api
+  postPrediction(params) => _api
+          .post("/prediction/addPrediction", params: params)
+          .then((value) {
+        _predictionResponse = PredictionResponse.fromJsonMap(value);
+      });
+
+  fetchCurrentPrediction(params) => _api
           .post("/prediction/userPredictionList/1/20", params: params)
+          .then((value) {
+        _predictionResponse = PredictionResponse.fromJsonMap(value);
+      });
+
+  fetchPastPrediction(params) => _api
+          .post("/prediction/getPastPredictionList/1/20", params: params)
           .then((value) {
         _predictionResponse = PredictionResponse.fromJsonMap(value);
       });

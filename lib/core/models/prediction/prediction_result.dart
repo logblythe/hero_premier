@@ -3,7 +3,7 @@ import 'package:hero_premier/core/models/prediction/match_id.dart';
 class PredictionResult {
 
   int obtainedScore;
-  String _id;
+  String id;
   MatchId matchId;
   String userId;
   int firstTeamScorePrediction;
@@ -13,7 +13,7 @@ class PredictionResult {
 
 	PredictionResult.fromJsonMap(Map<String, dynamic> map):
 		obtainedScore = map["obtainedScore"],
-		_id = map["_id"],
+		id = map["_id"],
 		matchId = MatchId.fromJsonMap(map["matchId"]),
 		userId = map["userId"],
 		firstTeamScorePrediction = map["firstTeamScorePrediction"],
@@ -24,7 +24,7 @@ class PredictionResult {
 	Map<String, dynamic> toJson() {
 		final Map<String, dynamic> data = new Map<String, dynamic>();
 		data['obtainedScore'] = obtainedScore;
-		data['_id'] = _id;
+		data['_id'] = id;
 		data['matchId'] = matchId == null ? null : matchId.toJson();
 		data['userId'] = userId;
 		data['firstTeamScorePrediction'] = firstTeamScorePrediction;

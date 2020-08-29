@@ -5,6 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 
 class DeadlineTimer extends StatefulWidget {
+  final DateTime endTime;
+
+  DeadlineTimer(this.endTime);
+
   @override
   _DeadlineTimerState createState() => _DeadlineTimerState();
 }
@@ -19,18 +23,34 @@ class _DeadlineTimerState extends State<DeadlineTimer> {
   @override
   void initState() {
     super.initState();
-    Duration _duration = DateTime(2021).difference(DateTime.now());
-    int _seconds = _duration.inSeconds;
-    _timer = Timer.periodic(Duration(seconds: 1), (_) {
-      _seconds = _seconds - 1;
-      calculateCountDown(_seconds);
-    });
+    Duration _duration = widget.endTime.difference(DateTime.now());
+    if (!_duration.isNegative) {
+      int _seconds = _duration.inSeconds;
+      _timer = Timer.periodic(
+        Duration(seconds: 1),
+        (_) {
+          _seconds = _seconds - 1;
+          calculateCountDown(_seconds);
+        },
+      );
+    }else{
+      //todo handle no deadline
+      Duration _duration = DateTime(2020,9,12).difference(DateTime.now());
+      int _seconds = _duration.inSeconds;
+      _timer = Timer.periodic(
+        Duration(seconds: 1),
+            (_) {
+          _seconds = _seconds - 1;
+          calculateCountDown(_seconds);
+        },
+      );
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
+    _timer?.cancel();
   }
 
   @override

@@ -129,25 +129,19 @@ class HistoryCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: 80.0,
-                        height: 80.0,
+                        padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
                           color: Color(0xFFF9F9F9),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CachedNetworkImage(
-                            imageUrl: historyResult.matchId.firstTeamId.image,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                            height: 75,
-                            width: 75,
-                          ),
+                        child: CachedNetworkImage(
+                          imageUrl: historyResult.matchId.firstTeamId.image,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                          height: 40,
+                          width: 40,
                         ),
                       ),
                     ],
@@ -214,25 +208,21 @@ class HistoryCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: 80.0,
-                        height: 80.0,
+                        padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
                           color: Color(0xFFF9F9F9),
                           borderRadius: BorderRadius.all(
                             Radius.circular(20.0),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CachedNetworkImage(
-                            imageUrl: historyResult.matchId.secondTeamId.image,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                            height: 75,
-                            width: 75,
-                          ),
+                        child: CachedNetworkImage(
+                          imageUrl: historyResult.matchId.secondTeamId.image,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                          height: 40,
+                          width: 40,
                         ),
                       ),
                     ],

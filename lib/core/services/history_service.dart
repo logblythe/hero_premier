@@ -10,8 +10,8 @@ class HistoryService {
 
   HistoryResponse get historyResponse => _historyResponse;
 
-  fetchHistory(params) => _api
-          .post("/prediction/getPastPredictionList/1/20", params: params)
+  fetchHistory(page,params) => _api
+          .post("/prediction/getPastPredictionList/$page/20", params: params)
           .then((res) {
         _historyResponse = HistoryResponse.fromJsonMap(res);
       });

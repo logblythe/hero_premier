@@ -18,6 +18,11 @@ class BaseViewModel extends ChangeNotifier {
     if (!_isDisposed) notifyListeners();
   }
 
+  setPaginating() {
+    status = Status.PAGINATING;
+    if (!_isDisposed) notifyListeners();
+  }
+
   setCompleted() {
     status = Status.COMPLETED;
     if (!_isDisposed) notifyListeners();

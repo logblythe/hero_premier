@@ -230,7 +230,6 @@ class _DeadlineTimerState extends State<DeadlineTimer> {
     int remainingSeconds2 = remainingSeconds - (hours * 60 * 60);
     var minutes = remainingSeconds2 ~/ 60;
     var seconds = remainingSeconds2 - (minutes * 60);
-    print("after calculation $days, $hours,$minutes,$seconds");
     setState(() {
       _days = days;
       _hours = hours;

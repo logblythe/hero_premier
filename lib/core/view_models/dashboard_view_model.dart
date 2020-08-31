@@ -30,16 +30,18 @@ class DashboardViewModel extends BaseViewModel {
         await _dashboardService.fetchTables();
         setCompleted();
       } catch (e) {
-        setError(e.toString());
+        setError(e.toJson());
       }
     }
   }
 
   postPrediction(String scoreA, String scoreB, String matchId) async {
+    //todo show a feedback in case of post success or failure
     setLoading();
     try {
+      var _userId = await _userService.getUserId();
       await _dashboardService.postPrediction({
-        "userId": "5d45bc0e6f24b26dc40bd462",
+        "userId": _userId,
         "matchId": matchId,
         "firstTeamScorePrediction": scoreA,
         "secondTeamScorePrediction": scoreB
@@ -57,7 +59,7 @@ class DashboardViewModel extends BaseViewModel {
       await _dashboardService.fetchCurrentPrediction({"userId": _userId});
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 
@@ -68,7 +70,7 @@ class DashboardViewModel extends BaseViewModel {
       await _dashboardService.fetchPastPrediction({"userId": _userId});
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 

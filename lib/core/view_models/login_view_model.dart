@@ -41,7 +41,7 @@ class LoginViewModel extends BaseViewModel {
       setDialogContent("username");
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 

@@ -39,7 +39,7 @@ class ProfileViewModel extends BaseViewModel {
       setDialogContent(response);
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 
@@ -52,7 +52,7 @@ class ProfileViewModel extends BaseViewModel {
       await _userService.fetchUserRank(_userId);
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 

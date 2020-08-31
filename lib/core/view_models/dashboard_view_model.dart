@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/table/season.dart';
-import 'package:hero_premier/core/models/table/standings.dart';
+import 'package:hero_premier/core/models/table/table_response.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
@@ -20,9 +19,7 @@ class DashboardViewModel extends BaseViewModel {
         this._navigationService = navigationService,
         this._userService = userService;
 
-  List<Standings> get standings => _dashboardService.tableResponse.standings;
-
-  Season get season => _dashboardService.tableResponse.season;
+  TableResponse get tableResponse => _dashboardService.tableResponse;
 
   get predictions => _dashboardService.predictionResponse.result;
 
@@ -33,7 +30,7 @@ class DashboardViewModel extends BaseViewModel {
         await _dashboardService.fetchTables();
         setCompleted();
       } catch (e) {
-        setError(e.toJson());
+        setError(e.toString());
       }
     }
   }

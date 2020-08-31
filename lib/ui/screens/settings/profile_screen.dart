@@ -37,18 +37,17 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       model: ProfileViewModel(
         navigationService: Provider.of(context),
         userService: Provider.of(context),
+        winnerService: Provider.of(context),
       ),
-      onModelReady:(model) async {
-        User user= await model.getUserModel();
+      onModelReady: (model) async {
+        User user = await model.getUserModel();
         _fullNameController = TextEditingController(text: user.name);
-        _fullNameController.text=user.name;
+        _fullNameController.text = user.name;
         _dobController = TextEditingController(text: user.dob);
         _genderController = TextEditingController();
         _addressController = TextEditingController(text: user.address);
-        _contactController =
-            TextEditingController(text: user.phoneNumber);
-        _emailAddressController =
-            TextEditingController(text: user.email);
+        _contactController = TextEditingController(text: user.phoneNumber);
+        _emailAddressController = TextEditingController(text: user.email);
       },
       builder: (context, model, child) {
         _profileViewModel = model;
@@ -83,7 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
               }
 
               if (local.data != null) {
-
                 return Stack(
                   children: [
                     IgnorePointer(
@@ -115,8 +113,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       },
     );
   }
-
-
 
   Widget body(User user) {
     return SingleChildScrollView(
@@ -182,10 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         ),
       ),
     );
-
-
   }
-
 
   Widget getProfileWidget(User user) {
     return Align(
@@ -269,5 +262,4 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       Navigator.of(_context).pop();
     }
   }
-
 }

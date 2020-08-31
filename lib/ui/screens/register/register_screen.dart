@@ -40,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           return Stack(
             children: <Widget>[
               IgnorePointer(
-                ignoring: !vm.loading,
+                ignoring: vm.loading,
                 child: Container(
                   margin: const EdgeInsets.only(top: 48),
                   child: Column(

@@ -17,8 +17,10 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
   Widget build(BuildContext context) {
     return BaseWidget<DashboardViewModel>(
       model: DashboardViewModel(
-          userService: Provider.of(context),
-          navigationService: Provider.of(context)),
+        dashboardService: Provider.of(context),
+        navigationService: Provider.of(context),
+        userService: Provider.of(context),
+      ),
       onModelReady: (model) {
         model.fetchCurrentPrediction();
       },

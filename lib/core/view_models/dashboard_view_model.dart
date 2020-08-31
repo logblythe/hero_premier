@@ -3,18 +3,22 @@ import 'package:hero_premier/core/models/table/season.dart';
 import 'package:hero_premier/core/models/table/standings.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
+import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
 import 'package:hero_premier/router.dart';
 
 class DashboardViewModel extends BaseViewModel {
   DashboardService _dashboardService;
   NavigationService _navigationService;
+  UserService _userService;
 
   DashboardViewModel({
+    @required DashboardService dashboardService,
     @required NavigationService navigationService,
-    @required DashboardService userService,
-  })  : this._navigationService = navigationService,
-        this._dashboardService = userService;
+    @required UserService userService,
+  })  : this._dashboardService = dashboardService,
+        this._navigationService = navigationService,
+        this._userService = userService;
 
   List<Standings> get standings => _dashboardService.tableResponse.standings;
 
@@ -52,22 +56,22 @@ class DashboardViewModel extends BaseViewModel {
   fetchCurrentPrediction() async {
     setLoading();
     try {
-      await _dashboardService
-          .fetchCurrentPrediction({"userId": "5d45bc0e6f24b26dc40bd462"});
+      var _userId = await _userService.getUserId();
+      await _dashboardService.fetchCurrentPrediction({"userId": _userId});
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e.toString());
     }
   }
 
   fetchPastPrediction() async {
     setLoading();
     try {
-      await _dashboardService
-          .fetchPastPrediction({"userId": "5d45bc0e6f24b26dc40bd462"});
+      var _userId = await _userService.getUserId();
+      await _dashboardService.fetchPastPrediction({"userId": _userId});
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e.toString());
     }
   }
 

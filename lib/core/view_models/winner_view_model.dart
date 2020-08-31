@@ -31,4 +31,6 @@ class WinnerViewModel extends BaseViewModel {
     _winnerService.setSelectedWinnerId(userId);
     _navigationService.navigateTo(RoutePaths.WINNER_DETAIL);
   }
+
+
 }

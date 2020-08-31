@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
+import 'package:hero_premier/core/services/winner_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
 import 'package:hero_premier/router.dart';
 
 class ProfileViewModel extends BaseViewModel {
-  UserService _userService;
   NavigationService _navigationService;
+  UserService _userService;
+  WinnerService _winnerService;
 
   ProfileViewModel({
-    @required UserService userService,
     @required NavigationService navigationService,
-  })  : this._userService = userService,
-        this._navigationService = navigationService;
+    @required UserService userService,
+    @required WinnerService winnerService,
+  })  : this._navigationService = navigationService,
+        this._userService = userService,
+        this._winnerService = winnerService;
 
   Future<User> getUserModel() async {
     return _userService.getUserModel();
@@ -39,11 +43,11 @@ class ProfileViewModel extends BaseViewModel {
     }
   }
 
-  fetchUserDetails({String userId}) async {
-    userId = "5d4819176f24b26dc40bd48f";
+  fetchUserDetails() async {
     try {
       setLoading();
-      String _userId = userId ?? await _userService.getUserId();
+      String _userId =
+          _winnerService.selectedWinnerId ?? await _userService.getUserId();
       await _userService.fetchUserDetails(_userId);
       await _userService.fetchUserRank(_userId);
       setCompleted();
@@ -53,4 +57,10 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   navigateSetting() => _navigationService.replace(RoutePaths.SETTING);
+
+  @override
+  void dispose() {
+    _winnerService.setSelectedWinnerId(null);
+    super.dispose();
+  }
 }

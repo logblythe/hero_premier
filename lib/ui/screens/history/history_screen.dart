@@ -20,13 +20,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseWidget<HistoryViewModel>(
+      model: HistoryViewModel(
+        historyService: Provider.of(context),
+        userService: Provider.of(context),
+        winnerService: Provider.of(context),
+      ),
       onModelReady: (model) {
         model.fetchHistory();
         _controller.addListener(() {
@@ -36,10 +40,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
           }
         });
       },
-      model: HistoryViewModel(
-        historyService: Provider.of(context),
-        userService: Provider.of(context),
-      ),
       builder: (context, model, child) {
         if (model.loading) {
           return Center(child: CircularProgressIndicator());

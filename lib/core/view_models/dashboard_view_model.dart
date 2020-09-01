@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/table/season.dart';
-import 'package:hero_premier/core/models/table/standings.dart';
+import 'package:hero_premier/core/models/table/table_response.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
+import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
 import 'package:hero_premier/router.dart';
 
 class DashboardViewModel extends BaseViewModel {
   DashboardService _dashboardService;
   NavigationService _navigationService;
+  UserService _userService;
 
   DashboardViewModel({
+    @required DashboardService dashboardService,
     @required NavigationService navigationService,
-    @required DashboardService userService,
-  })  : this._navigationService = navigationService,
-        this._dashboardService = userService;
+    @required UserService userService,
+  })  : this._dashboardService = dashboardService,
+        this._navigationService = navigationService,
+        this._userService = userService;
 
-  List<Standings> get standings => _dashboardService.tableResponse.standings;
-
-  Season get season => _dashboardService.tableResponse.season;
+  TableResponse get tableResponse => _dashboardService.tableResponse;
 
   get predictions => _dashboardService.predictionResponse.result;
 
@@ -35,10 +36,12 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   postPrediction(String scoreA, String scoreB, String matchId) async {
+    //todo show a feedback in case of post success or failure
     setLoading();
     try {
+      var _userId = await _userService.getUserId();
       await _dashboardService.postPrediction({
-        "userId": "5d45bc0e6f24b26dc40bd462",
+        "userId": _userId,
         "matchId": matchId,
         "firstTeamScorePrediction": scoreA,
         "secondTeamScorePrediction": scoreB
@@ -52,8 +55,8 @@ class DashboardViewModel extends BaseViewModel {
   fetchCurrentPrediction() async {
     setLoading();
     try {
-      await _dashboardService
-          .fetchCurrentPrediction({"userId": "5d45bc0e6f24b26dc40bd462"});
+      var _userId = await _userService.getUserId();
+      await _dashboardService.fetchCurrentPrediction({"userId": _userId});
       setCompleted();
     } catch (e) {
       setError(e.toJson());
@@ -63,8 +66,8 @@ class DashboardViewModel extends BaseViewModel {
   fetchPastPrediction() async {
     setLoading();
     try {
-      await _dashboardService
-          .fetchPastPrediction({"userId": "5d45bc0e6f24b26dc40bd462"});
+      var _userId = await _userService.getUserId();
+      await _dashboardService.fetchPastPrediction({"userId": _userId});
       setCompleted();
     } catch (e) {
       setError(e.toJson());

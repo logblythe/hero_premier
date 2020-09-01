@@ -22,7 +22,7 @@ class LeaderboardViewModel extends BaseViewModel {
       _leaderboards = _leaderboardService.leaderboardResponse.result;
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 
@@ -34,7 +34,7 @@ class LeaderboardViewModel extends BaseViewModel {
       _leaderboards.addAll(_leaderboardService.leaderboardResponse.result);
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 }

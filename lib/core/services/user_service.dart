@@ -90,9 +90,8 @@ class UserService {
       });
 
   updateProfile(params) {
-    print("params" + params.toString());
-
-    _api.patch("/user/updateLocalUser", params: params).then((value) {
+    _api.patch("/user/updateLocalUser", params: params
+    ).then((value){
       LoginModel loginModel = LoginModel.fromJson(value);
       _prefHelper.setString(
           KEY_USER, jsonEncode(loginModel.result.local.toJson()));
@@ -102,7 +101,6 @@ class UserService {
 
   Future<User> getUserModel() async {
     final jsonResponse = json.decode(await _prefHelper.getString(KEY_USER));
-    print("Response " + jsonResponse.toString());
     User user = User.fromJsonMap(jsonResponse);
     return user;
   }

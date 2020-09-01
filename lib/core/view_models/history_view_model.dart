@@ -3,17 +3,21 @@ import 'package:hero_premier/core/models/history/history_response.dart';
 import 'package:hero_premier/core/models/history/history_result.dart';
 import 'package:hero_premier/core/services/history_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
+import 'package:hero_premier/core/services/winner_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
 
 class HistoryViewModel extends BaseViewModel {
   final HistoryService _historyService;
   final UserService _userService;
+  final WinnerService _winnerService;
 
   HistoryViewModel({
     @required HistoryService historyService,
     @required UserService userService,
+    @required WinnerService winnerService,
   })  : this._historyService = historyService,
-        this._userService = userService;
+        this._userService = userService,
+        this._winnerService = winnerService;
 
   int _page = 1;
 
@@ -37,16 +41,16 @@ class HistoryViewModel extends BaseViewModel {
     });
   }
 
-  fetchHistory({String userId}) async {
+  fetchHistory() async {
     setLoading();
     try {
-      // var _userId = userId ?? await _userService.getUserId();
-      var _userId = "5d4819176f24b26dc40bd48f";
+      var _userId =
+          _winnerService.selectedWinnerId ?? await _userService.getUserId();
       await _historyService.fetchHistory(1, {"userId": _userId});
       calculateGameWeek();
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 
@@ -54,13 +58,13 @@ class HistoryViewModel extends BaseViewModel {
     _page = _page + 1;
     setPaginating();
     try {
-      // var _userId = userId ?? await _userService.getUserId();
-      var _userId = "5d4819176f24b26dc40bd48f";
+      var _userId =
+          _winnerService.selectedWinnerId ?? await _userService.getUserId();
       await _historyService.fetchHistory(_page, {"userId": _userId});
       calculateGameWeek();
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 }

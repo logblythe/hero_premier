@@ -41,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       model: ProfileViewModel(
         navigationService: Provider.of(context),
         userService: Provider.of(context),
+        winnerService: Provider.of(context),
       ),
       onModelReady: (model) async {
         User user = await model.getUserModel();

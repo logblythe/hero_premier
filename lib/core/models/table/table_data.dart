@@ -1,8 +1,9 @@
 import 'package:hero_premier/core/models/table/team.dart';
 
-class LeagueData {
+class TableData {
 
   int draw;
+  Object form;
   int goalDifference;
   int goalsAgainst;
   int goalsFor;
@@ -13,8 +14,9 @@ class LeagueData {
   Team team;
   int won;
 
-	LeagueData.fromJsonMap(Map<String, dynamic> map):
+	TableData.fromJsonMap(Map<String, dynamic> map): 
 		draw = map["draw"],
+		form = map["form"],
 		goalDifference = map["goalDifference"],
 		goalsAgainst = map["goalsAgainst"],
 		goalsFor = map["goalsFor"],
@@ -28,6 +30,7 @@ class LeagueData {
 	Map<String, dynamic> toJson() {
 		final Map<String, dynamic> data = new Map<String, dynamic>();
 		data['draw'] = draw;
+		data['form'] = form;
 		data['goalDifference'] = goalDifference;
 		data['goalsAgainst'] = goalsAgainst;
 		data['goalsFor'] = goalsFor;

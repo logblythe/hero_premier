@@ -23,7 +23,7 @@ class WinnerViewModel extends BaseViewModel {
       await _winnerService.fetchWinners();
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e.toJson());
     }
   }
 
@@ -31,4 +31,6 @@ class WinnerViewModel extends BaseViewModel {
     _winnerService.setSelectedWinnerId(userId);
     _navigationService.navigateTo(RoutePaths.WINNER_DETAIL);
   }
+
+
 }

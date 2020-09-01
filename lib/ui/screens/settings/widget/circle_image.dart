@@ -23,22 +23,28 @@ class CircleImage extends StatelessWidget {
         child: Stack(
           children: [
             ClipOval(
-              child: path != null
+              child: path == null
                   ? Container(
                       color: ColorLightPurple.withOpacity(0.2),
                       padding: EdgeInsets.all(16.0),
-                      child: SvgPicture.asset(
+                      child: Image.asset(
                         path,
                         width: size ?? 90,
                         height: size ?? 90,
                       ),
                     )
-                  : SvgPicture.asset(
-                       path,
-                      height: size ?? 90,
-                      width: size ?? 90,
-                      fit: BoxFit.cover,
-                    ),
+                  : CachedNetworkImage(
+                placeholder: (context, url) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                ),
+                imageUrl: path,
+                height: size ?? 60,
+                width: size ?? 60,
+                fit: BoxFit.cover,
+              ),
             ),
             Visibility(
               visible: isVisible,

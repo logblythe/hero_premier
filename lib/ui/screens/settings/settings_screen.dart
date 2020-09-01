@@ -121,7 +121,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     CircleImage(
-                      path: AssetPaths.IC_AVATAR_MEN,
+                      size: 126,
+                      path: user.image!=null?user.image:AssetPaths.IC_MAIL,
                       onPress: _handleProfileClick,
                     )
                   ],

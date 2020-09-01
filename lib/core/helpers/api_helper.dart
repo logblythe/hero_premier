@@ -1,10 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
 import 'package:hero_premier/utils/api_exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:path/path.dart';
+import 'package:async/async.dart';
 
 class ApiBaseHelper {
   final String _baseUrl = "https://dev.premierhero.com";
@@ -43,6 +49,39 @@ class ApiBaseHelper {
       throw FetchDataException({"message": 'No Internet connection'});
     }
     return responseJson;
+  }
+
+  Future<dynamic> multipart(String url, {Map<String, dynamic> params}) async {
+    var token = await getToken();
+    var responseJson;
+      try {
+      String mimeType = lookupMimeType(params['image'].path);
+      var fileType = mimeType.split('/');
+
+      var patchUri = Uri.parse(_baseUrl + url);
+      var request = http.MultipartRequest('PATCH', patchUri);
+
+      request.fields['userId'] = params['userId'];
+      request.files.add(
+        http.MultipartFile.fromString(
+          'image',
+          params['image'].path,
+          contentType: MediaType(fileType[0], fileType[1]),
+        ),
+      );
+      request.headers.addAll({'Authorization': token});
+
+      var streamResponse = await request.send();
+
+      final response=await http.Response.fromStream(streamResponse);
+      if (response.statusCode == 200) {
+          print("image response" + response.body.toString());
+      }
+    } on SocketException {
+      throw FetchDataException({"message": 'No Internet connection'});
+    }
+    return responseJson;
+
   }
 
   Future<dynamic> patch(String url, {Map<String, dynamic> params}) async {

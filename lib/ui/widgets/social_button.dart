@@ -40,11 +40,12 @@ class SocialButton extends StatelessWidget {
                 horizontal: 32,
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SvgPicture.asset(imagePath),
-
+                  SizedBox(width: 16.0,),
                   Text(
                     label,
                     style: TextStyles.Subtitle2.copyWith(color: Colors.white),

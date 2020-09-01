@@ -40,8 +40,7 @@ class UserService {
 
   registerUser(user) => _api.post("/user/localSignup", params: user.toJson());
 
-  login(params) =>
-      _api.post("/user/localLogin", params: params).then((value) {
+  login(params) => _api.post("/user/localLogin", params: params).then((value) {
         LoginModel loginModel = LoginModel.fromJson(value);
         _prefHelper.setString(KEY_TOKEN, loginModel.token);
         _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));
@@ -54,9 +53,9 @@ class UserService {
   fbLogin(token) {
     _api
         .get(null,
-        wholeUrl:
-        "https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=" +
-            token)
+            wholeUrl:
+                "https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=" +
+                    token)
         .then((value) {
       FacebookResponse facebookResponse = FacebookResponse.fromJsonMap(value);
       _api.post("/user/facebookLogin", params: {
@@ -78,16 +77,14 @@ class UserService {
     });
   }
 
-  logout() =>
-      _api.post("/user/logout").then((value) {
+  logout() => _api.post("/user/logout").then((value) {
         _prefHelper.clear();
       });
 
   sendEmailForgotPassword(params) =>
       _api.post("/user/forgotPassword", params: params);
 
-  fetchClubs() =>
-      _api.get("/club/getList/1/20").then((result) {
+  fetchClubs() => _api.get("/club/getList/1/20").then((result) {
         ClubsResponse clubsResponse = ClubsResponse.fromJsonMap(result);
         _clubs = clubsResponse.clubs;
       });
@@ -129,4 +126,8 @@ class UserService {
         RankResponse rankResponse = RankResponse.fromJsonMap(value);
         _user.rank = rankResponse.rank[0].rank.toString();
       });
+
+  uploadProfileImage(params) => _api
+      .multipart("/user/updateImage", params: params)
+      .then((value) => print("profile::" + value.toString()));
 }

@@ -13,59 +13,54 @@ class CustomAppBar extends AppBar {
           backgroundColor: Colors.white,
         );
 
-  static PreferredSize getAppBar(
-      String title, {onNotificationPress, onSearchPress}) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(72.0),
-      child: AppBar(
-        elevation: 0.0,
-        title: Text(
-          title,
-          style: TextStyle(
-              fontSize: 18.0, color: TextColor, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.white,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: TextColorGrey,
-            ),
-            onPressed: onSearchPress,
+  static AppBar getAppBar(String title, {onNotificationPress, onSearchPress}) {
+    return AppBar(
+      elevation: 0.0,
+      toolbarHeight: 75.0,
+      title: Text(
+        title,
+        style: TextStyle(
+            fontSize: 18.0, color: TextColor, fontWeight: FontWeight.bold),
+      ),
+      backgroundColor: Colors.white,
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(
+            Icons.search,
+            color: TextColorGrey,
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.notifications,
-              color: TextColorGrey,
-            ),
-            onPressed: onNotificationPress,
-          ),
-        ],
-        leading: IconButton(
-          onPressed: () {},
-          icon: Image.asset("assets/images/logo_purple.png"),
+          onPressed: onSearchPress,
         ),
+        IconButton(
+          icon: const Icon(
+            Icons.notifications,
+            color: TextColorGrey,
+          ),
+          onPressed: onNotificationPress,
+        ),
+      ],
+      leading: IconButton(
+        onPressed: () {},
+        icon: Image.asset("assets/images/logo_purple.png"),
       ),
     );
   }
 
-  static PreferredSize getAppBarGeneral(String title) {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(72.0),
-      child: AppBar(
-        elevation: 0.0,
-        centerTitle: false,
-        title: Text(
-          title,
-          style: TextStyle(
-              fontSize: 18.0, color: TextColor, fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          onPressed: () {},
-          icon: Image.asset("assets/images/logo_purple.png"),
-        ),
-        backgroundColor: Color(0xFFFFFFFF),
+  static AppBar getAppBarGeneral(String title) {
+    return AppBar(
+      toolbarHeight: 75.0,
+      elevation: 0.0,
+      centerTitle: false,
+      title: Text(
+        title,
+        style: TextStyle(
+            fontSize: 18.0, color: TextColor, fontWeight: FontWeight.bold),
       ),
+      leading: IconButton(
+        onPressed: () {},
+        icon: Image.asset("assets/images/logo_purple.png"),
+      ),
+      backgroundColor: Color(0xFFFFFFFF),
     );
   }
 }

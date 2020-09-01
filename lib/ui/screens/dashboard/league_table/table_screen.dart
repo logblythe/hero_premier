@@ -1,8 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:hero_premier/core/models/table/league_data.dart';
-import 'package:hero_premier/core/models/table/season.dart';
+import 'package:hero_premier/core/models/table/table_data.dart';
 import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
 import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/base_widget.dart';
@@ -23,8 +22,7 @@ class TableScreen extends StatefulWidget {
 class _TableScreenState extends State<TableScreen> {
   bool _fullTable;
   BuildContext _context;
-  List<LeagueData> _table;
-  Season _season;
+  List<TableData> _table;
 
   @override
   void initState() {
@@ -37,8 +35,10 @@ class _TableScreenState extends State<TableScreen> {
     _context = context;
     return BaseWidget<DashboardViewModel>(
       model: DashboardViewModel(
-          userService: Provider.of(context),
-          navigationService: Provider.of(context)),
+        dashboardService: Provider.of(context),
+        navigationService: Provider.of(context),
+        userService: Provider.of(context),
+      ),
       onModelReady: (model) {
         model.fetchTables();
       },
@@ -48,13 +48,15 @@ class _TableScreenState extends State<TableScreen> {
         } else if (model.error != null) {
           return Text(model.error.toString());
         } else {
-          _season = model.season;
           if (_fullTable)
-            _table = model.standings.elementAt(0).table;
+            _table = model.tableResponse.table;
           else
-            _table = model.standings.elementAt(0).table.sublist(0, 5);
+            _table = model.tableResponse.table.sublist(0, 5);
           return Container(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             margin: const EdgeInsets.only(top: 16),
             padding: const EdgeInsets.only(bottom: 32),
             decoration: BoxDecoration(color: Colors.white),
@@ -69,7 +71,7 @@ class _TableScreenState extends State<TableScreen> {
                     style: TextStyles.TitleTextNormalBoldStyle,
                   ),
                   Text(
-                    '${_season.startDate.split("-")[0]}/${_season.endDate.split("-")[0]}',
+                    model.tableResponse.stage,
                     style: TextStyle(
                       color: ColorPrimary,
                       fontSize: 12.0,
@@ -83,13 +85,13 @@ class _TableScreenState extends State<TableScreen> {
                   _fullTable
                       ? Container()
                       : Container(
-                          margin: const EdgeInsets.only(top: 24),
-                          width: 160,
-                          child: PrimaryButton(
-                            label: 'FULL TABLE',
-                            onPress: _handleFullTable,
-                          ),
-                        ),
+                    margin: const EdgeInsets.only(top: 24),
+                    width: 160,
+                    child: PrimaryButton(
+                      label: 'FULL TABLE',
+                      onPress: _handleFullTable,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -129,31 +131,39 @@ class _TableScreenState extends State<TableScreen> {
               CenterText('Pts'),
             ],
           ),
-        ]..addAll(
+        ]
+          ..addAll(
             _table
                 .map(
-                  (data) => TableRow(
+                  (data) =>
+                  TableRow(
                     children: [
-                      CenterText(data.position.toString(),focus: true,),
+                      CenterText(
+                        data.position.toString(),
+                        focus: true,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
-                        child: SvgPicture.network(
-                          data.team.crestUrl,
+                        child: CachedNetworkImage(
+                          imageUrl: data.team.icon,
                           height: 30,
                           width: 30,
-                          placeholderBuilder: (context) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                            ),
-                          ),
+                          placeholder: (ctx, url) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            );
+                          },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0, top: 14),
                         child: Text(
-                          data.team.name,
-                          style: TextStyleTable.copyWith(color: Theme.of(context).primaryColor),
+                          data.team.code,
+                          style: TextStyleTable.copyWith(
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor),
                         ),
                       ),
                       CenterText(data.playedGames.toString()),
@@ -167,7 +177,7 @@ class _TableScreenState extends State<TableScreen> {
                       ),
                     ],
                   ),
-                )
+            )
                 .toList(),
           ),
       ),
@@ -198,24 +208,31 @@ class _TableScreenState extends State<TableScreen> {
                 CenterText('Pts'),
               ],
             ),
-          ]..addAll(
+          ]
+            ..addAll(
               _table
                   .map(
-                    (data) => TableRow(
+                    (data) =>
+                    TableRow(
                       children: [
-                        CenterText(data.position.toString(),focus: true,),
+                        CenterText(
+                          data.position.toString(),
+                          focus: true,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 12, bottom: 12),
-                          child: SvgPicture.network(
-                            data.team.crestUrl,
+                          child: CachedNetworkImage(
+                            imageUrl: data.team.icon,
                             height: 30,
                             width: 30,
-                            placeholderBuilder: (context) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
-                            ),
+                            placeholder: (ctx, url) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              );
+                            },
                           ),
                         ),
                         Padding(
@@ -227,7 +244,10 @@ class _TableScreenState extends State<TableScreen> {
                           ),
                           child: Text(
                             data.team.name,
-                            style: TextStyleTable.copyWith(color: Theme.of(context).primaryColor),
+                            style: TextStyleTable.copyWith(
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor),
                           ),
                         ),
                         CenterText(data.playedGames.toString()),
@@ -238,7 +258,7 @@ class _TableScreenState extends State<TableScreen> {
                         ),
                       ],
                     ),
-                  )
+              )
                   .toList(),
             ),
         ),

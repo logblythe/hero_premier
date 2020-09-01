@@ -45,8 +45,10 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
   Widget getHeaderWidget() {
     return BaseWidget<ProfileViewModel>(
       model: ProfileViewModel(
-          navigationService: Provider.of(context),
-          userService: Provider.of(context)),
+        navigationService: Provider.of(context),
+        userService: Provider.of(context),
+        winnerService: Provider.of(context),
+      ),
       onModelReady: (model) {
         model.fetchUserDetails();
       },

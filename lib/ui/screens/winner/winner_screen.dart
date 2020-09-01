@@ -112,11 +112,6 @@ class _WinnerScreenState extends State<WinnerScreen>
     );
   }
 
-  _handlePress(String userId) {
-    Navigator.of(context)
-        .pushNamed(RoutePaths.WINNER_DETAIL, arguments: userId);
-  }
-
   Widget currentSeasonWinners(List<WinnerResult> winners, model) {
     return ListView(
       children: winners.map((winner) {

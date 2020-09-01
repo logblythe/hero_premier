@@ -27,8 +27,6 @@ class SettingViewModel extends BaseViewModel {
 
   getUserModel() => _userService.getUserModel();
 
-
-
   navigateToChangePassword() =>
       _navigationService.navigateTo(RoutePaths.CHANGE_PASSWORD);
 

@@ -1,13 +1,10 @@
 String getFormattedTimeFromUtc(String utcString) {
   DateTime dateTime = DateTime.parse(utcString);
-  print('the date time is ${dateTime.toString()}');
-  // DateTime dateTime = DateFormat("yyyy-MM-ddTHH:mm:ss").parseUTC(utcString);
   int weekday = dateTime.weekday;
   int day = dateTime.day;
   int month = dateTime.month;
   int hours = dateTime.hour;
   int minutes = dateTime.minute;
-
   return "${getWeekday(weekday)} ${getMonthName(month)} $day, $hours:$minutes";
 }
 

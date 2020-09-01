@@ -366,157 +366,166 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 32,
-                          width: 32,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF9EA6C9).withOpacity(0.15),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(
-                              "assets/images/ic_info.svg",
-                              width: 8.0,
-                              height: 8.0,
+          InkWell(
+            onTap:()=> _settingViewModel.launchInWebViewOrVC(AssetPaths.ABOUT_US),
+            child: Container(
+              margin: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF9EA6C9).withOpacity(0.15),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SvgPicture.asset(
+                                "assets/images/ic_info.svg",
+                                width: 8.0,
+                                height: 8.0,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text(
-                          "About us",
-                          style: TextStyle(
-                              color: Color(0xFF9EA6C9),
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF9EA6C9),
-                        size: 18.0,
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            "About us",
+                            style: TextStyle(
+                                color: Color(0xFF9EA6C9),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Color(0xFF9EA6C9),
+                          size: 18.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 32,
-                          width: 32,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF9EA6C9).withOpacity(0.15),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(
-                              "assets/images/ic_privacy.svg",
-                              width: 8.0,
-                              height: 8.0,
+          InkWell(
+            onTap:()=> _settingViewModel.launchInWebViewOrVC(AssetPaths.PRIVACY_POLICY),
+            child: Container(
+              margin: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF9EA6C9).withOpacity(0.15),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SvgPicture.asset(
+                                "assets/images/ic_privacy.svg",
+                                width: 8.0,
+                                height: 8.0,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text(
-                          "Privacy policy",
-                          style: TextStyle(
-                              color: Color(0xFF9EA6C9),
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF9EA6C9),
-                        size: 18.0,
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            "Privacy policy",
+                            style: TextStyle(
+                                color: Color(0xFF9EA6C9),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Color(0xFF9EA6C9),
+                          size: 18.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 32,
-                          width: 32,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF9EA6C9).withOpacity(0.15),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(
-                              "assets/images/ic_disclaimer.svg",
-                              width: 8.0,
-                              height: 8.0,
+          InkWell(
+            onTap:()=> _settingViewModel.launchInWebViewOrVC(AssetPaths.TERMS_CONDITIONS),
+            child: Container(
+              margin: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF9EA6C9).withOpacity(0.15),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SvgPicture.asset(
+                                "assets/images/ic_disclaimer.svg",
+                                width: 8.0,
+                                height: 8.0,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text(
-                          "Disclaimer",
-                          style: TextStyle(
-                              color: Color(0xFF9EA6C9),
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF9EA6C9),
-                        size: 18.0,
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            "Disclaimer",
+                            style: TextStyle(
+                                color: Color(0xFF9EA6C9),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Color(0xFF9EA6C9),
+                          size: 18.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

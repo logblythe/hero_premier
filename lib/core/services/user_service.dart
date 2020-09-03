@@ -98,9 +98,9 @@ class UserService {
     });
   }
 
-  changePassword(params) {
-    _api.patch("/user/changePassword", params: params);
-  }
+  changePassword(params) => _api
+      .patch("/user/changePassword", params: params)
+      .then((value) => print("the response ${jsonEncode(value)}"));
 
   Future<User> getUserModel() async {
     final jsonResponse = json.decode(await _prefHelper.getString(KEY_USER));

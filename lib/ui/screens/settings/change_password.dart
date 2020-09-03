@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/view_models/change_password_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
@@ -15,7 +14,6 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen>
     with ValidationMixing {
-  BuildContext _context;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _oldPasswordController = TextEditingController();
   TextEditingController _newPasswordController = TextEditingController();
@@ -24,7 +22,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return BaseWidget<ChangePasswordViewModel>(
       model: ChangePasswordViewModel(
         navigationService: Provider.of(context),
@@ -55,7 +52,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
           body: Stack(
             children: [
               IgnorePointer(
-                ignoring: _viewModel.loading,
+                ignoring: !_viewModel.loading,
                 child: body(),
               )
             ],
@@ -92,7 +89,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
             SizedBox(height: 32.0),
             SecondaryButton(
               label: 'UPDATE',
-              loading: _viewModel.loading,
+              loading: !_viewModel.loading,
               onPress: _handleUpdatePassword,
             )
           ],

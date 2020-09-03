@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
+import 'package:hero_premier/utils/api_exceptions.dart';
 
 class ChangePasswordViewModel extends BaseViewModel {
   UserService _userService;
@@ -51,13 +53,30 @@ class ChangePasswordViewModel extends BaseViewModel {
         {
           "oldPassword": oldPassword,
           "newPassword": newPassword,
-          "userId": _userService.loginModel.result.id
+          "userId":
+              _userService.loginModel?.result?.id ?? "5d45bc0e6f24b26dc40bd462"
         },
       );
-      //todo show a toast
-      setCompleted();
+      Fluttertoast.showToast(
+          msg: "Password changed successful.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey.withOpacity(0.9),
+          textColor: Colors.white,
+          fontSize: 16.0);
+      _navigationService.goBack();
     } catch (e) {
-      setError(error.toJson());
+      // AppException exception = e.toJson();
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
+    setCompleted();
   }
 }

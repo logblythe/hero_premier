@@ -42,7 +42,7 @@ class ErrorCard extends StatelessWidget {
       );
     } else if (error is Map<String, dynamic>) {
       return Text(
-        error["email"]??error["message"],
+        error["email"] ?? error["message"],
         style: TextStyles.Subtitle2,
       );
     }

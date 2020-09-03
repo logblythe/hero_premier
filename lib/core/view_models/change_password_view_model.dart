@@ -13,12 +13,51 @@ class ChangePasswordViewModel extends BaseViewModel {
   })  : this._userService = userService,
         this._navigationService = navigationService;
 
-  bool _obscureText = true;
+  Map<String, bool> _obscure = {
+    "oldPassword": true,
+    "newPassword": true,
+    "confirmPassword": true,
+  };
+  String _passwordNotMatchError;
 
-  get obscureText => _obscureText;
+  Map<String, bool> get obscure => _obscure;
 
-  void toggleObscureText() {
-    _obscureText = !_obscureText;
+  String get passwordNotMatchError => _passwordNotMatchError;
+
+  void setPasswordNotMatchError(String value) {
+    _passwordNotMatchError = value;
     notifyListeners();
+  }
+
+  void toggleOldPassword() {
+    _obscure["oldPassword"] = !_obscure["oldPassword"];
+    notifyListeners();
+  }
+
+  void toggleNewPassword() {
+    _obscure["newPassword"] = !_obscure["newPassword"];
+    notifyListeners();
+  }
+
+  void toggleConfirmPassword() {
+    _obscure["confirmPassword"] = !_obscure["confirmPassword"];
+    notifyListeners();
+  }
+
+  void changePassword(String oldPassword, String newPassword) async {
+    setLoading();
+    try {
+      await _userService.changePassword(
+        {
+          "oldPassword": oldPassword,
+          "newPassword": newPassword,
+          "userId": _userService.loginModel.result.id
+        },
+      );
+      //todo show a toast
+      setCompleted();
+    } catch (e) {
+      setError(error.toJson());
+    }
   }
 }

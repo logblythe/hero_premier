@@ -3,6 +3,8 @@ import 'package:hero_premier/core/models/prediction/prediction_result.dart';
 import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/dashboard/prediction/widgets/prediction_card.dart';
+import 'package:hero_premier/ui/screens/history/widgets/history_default_widget.dart';
+import 'package:hero_premier/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 class PredictionResultScreen extends StatefulWidget {
@@ -29,16 +31,20 @@ class _PredictionResultScreenState extends State<PredictionResultScreen> {
           return Text(model.error.toString());
         } else {
           List<PredictionResult> predictions = model.predictions;
-          return Container(
-            margin: EdgeInsets.only(top: 16),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: predictions.length,
-              itemBuilder: (context, index) {
-                return PredictionCard(prediction: predictions[index]);
-              },
-            ),
-          );
+          if (predictions.length > 0) {
+            return Container(
+              margin: EdgeInsets.only(top: 16),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: predictions.length,
+                itemBuilder: (context, index) {
+                  return PredictionCard(prediction: predictions[index]);
+                },
+              ),
+            );
+          } else {
+            return HistoryDefaultWidget(type: EmptyList.RESULT);
+          }
         }
       },
     );

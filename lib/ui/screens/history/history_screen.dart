@@ -7,6 +7,7 @@ import 'package:hero_premier/ui/screens/history/widgets/history_default_widget.d
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/paginating_card.dart';
 import 'package:hero_premier/utils/api_response.dart';
+import 'package:hero_premier/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 //design fixes
@@ -55,7 +56,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget body(HistoryViewModel model) {
     Map<String, List<HistoryResult>> _gameWeekMap = model.gameWeekMap;
     return _gameWeekMap.length == 0
-        ? HistoryDefaultWidget()
+        ? HistoryDefaultWidget(type: EmptyList.HISTORY)
         : ListView.builder(
             controller: _controller,
             itemCount: _gameWeekMap.length,
@@ -81,6 +82,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       : Container()
                 ],
               );
-            });
+            },
+          );
   }
 }

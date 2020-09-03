@@ -48,9 +48,7 @@ class ClubCard extends StatelessWidget {
                         imageUrl: club.image,
                         placeholder: (context, url) => Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
+                          child: CircularProgressIndicator(strokeWidth: 2),
                         ),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),

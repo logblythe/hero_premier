@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ui/shared/asset_paths.dart';
 
 class CircularCachedNetworkImage extends StatelessWidget {
   final String url;
@@ -15,14 +16,16 @@ class CircularCachedNetworkImage extends StatelessWidget {
       child: CachedNetworkImage(
         placeholder: (context, url) => Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-          ),
+          child: CircularProgressIndicator(strokeWidth: 2),
         ),
         imageUrl: url,
         height: height ?? 60,
         width: width ?? 60,
         fit: BoxFit.cover,
+        useOldImageOnUrlChange: false,
+        errorWidget: (context, url, error) {
+          return Image.asset(AssetPaths.LOGO);
+        },
       ),
     );
   }

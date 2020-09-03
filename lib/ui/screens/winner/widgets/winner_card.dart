@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
 
 class WinnerCard extends StatelessWidget {
   final String name;
@@ -94,19 +95,10 @@ class WinnerCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          ClipOval(
-                            child: CachedNetworkImage(
-                              placeholder: (context, url) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              ),
-                              imageUrl: url,
-                              height: 60,
-                              width: 60,
-                              fit: BoxFit.cover,
-                            ),
+                          CircularCachedNetworkImage(
+                            url: url ?? "https://via.placeholder.com/150",
+                            width: 60,
+                            height: 60,
                           ),
                           SizedBox(width: 16.0),
                           Column(

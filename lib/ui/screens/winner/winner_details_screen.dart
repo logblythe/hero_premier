@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hero_premier/core/view_models/profile_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/history/history_screen.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
 import 'package:provider/provider.dart';
 
 class WinnerDetailsScreen extends StatefulWidget {
@@ -71,16 +71,11 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
                   color: Colors.white,
                   child: Column(
                     children: [
-                      ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: model.user.image,
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                          height: 90,
-                          width: 90,
-                        ),
+                      CircularCachedNetworkImage(
+                        url: model.user.image ??
+                            "https://via.placeholder.com/150",
+                        width: 60,
+                        height: 60,
                       ),
                       SizedBox(height: 8.0),
                       Text(

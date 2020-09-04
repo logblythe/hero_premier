@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
-import 'package:hero_premier/utils/api_exceptions.dart';
 
 class ChangePasswordViewModel extends BaseViewModel {
   UserService _userService;
@@ -53,8 +52,7 @@ class ChangePasswordViewModel extends BaseViewModel {
         {
           "oldPassword": oldPassword,
           "newPassword": newPassword,
-          "userId":
-              _userService.loginModel?.result?.id ?? "5d45bc0e6f24b26dc40bd462"
+          "userId": _userService.loginModel?.result?.id
         },
       );
       Fluttertoast.showToast(

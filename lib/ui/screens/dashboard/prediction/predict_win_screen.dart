@@ -74,7 +74,7 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
               ),
             );
           } else {
-            return HistoryDefaultWidget(type: EmptyList.RESULT);
+            return HistoryDefaultWidget(type: EmptyList.PREDICTION);
           }
         }
       },

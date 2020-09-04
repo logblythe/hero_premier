@@ -52,7 +52,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
           body: Stack(
             children: [
               IgnorePointer(
-                ignoring: !_viewModel.loading,
+                ignoring: _viewModel.loading,
                 child: body(),
               )
             ],
@@ -89,7 +89,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen>
             SizedBox(height: 32.0),
             SecondaryButton(
               label: 'UPDATE',
-              loading: !_viewModel.loading,
+              loading: _viewModel.loading,
               onPress: _handleUpdatePassword,
             )
           ],

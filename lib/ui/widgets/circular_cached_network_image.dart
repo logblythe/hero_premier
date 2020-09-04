@@ -14,15 +14,15 @@ class CircularCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipOval(
       child: CachedNetworkImage(
-        placeholder: (context, url) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CircularProgressIndicator(strokeWidth: 2),
-        ),
         imageUrl: url,
         height: height ?? 60,
         width: width ?? 60,
         fit: BoxFit.cover,
         useOldImageOnUrlChange: false,
+        placeholder: (context, url) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircularProgressIndicator(strokeWidth: 2),
+        ),
         errorWidget: (context, url, error) {
           return Image.asset(AssetPaths.LOGO);
         },

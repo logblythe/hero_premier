@@ -1,59 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/news.dart';
-import 'package:hero_premier/router.dart';
+import 'package:hero_premier/core/models/news/news.dart';
+import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
+import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/widgets/news_card.dart';
-import 'package:hero_premier/ui/shared/asset_paths.dart';
+import 'package:provider/provider.dart';
 
 class NewsScreen extends StatelessWidget {
-  final List<News> _newsList = [
-    News(
-      'Talking Tactics',
-      "Promoted Clubs: Parker\'s Fulham can learn from past",
-      "12 min ago",
-      "110",
-      AssetPaths.NEWS_1,
-    ),
-    News(
-      'Fantasy Premier League',
-      "FPL Promoted Picks: attacking leeds full back to shine",
-      "12 min ago",
-      "110",
-      AssetPaths.NEWS_2,
-    ),
-    News(
-      'Fantasy Premier League',
-      "FPL Promoted Picks: Mitrovic the focal point of Fulham attack",
-      "12 min ago",
-      "110",
-      AssetPaths.NEWS_3,
-    ),
-  ];
+  final int showCount;
+
+  const NewsScreen({Key key, this.showCount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 16),
-      color: Colors.grey.withOpacity(0.05),
-      child: SingleChildScrollView(
-        child: Column(
-          children: _newsList.asMap().entries.map(
-            (entry) {
-              int index = entry.key;
-              News news = entry.value;
-              return NewsCard(
-                index: index,
-                news: news,
-                onPress: () => _handleNewsSelect(context, index, news),
-              );
-            },
-          ).toList(),
+    return BaseWidget<DashboardViewModel>(
+        model: DashboardViewModel(
+          dashboardService: Provider.of(context),
+          navigationService: Provider.of(context),
+          userService: Provider.of(context),
         ),
-      ),
-    );
-  }
-
-  _handleNewsSelect(BuildContext context, int index, News news) {
-    Navigator.of(context)
-        .pushNamed(RoutePaths.NEWS_DETAILS, arguments: [index, news]);
+        onModelReady: (model) {
+          model.fetchNews();
+        },
+        builder: (context, model, child) {
+          if (model.loading) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            List<News> _newsList;
+            if (showCount != null) {
+              _newsList = model.newsList.sublist(0, showCount);
+            } else {
+              _newsList = model.newsList;
+            }
+            return Container(
+              padding: const EdgeInsets.only(top: 16),
+              color: Colors.grey.withOpacity(0.05),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: _newsList.asMap().entries.map(
+                    (entry) {
+                      int index = entry.key;
+                      News news = entry.value;
+                      return NewsCard(
+                        index: index,
+                        news: news,
+                        onPress: () => model.selectNews(index),
+                      );
+                    },
+                  ).toList(),
+                ),
+              ),
+            );
+          }
+        });
   }
 }

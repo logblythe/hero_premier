@@ -1,14 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 
 class SourceAuthor extends StatelessWidget {
   final String source;
+  final String authorUrl;
   final bool showAuthor;
 
-  const SourceAuthor({Key key, this.source, this.showAuthor = false})
-      : super(key: key);
+  const SourceAuthor({
+    Key key,
+    this.source,
+    this.authorUrl,
+    this.showAuthor = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +23,18 @@ class SourceAuthor extends StatelessWidget {
           margin: const EdgeInsets.only(right: 8),
           height: 30,
           width: 30,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+          child: ClipOval(
+            child: CachedNetworkImage(
+              imageUrl: authorUrl,
+              placeholder: (context, url) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              errorWidget: (context, url, error) {
+                return Image.asset(AssetPaths.LOGO);
+              },
+            ),
           ),
-          child: SvgPicture.asset(AssetPaths.IC_GOAL),
         ),
         Column(
           children: <Widget>[

@@ -1,5 +1,6 @@
 import 'package:hero_premier/core/models/history/history_result.dart';
 
+//TODO: Not sure to delete
 class GameWeek {
   int _gameWeek;
   int _totalScore;

@@ -3,12 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/view_models/setting_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
-
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
-import 'package:hero_premier/ui/screens/settings/widget/invite_dialog_widget.dart';
-import 'package:hero_premier/ui/screens/settings/widget/invite_friends_group.dart';
-import 'package:hero_premier/ui/screens/settings/widget/join_group_dialog_widget.dart';
-
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/shared/ui_helpers.dart';
@@ -22,7 +17,6 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _switchValue = true;
-  BuildContext _context;
   SettingViewModel _settingViewModel;
 
   void onChanged(bool value) {
@@ -33,7 +27,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return BaseWidget<SettingViewModel>(
       model: SettingViewModel(
         navigationService: Provider.of(context),
@@ -46,10 +39,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               children: [
                 getTopWidget(),
-                InviteFriendWidget(
-                  onPressFriend: _handleFriendGroup,
-                  onPressInvite: _handleInviteFriends,
-                ),
+                //TODO: GROUP WILL BE RELEASED IN NEXT RELEASE
+                // InviteFriendWidget(
+                //   onPressFriend: _handleFriendGroup,
+                //   onPressInvite: _handleInviteFriends,
+                // ),
                 getBottomWidget(),
               ],
             ),
@@ -122,7 +116,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     CircleImage(
                       size: 126,
-                      path: user.image!=null?user.image:AssetPaths.IC_MAIL,
+                      path:
+                          user.image != null ? user.image : AssetPaths.IC_MAIL,
                       onPress: _handleProfileClick,
                     )
                   ],
@@ -152,9 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 2.0,
-                      ),
+                      SizedBox(height: 2.0),
                       Text(
                         "Favourite Club",
                         style: TextStyle(
@@ -367,7 +360,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           InkWell(
-            onTap:()=> _settingViewModel.launchInWebViewOrVC(AssetPaths.ABOUT_US),
+            onTap: () =>
+                _settingViewModel.launchInWebViewOrVC(AssetPaths.ABOUT_US),
             child: Container(
               margin: EdgeInsets.all(8.0),
               child: Column(
@@ -421,7 +415,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           InkWell(
-            onTap:()=> _settingViewModel.launchInWebViewOrVC(AssetPaths.PRIVACY_POLICY),
+            onTap: () => _settingViewModel
+                .launchInWebViewOrVC(AssetPaths.PRIVACY_POLICY),
             child: Container(
               margin: EdgeInsets.all(8.0),
               child: Column(
@@ -475,7 +470,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           InkWell(
-            onTap:()=> _settingViewModel.launchInWebViewOrVC(AssetPaths.TERMS_CONDITIONS),
+            onTap: () => _settingViewModel
+                .launchInWebViewOrVC(AssetPaths.TERMS_CONDITIONS),
             child: Container(
               margin: EdgeInsets.all(8.0),
               child: Column(
@@ -538,12 +534,4 @@ class _SettingsScreenState extends State<SettingsScreen> {
   _handleProfileClick() => _settingViewModel.navigateToProfile();
 
   _handleChangePassword() => _settingViewModel.navigateToChangePassword();
-
-  _handleCreateGroup() => _settingViewModel.navigateToCreateGroup();
-
-  _handleInviteFriends() =>
-      showDialog(context: context, builder: (_) => InviteDialogWidget());
-
-  _handleFriendGroup() =>
-      showDialog(context: context, builder: (_) => JoinGroupDialogWidget());
 }

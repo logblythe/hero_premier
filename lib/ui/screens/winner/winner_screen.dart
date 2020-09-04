@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/winner_result.dart';
 import 'package:hero_premier/core/view_models/winner_view_model.dart';
-import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/winner/widgets/winner_card.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';

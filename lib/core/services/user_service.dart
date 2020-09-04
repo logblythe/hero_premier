@@ -41,13 +41,13 @@ class UserService {
   registerUser(user) => _api.post("/user/localSignup", params: user.toJson());
 
   login(params) => _api.post("/user/localLogin", params: params).then((value) {
-        LoginModel loginModel = LoginModel.fromJson(value);
+        _loginModel = LoginModel.fromJson(value);
         _prefHelper.setString(KEY_TOKEN, loginModel.token);
         _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));
         _prefHelper.setBool(KEY_SESSION, true);
         _prefHelper.setString(
             KEY_USER, jsonEncode(loginModel.result.local.toJson()));
-        _prefHelper.setString(KEY_USER_ID, loginModel.result.sId);
+        _prefHelper.setString(KEY_USER_ID, loginModel.result.id);
       });
 
   fbLogin(token) {
@@ -72,7 +72,7 @@ class UserService {
         _prefHelper.setBool(KEY_SOCIAL, true);
         _prefHelper.setString(
             KEY_USER, jsonEncode(loginModel.result.facebook.toJson()));
-        _prefHelper.setString(KEY_USER_ID, loginModel.result.sId);
+        _prefHelper.setString(KEY_USER_ID, loginModel.result.id);
       });
     });
   }
@@ -90,14 +90,17 @@ class UserService {
       });
 
   updateProfile(params) {
-    _api.patch("/user/updateLocalUser", params: params
-    ).then((value){
+    _api.patch("/user/updateLocalUser", params: params).then((value) {
       LoginModel loginModel = LoginModel.fromJson(value);
       _prefHelper.setString(
           KEY_USER, jsonEncode(loginModel.result.local.toJson()));
-      _prefHelper.setString(KEY_USER_ID, loginModel.result.sId);
+      _prefHelper.setString(KEY_USER_ID, loginModel.result.id);
     });
   }
+
+  changePassword(params) => _api
+      .patch("/user/changePassword", params: params)
+      .then((value) => print("the response ${jsonEncode(value)}"));
 
   Future<User> getUserModel() async {
     final jsonResponse = json.decode(await _prefHelper.getString(KEY_USER));

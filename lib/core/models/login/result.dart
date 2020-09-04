@@ -7,7 +7,7 @@ class Result {
   Facebook facebook;
   String role;
   String status;
-  String sId;
+  String id;
   String createdAt;
   String loggedFrom;
   int iV;
@@ -19,7 +19,7 @@ class Result {
       this.facebook,
       this.role,
       this.status,
-      this.sId,
+      this.id,
       this.createdAt,
       this.loggedFrom,
       this.iV,
@@ -33,7 +33,7 @@ class Result {
         : null;
     role = json['role'];
     status = json['status'];
-    sId = json['_id'];
+    id = json['_id'];
     createdAt = json['createdAt'];
     loggedFrom = json['loggedFrom'];
     iV = json['__v'];
@@ -52,7 +52,7 @@ class Result {
     }
     data['role'] = this.role;
     data['status'] = this.status;
-    data['_id'] = this.sId;
+    data['_id'] = this.id;
     data['createdAt'] = this.createdAt;
     data['loggedFrom'] = this.loggedFrom;
     if (this.groupId != null) {

@@ -1,0 +1,32 @@
+{
+  "_embedded": {
+    "author": [
+      {
+        "name": "admin",
+        "avatar_urls": {
+          "24": "https://secure.gravatar.com/avatar/5381df93b4979777ea7c57026b085529?s=24&d=mm&r=g",
+          "48": "https://secure.gravatar.com/avatar/5381df93b4979777ea7c57026b085529?s=48&d=mm&r=g",
+          "96": "https://secure.gravatar.com/avatar/5381df93b4979777ea7c57026b085529?s=96&d=mm&r=g"
+        }
+      }
+    ],
+    "wp:featuredmedia": [
+      {
+        "media_details": {
+          "width": 1920,
+          "height": 1280,
+          "file": "1.jpg",
+          "sizes": {
+            "medium": {
+              "file": "1-300x200.jpg",
+              "width": 300,
+              "height": 200,
+              "mime_type": "image/jpeg",
+              "source_url": "https://blog.premierhero.com/wp-content/uploads/1-300x200.jpg"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

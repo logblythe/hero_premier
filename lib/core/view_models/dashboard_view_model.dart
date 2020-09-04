@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/core/models/news/news.dart';
 import 'package:hero_premier/core/models/table/table_response.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
@@ -22,6 +23,15 @@ class DashboardViewModel extends BaseViewModel {
   TableResponse get tableResponse => _dashboardService.tableResponse;
 
   get predictions => _dashboardService.predictionResponse.result;
+
+  List<News> get newsList => _dashboardService.newsList;
+
+  get selectedNews => _dashboardService.selectedNews;
+
+  selectNews(index) {
+    _dashboardService.selectNews(index);
+    _navigationService.navigateTo(RoutePaths.NEWS_DETAILS);
+  }
 
   fetchTables() async {
     if (_dashboardService.tableResponse == null) {
@@ -60,6 +70,18 @@ class DashboardViewModel extends BaseViewModel {
       setCompleted();
     } catch (e) {
       setError(e.toJson());
+    }
+  }
+
+  fetchNews() async {
+    if (_dashboardService.newsList == null) {
+      setLoading();
+      try {
+        await _dashboardService.fetchNews();
+        setCompleted();
+      } catch (e) {
+        setError(e.toString());
+      }
     }
   }
 

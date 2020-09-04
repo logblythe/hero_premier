@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/models/leaderboard/leaderboard.dart';
@@ -6,6 +5,7 @@ import 'package:hero_premier/core/view_models/leaderboard_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/leaderboard/widgets/rank_card.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/paginating_card.dart';
 import 'package:hero_premier/utils/api_response.dart';
@@ -95,20 +95,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Stack(
             children: [
-              ClipOval(
-                child: CachedNetworkImage(
-                  placeholder: (context, url) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  ),
-                  imageUrl: imageUrl,
-                  height: 90,
-                  width: 90,
-                  fit: BoxFit.cover,
-                ),
+              CircularCachedNetworkImage(
+                url: imageUrl ?? "https://via.placeholder.com/150",
+                width: 60,
+                height: 60,
               ),
+
             ],
           ),
         ),
@@ -380,19 +372,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Stack(
             children: [
-              ClipOval(
-                child: CachedNetworkImage(
-                  placeholder: (context, url) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  ),
-                  imageUrl: imageUrl,
-                  height: 90,
-                  width: 90,
-                  fit: BoxFit.cover,
-                ),
+              CircularCachedNetworkImage(
+                url: imageUrl ?? "https://via.placeholder.com/150",
+                width: 60,
+                height: 60,
               ),
             ],
           ),
@@ -418,19 +401,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               BoxDecoration(color: Colors.white, shape: BoxShape.circle),
           child: Stack(
             children: [
-              ClipOval(
-                child: CachedNetworkImage(
-                  placeholder: (context, url) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  ),
-                  imageUrl: imageUrl,
-                  height: 90,
-                  width: 90,
-                  fit: BoxFit.cover,
-                ),
+              CircularCachedNetworkImage(
+                url: imageUrl ?? "https://via.placeholder.com/150",
+                width: 60,
+                height: 60,
               ),
             ],
           ),

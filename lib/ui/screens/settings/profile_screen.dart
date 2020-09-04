@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +10,6 @@ import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 

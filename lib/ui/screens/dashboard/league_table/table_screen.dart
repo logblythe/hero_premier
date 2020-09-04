@@ -243,7 +243,7 @@ class _TableScreenState extends State<TableScreen> {
                             bottom: 12,
                           ),
                           child: Text(
-                            data.team.name,
+                            data.team.short,
                             style: TextStyleTable.copyWith(
                                 color: Theme
                                     .of(context)

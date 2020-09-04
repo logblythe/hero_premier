@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/news.dart';
 import 'package:hero_premier/ui/screens/club/club_select_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/full_table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_detail_screen.dart';
@@ -23,11 +22,10 @@ class RoutePaths {
   static const String PROFILE = "/profile";
   static const String FULL_TABLE = "/full-table";
   static const String NEWS_DETAILS = "/news-details";
-  static const String FORGOT_PASSWORD="/forgot-password";
-  static const String SETTING="/setting";
-  static const String CHANGE_PASSWORD="/change-password";
-  static const String CREATE_GROUP="/create-group";
-
+  static const String FORGOT_PASSWORD = "/forgot-password";
+  static const String SETTING = "/setting";
+  static const String CHANGE_PASSWORD = "/change-password";
+  static const String CREATE_GROUP = "/create-group";
 }
 
 class Router {
@@ -56,17 +54,7 @@ class Router {
       case RoutePaths.CREATE_GROUP:
         return MaterialPageRoute(builder: (_) => CreateGroup());
       case RoutePaths.NEWS_DETAILS:
-        {
-          var arguments = settings.arguments as List;
-          int index = arguments[0];
-          News news = arguments[1];
-          return MaterialPageRoute(
-            builder: (_) => NewsDetails(
-              index: index,
-              news: news,
-            ),
-          );
-        }
+        return MaterialPageRoute(builder: (_) => NewsDetails());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

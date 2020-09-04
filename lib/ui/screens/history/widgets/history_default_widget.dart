@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 
 class HistoryDefaultWidget extends StatelessWidget {
+  final String type;
+
+  const HistoryDefaultWidget({Key key, this.type}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +25,7 @@ class HistoryDefaultWidget extends StatelessWidget {
             height: 24.0,
           ),
           Text(
-            "No game history found yet !",
+            "No game $type found yet !",
             style: TextStyles.Heading3.copyWith(fontWeight: FontWeight.bold),
           ),
           SizedBox(

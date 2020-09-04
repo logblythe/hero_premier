@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
   TextEditingController _emailController =
       TextEditingController(text: "nareshlamgade@gmail.com");
   TextEditingController _passwordController =
-      TextEditingController(text: "Google@123");
+      TextEditingController(text: "Nepal@123");
   LoginViewModel _model;
   final facebookLogin = FacebookLogin();
 

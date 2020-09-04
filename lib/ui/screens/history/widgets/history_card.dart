@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/models/history/history_result.dart';
+import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 
 class HistoryCard extends StatelessWidget {
@@ -139,7 +140,7 @@ class HistoryCard extends StatelessWidget {
                           placeholder: (context, url) =>
                               CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              Image.asset(AssetPaths.LOGO),
                           height: 40,
                           width: 40,
                         ),
@@ -220,7 +221,7 @@ class HistoryCard extends StatelessWidget {
                           placeholder: (context, url) =>
                               CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              Image.asset(AssetPaths.LOGO),
                           height: 40,
                           width: 40,
                         ),

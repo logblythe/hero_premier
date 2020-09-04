@@ -17,12 +17,10 @@ class ClubSelectScreen extends StatefulWidget {
 
 class _ClubSelectScreenState extends State<ClubSelectScreen> {
   int _selectedIndex;
-  BuildContext _context;
   ClubViewModel _vm;
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return Scaffold(
       body: SafeArea(
         child: BaseWidget<ClubViewModel>(

@@ -1,5 +1,5 @@
 import 'package:hero_premier/core/models/news/author.dart';
-import 'package:hero_premier/core/models/news/wp:featuredmedia.dart';
+import 'package:hero_premier/core/models/news/wp_featuredmedia.dart';
 
 class Embedded {
   List<Author> author;

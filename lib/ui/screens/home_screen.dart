@@ -8,6 +8,8 @@ import 'package:hero_premier/ui/widgets/custom_appbar.dart';
 import 'package:hero_premier/ui/widgets/custom_bottom_navbar.dart';
 import 'package:hero_premier/ui/widgets/welcome_modal.dart';
 
+import '../../router.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -81,16 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
   _handleSearch() {}
 
   _handleNotificationPress() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            child: WelcomeModal(
-              onPress: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          );
-        });
+    Navigator.of(context).pushReplacementNamed(RoutePaths.NOTIFICATION);
   }
 }

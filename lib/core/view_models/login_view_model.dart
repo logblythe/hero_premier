@@ -34,7 +34,7 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
-  fbLogin(String token) async{
+  fbLogin(String token) async {
     try {
       setLoading();
       await _userService.fbLogin(token);
@@ -52,6 +52,4 @@ class LoginViewModel extends BaseViewModel {
   register() => _navigationService.navigateTo(RoutePaths.REGISTER);
 
   navigateHome() => _navigationService.navigateTo(RoutePaths.HOME);
-
-
 }

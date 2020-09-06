@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/models/login/local.dart';
@@ -193,11 +192,12 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         ),
         child: CircleImage(
           size: 126,
-          path: user.image != null ? user.image : AssetPaths.IC_NO_HISTORY,
+          path: _profileViewModel.updatedImageUlr != null
+              ? _profileViewModel.updatedImageUlr
+              : user.image != null ? user.image : AssetPaths.IC_NO_HISTORY,
           onPress: () {
             _profileViewModel.pickImage(ImageSource.gallery);
           },
-
         ),
       ),
     );

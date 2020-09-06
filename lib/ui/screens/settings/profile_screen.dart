@@ -9,10 +9,9 @@ import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
+import 'package:hero_premier/validator_mixin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
-import '../../../validator_mixin.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -20,7 +19,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
-  BuildContext _context;
   ProfileViewModel _profileViewModel;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _fullNameController;
@@ -33,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return BaseWidget<ProfileViewModel>(
       model: ProfileViewModel(
         navigationService: Provider.of(context),

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hero_premier/core/models/image_upload.dart';
 import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
@@ -40,7 +39,7 @@ class ProfileViewModel extends BaseViewModel {
       String contact) async {
     try {
       setLoading();
-      var response = await _userService.updateProfile({
+      await _userService.updateProfile({
         "userId": await _userService.getUserId(),
         "name": name,
         "address": address,
@@ -75,6 +74,7 @@ class ProfileViewModel extends BaseViewModel {
   }
 
   pickImage(ImageSource source) async {
+    // ignore: invalid_use_of_visible_for_testing_member
     PickedFile selected = await ImagePicker.platform.pickImage(source: source);
     if (selected != null) {
       Future.delayed(const Duration(milliseconds: 500), () {
@@ -90,7 +90,8 @@ class ProfileViewModel extends BaseViewModel {
       try {
         setLoading();
         String _userId = await _userService.getUserId();
-        await _userService.uploadProfileImage({"userId": _userId, "image": file});
+        await _userService
+            .uploadProfileImage({"userId": _userId, "image": file});
         Fluttertoast.showToast(
             msg: "Image update successful.",
             toastLength: Toast.LENGTH_LONG,

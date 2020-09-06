@@ -8,6 +8,7 @@ import 'package:hero_premier/ui/screens/login_screen.dart';
 import 'package:hero_premier/ui/screens/register/register_screen.dart';
 import 'package:hero_premier/ui/screens/settings/change_password.dart';
 import 'package:hero_premier/ui/screens/settings/create_group.dart';
+import 'package:hero_premier/ui/screens/settings/notification.dart';
 import 'package:hero_premier/ui/screens/settings/profile_screen.dart';
 import 'package:hero_premier/ui/screens/settings/settings_screen.dart';
 import 'package:hero_premier/ui/screens/winner/winner_details_screen.dart';
@@ -26,6 +27,7 @@ class RoutePaths {
   static const String SETTING = "/setting";
   static const String CHANGE_PASSWORD = "/change-password";
   static const String CREATE_GROUP = "/create-group";
+  static const String NOTIFICATION="/notification";
 }
 
 class Router {
@@ -55,6 +57,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => CreateGroup());
       case RoutePaths.NEWS_DETAILS:
         return MaterialPageRoute(builder: (_) => NewsDetails());
+      case RoutePaths.NOTIFICATION:
+        return MaterialPageRoute(builder: (_) => NotificationScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

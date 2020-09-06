@@ -29,6 +29,7 @@ class AssetPaths {
   static const IC_DISCOUNT="assets/images/ic_discount_card.svg";
   static const IC_TICKETS="assets/images/ic_tickets.svg";
   static const IC_POINTS="assets/images/ic_points_gift.svg";
+  static const IC_NO_NOTIFICATION="assets/images/ic_no_notification.png";
 
   //external URLs
   static const PRIVACY_POLICY = "https://premierhero.com/privacy-policy";

@@ -4,14 +4,14 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 class CustomAppBar extends AppBar {
   CustomAppBar(String title)
       : super(
-          elevation: 1.0,
-          centerTitle: true,
-          title: Text(
-            title,
-            style: TextStyle(color: TextColorGrey),
-          ),
-          backgroundColor: Colors.white,
-        );
+    elevation: 1.0,
+    centerTitle: true,
+    title: Text(
+      title,
+      style: TextStyle(color: TextColorGrey),
+    ),
+    backgroundColor: Colors.white,
+  );
 
   static AppBar getAppBar(String title, {onNotificationPress, onSearchPress}) {
     return AppBar(
@@ -61,6 +61,33 @@ class CustomAppBar extends AppBar {
         icon: Image.asset("assets/images/logo_purple.png"),
       ),
       backgroundColor: Color(0xFFFFFFFF),
+    );
+  }
+
+  static AppBar getAppBarWithBack(String title, BuildContext context) {
+   return AppBar(
+      toolbarHeight: 75.0,
+      title: Text(
+        title,
+        style: TextStyle(
+            color: Theme
+                .of(context)
+                .primaryColor,
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back_ios,
+          color: Theme
+              .of(context)
+              .primaryColor,
+        ),
+        onPressed: () {
+        },
+      ),
     );
   }
 }

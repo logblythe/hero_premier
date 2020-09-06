@@ -44,7 +44,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       onModelReady: (model) async {
         User user = await model.getUserModel();
         _fullNameController = TextEditingController(text: user.name);
-        _fullNameController.text = user.name;
         _dobController = TextEditingController(text: user.dob);
         _genderController = TextEditingController();
         _addressController = TextEditingController(text: user.address);
@@ -53,7 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       },
       builder: (context, model, child) {
         _profileViewModel = model;
-
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 75.0,
@@ -82,7 +80,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
               if (local.hasError) {
                 return Text("Error");
               }
-
               if (local.data != null) {
                 return Stack(
                   children: [
@@ -265,7 +262,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         _addressController.text,
         _contactController.text,
       );
-      Navigator.of(_context).pop();
     }
   }
 }

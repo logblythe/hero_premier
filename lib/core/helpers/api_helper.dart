@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -48,38 +49,6 @@ class ApiBaseHelper {
     return responseJson;
   }
 
-  Future<dynamic> multipart(String url, {Map<String, dynamic> params}) async {
-    var token = await getToken();
-    var responseJson;
-    try {
-      String mimeType = lookupMimeType(params['image'].path);
-      var fileType = mimeType.split('/');
-
-      var patchUri = Uri.parse(_baseUrl + url);
-      var request = http.MultipartRequest('PATCH', patchUri);
-
-      request.fields['userId'] = params['userId'];
-      request.files.add(
-        http.MultipartFile.fromString(
-          'image',
-          params['image'].path,
-          contentType: MediaType(fileType[0], fileType[1]),
-        ),
-      );
-      request.headers.addAll({'Authorization': token});
-
-      var streamResponse = await request.send();
-
-      final response = await http.Response.fromStream(streamResponse);
-      if (response.statusCode == 200) {
-        print("image response" + response.body.toString());
-      }
-    } on SocketException {
-      throw FetchDataException({"message": 'No Internet connection'});
-    }
-    return responseJson;
-  }
-
   Future<dynamic> patch(String url, {Map<String, dynamic> params}) async {
     print('the params $params');
     var token = await getToken();
@@ -90,6 +59,35 @@ class ApiBaseHelper {
         headers: {'Authorization': token},
         body: params,
       );
+      responseJson = _returnResponse(response);
+    } on SocketException {
+      throw FetchDataException({"message": 'No Internet connection'});
+    }
+    return responseJson;
+  }
+
+  Future<dynamic> multipart(String url, {Map<String, dynamic> params}) async {
+    var responseJson;
+    try {
+      var token = await getToken();
+      var request = http.MultipartRequest("PATCH", Uri.parse(_baseUrl + url));
+      request.headers.addAll({
+        HttpHeaders.contentTypeHeader: "multipart/form-data",
+        HttpHeaders.authorizationHeader: token
+      });
+      //add text fields
+      request.fields["userId"] = params['userId'];
+      String mimeType = lookupMimeType(params['image'].path);
+      var fileType = mimeType.split('/');
+      var pic = await http.MultipartFile.fromPath(
+        "image",
+        params['image'].path,
+        contentType: MediaType(fileType[0], fileType[1]),
+      );
+      //add multipart to request
+      request.files.add(pic);
+      var streamResponse = await request.send();
+      final response = await http.Response.fromStream(streamResponse);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException({"message": 'No Internet connection'});

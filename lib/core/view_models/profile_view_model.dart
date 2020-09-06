@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
@@ -32,7 +33,6 @@ class ProfileViewModel extends BaseViewModel {
 
   User get user => _userService.user;
 
-
   updateProfile(String name, String dob, String gender, String address,
       String contact) async {
     try {
@@ -44,10 +44,17 @@ class ProfileViewModel extends BaseViewModel {
         "dob": dob,
         "phoneNumber": contact
       });
-      setDialogContent(response);
+      Fluttertoast.showToast(
+          msg: "Updated successfully.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey.withOpacity(0.9),
+          textColor: Colors.white,
+          fontSize: 16.0);
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e.toString());
     }
   }
 
@@ -80,10 +87,8 @@ class ProfileViewModel extends BaseViewModel {
       try {
         setLoading();
         String _userId = await _userService.getUserId();
-        await _userService.uploadProfileImage({
-          "userId": _userId,
-          "image": file
-        });
+        await _userService
+            .uploadProfileImage({"userId": _userId, "image": file});
         setCompleted();
       } catch (e) {
         setError(e.toString());

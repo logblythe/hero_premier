@@ -4,17 +4,13 @@ import 'package:hero_premier/core/helpers/api_helper.dart';
 import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
 import 'package:hero_premier/core/models/club/club.dart';
 import 'package:hero_premier/core/models/club/clubs_response.dart';
+import 'package:hero_premier/core/models/image_upload.dart';
 import 'package:hero_premier/core/models/individual_detail.dart';
 import 'package:hero_premier/core/models/login/facebook_response.dart';
 import 'package:hero_premier/core/models/login/login_model.dart';
 import 'package:hero_premier/core/models/rank/rank_response.dart';
 import 'package:hero_premier/core/models/user.dart';
 
-//The related functionalities should be grouped into one service.
-//Example: logout functionality is related to user
-//so, deleted settings service and moved the logout functionality to user service
-
-//One viewModel can have multiple services
 class UserService {
   final ApiBaseHelper _api;
   final SharedPrefHelper _prefHelper;
@@ -24,14 +20,16 @@ class UserService {
         _prefHelper = prefHelper;
 
   List<Club> _clubs;
+  LoginModel _loginModel;
+  User _user = User();
+  ImageUpload _upload;
+  String _imageUrl;
 
   get clubs => _clubs;
 
-  LoginModel _loginModel;
-
   get loginModel => _loginModel;
 
-  User _user = User();
+  get imageUrl => _imageUrl;
 
   User get user => _user;
 
@@ -89,14 +87,8 @@ class UserService {
         _clubs = clubsResponse.clubs;
       });
 
-  updateProfile(params) {
-    _api.patch("/user/updateLocalUser", params: params).then((value) {
-      LoginModel loginModel = LoginModel.fromJson(value);
-      _prefHelper.setString(
-          KEY_USER, jsonEncode(loginModel.result.local.toJson()));
-      _prefHelper.setString(KEY_USER_ID, loginModel.result.id);
-    });
-  }
+  updateProfile(params) =>
+      _api.patch("/user/updateLocalUser", params: params);
 
   changePassword(params) => _api
       .patch("/user/changePassword", params: params)
@@ -130,7 +122,9 @@ class UserService {
         _user.rank = rankResponse.rank[0].rank.toString();
       });
 
-  uploadProfileImage(params) => _api
-      .multipart("/user/updateImage", params: params)
-      .then((value) => print("profile::" + value.toString()));
+  uploadProfileImage(params) =>
+      _api.multipart("/user/updateImage", params: params).then((value) {
+        _upload = ImageUpload.fromJsonMap(value);
+        _imageUrl = _upload.result;
+      });
 }

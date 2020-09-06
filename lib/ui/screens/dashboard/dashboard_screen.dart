@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/ui/screens/dashboard/all_screen.dart';
+import 'package:hero_premier/ui/screens/dashboard/gift/gift.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/prediction/predict_win_screen.dart';
@@ -17,7 +18,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 6, vsync: this);
   }
 
   @override
@@ -45,6 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   NewsScreen(),
                   PredictionResultScreen(),
                   TableScreen(),
+                  GiftScreen(),
                 ],
               ),
             ),
@@ -73,6 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         Tab(text: "News"),
         Tab(text: "Results"),
         Tab(text: "Tables"),
+        Tab(text: "Gift"),
       ],
       controller: _tabController,
     );

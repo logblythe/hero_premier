@@ -1,3 +1,5 @@
+/*
+//TODO unused file may be delete it?
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -60,3 +62,4 @@ class _ImageCaptureState extends State<ImageCapture> {
     return _finalImageFile;
   }
 }
+*/

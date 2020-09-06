@@ -8,7 +8,8 @@ class CircleImage extends StatelessWidget {
   final String path;
   final bool isVisible;
 
-  const CircleImage({Key key, this.onPress, this.size,this.isVisible=true, this.path})
+  const CircleImage(
+      {Key key, this.onPress, this.size, this.isVisible = true, this.path})
       : super(key: key);
 
   @override
@@ -33,17 +34,19 @@ class CircleImage extends StatelessWidget {
                       ),
                     )
                   : CachedNetworkImage(
-                placeholder: (context, url) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
-                ),
-                imageUrl: path,
-                height: size ?? 60,
-                width: size ?? 60,
-                fit: BoxFit.cover,
-              ),
+                      imageUrl: path,
+                      height: size ?? 60,
+                      width: size ?? 60,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        );
+                      },
+                    ),
             ),
             Visibility(
               visible: isVisible,

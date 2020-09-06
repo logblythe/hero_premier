@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/models/login/local.dart';
@@ -10,10 +9,9 @@ import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
+import 'package:hero_premier/validator_mixin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
-import '../../../validator_mixin.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -21,7 +19,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
-  BuildContext _context;
   ProfileViewModel _profileViewModel;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _fullNameController;
@@ -34,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return BaseWidget<ProfileViewModel>(
       model: ProfileViewModel(
         navigationService: Provider.of(context),
@@ -44,7 +40,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       onModelReady: (model) async {
         User user = await model.getUserModel();
         _fullNameController = TextEditingController(text: user.name);
-        _fullNameController.text = user.name;
         _dobController = TextEditingController(text: user.dob);
         _genderController = TextEditingController();
         _addressController = TextEditingController(text: user.address);
@@ -53,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
       },
       builder: (context, model, child) {
         _profileViewModel = model;
-
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 75.0,
@@ -82,7 +76,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
               if (local.hasError) {
                 return Text("Error");
               }
-
               if (local.data != null) {
                 return Stack(
                   children: [
@@ -196,11 +189,12 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         ),
         child: CircleImage(
           size: 126,
-          path: user.image != null ? user.image : AssetPaths.IC_NO_HISTORY,
+          path: _profileViewModel.updatedImageUlr != null
+              ? _profileViewModel.updatedImageUlr
+              : user.image != null ? user.image : AssetPaths.IC_NO_HISTORY,
           onPress: () {
             _profileViewModel.pickImage(ImageSource.gallery);
           },
-
         ),
       ),
     );
@@ -265,7 +259,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         _addressController.text,
         _contactController.text,
       );
-      Navigator.of(_context).pop();
     }
   }
 }

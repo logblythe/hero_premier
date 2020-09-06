@@ -8,6 +8,11 @@ import 'package:hero_premier/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 class PredictionResultScreen extends StatefulWidget {
+  final bool insideScrollView;
+
+  const PredictionResultScreen({Key key, this.insideScrollView = false})
+      : super(key: key);
+
   @override
   _PredictionResultScreenState createState() => _PredictionResultScreenState();
 }
@@ -36,6 +41,9 @@ class _PredictionResultScreenState extends State<PredictionResultScreen> {
               margin: EdgeInsets.only(top: 16),
               child: ListView.builder(
                 shrinkWrap: true,
+                physics: widget.insideScrollView
+                    ? NeverScrollableScrollPhysics()
+                    : null,
                 itemCount: predictions.length,
                 itemBuilder: (context, index) {
                   return PredictionCard(prediction: predictions[index]);

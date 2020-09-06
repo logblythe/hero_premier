@@ -14,7 +14,7 @@ class AllScreen extends StatelessWidget {
             NewsScreen(showCount: 2),
             TableScreen(),
             SizedBox(height: 82),
-            PredictionResultScreen(),
+            PredictionResultScreen(insideScrollView: true,),
           ],
         ),
       ),

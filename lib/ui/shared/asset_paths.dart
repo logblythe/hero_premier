@@ -21,6 +21,10 @@ class AssetPaths {
   static const IC_MAIL = "assets/images/ic_letter_link.svg";
   static const IC_NO_HISTORY = "assets/images/ic_no_history.png";
   static const IC_FACEBOOK = "assets/images/ic_facebook.svg";
+  static const IC_BACKGROUND_REWARD = "assets/images/img_pattern.png";
+  static const IC_FIRST_MEDAL="assets/images/ic_medal_first.svg";
+  static const IC_SECOND_MEDAL="assets/images/ic_medal_second.svg";
+  static const IC_THIRD_MEDAL="assets/images/ic_medal_third.svg";
 
   //external URLs
   static const PRIVACY_POLICY = "https://premierhero.com/privacy-policy";

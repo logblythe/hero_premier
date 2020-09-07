@@ -191,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
           size: 126,
           path: _profileViewModel.updatedImageUlr != null
               ? _profileViewModel.updatedImageUlr
-              : user.image != null ? user.image : AssetPaths.IC_NO_HISTORY,
+              : (user.image != null && user.image.isNotEmpty)  ? user.image : AssetPaths.IC_NO_HISTORY,
           onPress: () {
             _profileViewModel.pickImage(ImageSource.gallery);
           },

@@ -12,13 +12,17 @@ class GiftCard extends StatelessWidget {
   final String descripion;
   final Color buttonColor;
   final Color fontColor;
+  final int height;
+  final bool isFull;
   final Function press;
 
   GiftCard(
       {Key key,
+      this.isFull = true,
       this.icon,
       this.points,
       this.title,
+      this.height,
       this.descripion,
       this.buttonColor,
       this.fontColor,
@@ -28,6 +32,7 @@ class GiftCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: isFull?MediaQuery.of(context).size.width :MediaQuery.of(context).size.width / 1.8,
       margin: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -44,7 +49,11 @@ class GiftCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SvgPicture.asset(AssetPaths.IC_POINTS,width: 24,height: 24,),
+                SvgPicture.asset(
+                  AssetPaths.IC_POINTS,
+                  width: 24,
+                  height: 24,
+                ),
                 SizedBox(
                   width: 8.0,
                 ),

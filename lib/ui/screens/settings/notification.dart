@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ui/shared/asset_paths.dart';
+import 'package:hero_premier/ui/shared/text_styles.dart';
+import 'package:hero_premier/ui/widgets/custom_appbar.dart';
+import 'package:hero_premier/utils/constants.dart';
 
-import '../../../utils/constants.dart';
-import '../../shared/asset_paths.dart';
-import '../../shared/asset_paths.dart';
-import '../../shared/text_styles.dart';
-import '../../widgets/custom_appbar.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override

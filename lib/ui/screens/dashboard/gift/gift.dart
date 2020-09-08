@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/ui/screens/dashboard/widget/gift_card.dart';
-
-import '../../../shared/asset_paths.dart';
-import '../../../shared/asset_paths.dart';
+import 'package:hero_premier/ui/shared/asset_paths.dart';
 
 class GiftScreen extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/prediction/prediction_result.dart';
+import 'package:hero_premier/core/models/todayList/today_result.dart';
 import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
-import 'package:hero_premier/ui/screens/dashboard/prediction/widgets/prediction_card.dart';
+import 'package:hero_premier/ui/screens/dashboard/prediction/widgets/today_prediction_card.dart';
 import 'package:hero_premier/ui/screens/history/widgets/history_default_widget.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/dead_line_timer.dart';
@@ -32,10 +32,9 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
         } else if (model.error != null) {
           return Text(model.error.toString());
         } else {
-          if (model.predictions != null && model.predictions.length > 0) {
-            List<PredictionResult> predictions = model.predictions;
-            PredictionResult _firstPrediction = predictions[0];
-            List<PredictionResult> _restPredictions = predictions.sublist(1);
+          if (model.todayPredictions != null &&
+              model.todayPredictions.length > 0) {
+            List<TodayResult> predictions = model.todayPredictions;
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,12 +43,18 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: DeadlineTimer(
-                      DateTime.parse(_firstPrediction.matchId.matchTime),
+                      DateTime.parse(predictions[0].matchTime),
                     ),
                   ),
-                  PredictionCard(
-                    prediction: _firstPrediction,
+                  PredictionTodayCard(
+                    firstTeamId: predictions[0].firstTeamId,
+                    secondTeamId: predictions[0].secondTeamId,
+                    matchId: predictions[0].id,
+                    matchTime: predictions[0].matchTime,
+                    stadium: predictions[0].stadium.name,
+                    weekNumber: predictions[0].weekNo,
                     editable: true,
+                    index: 0,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
@@ -63,10 +68,16 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: _restPredictions.length,
+                    itemCount: predictions.length -1 ,
                     itemBuilder: (context, index) {
-                      return PredictionCard(
-                        prediction: _restPredictions[index],
+                      return PredictionTodayCard(
+                        firstTeamId: predictions[index+1].firstTeamId,
+                        secondTeamId: predictions[index+1].secondTeamId,
+                        matchId: predictions[index+1].id,
+                        matchTime: predictions[index+1].matchTime,
+                        stadium: predictions[index+1].stadium.name,
+                        weekNumber: predictions[index+1].weekNo,
+                        index: index+1,
                       );
                     },
                   )

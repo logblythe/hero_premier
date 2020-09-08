@@ -6,7 +6,6 @@ import 'package:hero_premier/ui/screens/settings/settings_screen.dart';
 import 'package:hero_premier/ui/screens/winner/winner_screen.dart';
 import 'package:hero_premier/ui/widgets/custom_appbar.dart';
 import 'package:hero_premier/ui/widgets/custom_bottom_navbar.dart';
-import 'package:hero_premier/ui/widgets/welcome_modal.dart';
 
 import '../../router.dart';
 

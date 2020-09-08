@@ -5,7 +5,6 @@ import 'package:hero_premier/ui/screens/dashboard/news/news_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/prediction/prediction_result_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/widget/favclubnews_widget.dart';
 import 'package:hero_premier/ui/screens/dashboard/widget/gift_section_widget.dart';
-import 'package:hero_premier/ui/shared/asset_paths.dart';
 
 class AllScreen extends StatelessWidget {
   @override

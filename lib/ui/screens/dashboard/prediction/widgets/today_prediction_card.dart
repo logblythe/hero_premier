@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/prediction/prediction_result.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hero_premier/core/models/todayList/first_team_id.dart';
+import 'package:hero_premier/core/models/todayList/second_team_id.dart';
 import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
+import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
@@ -9,31 +12,50 @@ import 'package:hero_premier/ui/widgets/secondary_button.dart';
 import 'package:hero_premier/utils/utilities.dart';
 import 'package:provider/provider.dart';
 
-class PredictionCard extends StatefulWidget {
-  final PredictionResult prediction;
+class PredictionTodayCard extends StatefulWidget {
+  final FirstTeamId firstTeamId;
+  final SecondTeamId secondTeamId;
+  final String stadium;
+  final String matchTime;
+  final String matchId;
+  final String weekNumber;
   final bool editable;
+  final int index;
 
-  const PredictionCard({Key key, this.prediction, this.editable = false})
-      : super(key: key);
+  const PredictionTodayCard({
+    Key key,
+    this.editable = false,
+    this.firstTeamId,
+    this.secondTeamId,
+    this.stadium,
+    this.matchTime,
+    this.matchId,
+    this.weekNumber,
+    this.index,
+  }) : super(key: key);
 
   @override
-  _PredictionCardState createState() => _PredictionCardState();
+  _PredictionTodayCardState createState() => _PredictionTodayCardState();
 }
 
-class _PredictionCardState extends State<PredictionCard> {
+class _PredictionTodayCardState extends State<PredictionTodayCard> {
   final _controllerA = TextEditingController();
   final _controllerB = TextEditingController();
 
-  bool _edit = false;
-  PredictionResult _prediction;
+  bool _edit;
+
+  bool _isFirstCard;
+
   DashboardViewModel _model;
 
   @override
   void initState() {
     super.initState();
-    _prediction = widget.prediction;
-    _controllerA.text = _prediction.firstTeamScorePrediction.toString();
-    _controllerB.text = _prediction.secondTeamScorePrediction.toString();
+    _edit = false;
+    _isFirstCard = widget.index == 0;
+    //todo pre-fill the prediction
+    // _controllerA.text = _prediction.firstTeamScorePrediction.toString();
+    // _controllerB.text = _prediction.secondTeamScorePrediction.toString();
   }
 
   @override
@@ -49,10 +71,9 @@ class _PredictionCardState extends State<PredictionCard> {
       },
       builder: (context, model, child) {
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           margin: widget.editable
-              ? EdgeInsets.symmetric(vertical: 8)
-              : EdgeInsets.symmetric(vertical: 8,horizontal: 16),
+              ? EdgeInsets.symmetric(vertical: 16)
+              : EdgeInsets.all(16),
           decoration: widget.editable
               ? BoxDecoration(color: Colors.white)
               : UIHelper.boxDecoration(context),
@@ -60,26 +81,30 @@ class _PredictionCardState extends State<PredictionCard> {
             children: [
               header(),
               SizedBox(height: 24),
-              Row(
-                children: [
-                  clubNameImage(
-                    imageUrl: _prediction.matchId.firstTeamId.image,
-                    name: _prediction.matchId.firstTeamId.name,
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 24),
-                      child: details(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  children: [
+                    clubNameImage(
+                      imageUrl: widget.firstTeamId.image,
+                      name: widget.firstTeamId.name,
                     ),
-                  ),
-                  clubNameImage(
-                    imageUrl: _prediction.matchId.secondTeamId.image,
-                    name: _prediction.matchId.secondTeamId.name,
-                  ),
-                ],
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 24),
+                        child: details(),
+                      ),
+                    ),
+                    clubNameImage(
+                      imageUrl: widget.secondTeamId.image,
+                      name: widget.secondTeamId.name,
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 24),
               footer(),
+              SizedBox(height: 16),
             ],
           ),
         );
@@ -90,25 +115,66 @@ class _PredictionCardState extends State<PredictionCard> {
   Widget header() {
     return Stack(
       children: [
-        Align(
-          alignment: Alignment.center,
-          child: Text(
-            "Predict & Win",
-            style: TextStyles.TitleTextNormalBoldStyle,
-          ),
-        ),
-        Visibility(
-          visible: widget.editable && _controllerA.text != null,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: IgnorePointer(
-              ignoring: _model.loading,
-              child: InkWell(
-                onTap: _handleEditPress,
-                child: Text(
-                  _edit ? "Cancel" : "Edit",
-                  style: TextStyles.Subtitle2.copyWith(
-                      color: Theme.of(context).accentColor),
+        _isFirstCard
+            ? Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text(
+                    "Predict & Win",
+                    style: TextStyles.TitleTextNormalBoldStyle,
+                  ),
+                ),
+              )
+            : Align(
+                alignment: Alignment.centerLeft,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).accentColor,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8)),
+                      ),
+                    ),
+                    ClipRRect(
+                      child: SvgPicture.asset(
+                        AssetPaths.GAME_WEEK_BG,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8)),
+                    ),
+                    Positioned(
+                      top: 20,
+                      left: 20,
+                      child: Text(
+                        "Game week ${widget.weekNumber.substring(widget.weekNumber.lastIndexOf(" "))}",
+                        style:
+                            TextStyles.Subtitle1.copyWith(color: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16, right: 24),
+          child: Visibility(
+            visible: widget.editable && _controllerA.text != null,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: IgnorePointer(
+                ignoring: _model.loading,
+                child: InkWell(
+                  onTap: _handleEditPress,
+                  child: Text(
+                    _edit ? "Cancel" : "Edit",
+                    style: TextStyles.Subtitle2.copyWith(
+                        color: Theme.of(context).accentColor),
+                  ),
                 ),
               ),
             ),
@@ -170,7 +236,7 @@ class _PredictionCardState extends State<PredictionCard> {
                           : Theme.of(context).primaryColor,
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.only(left: 8.0),
-                      hintText: 'Score',
+                      hintText: '-',
                       hintStyle: TextStyle(
                         color: _edit
                             ? Colors.black.withOpacity(0.36)
@@ -209,7 +275,7 @@ class _PredictionCardState extends State<PredictionCard> {
                           : Theme.of(context).primaryColor,
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.only(left: 8.0),
-                      hintText: 'Score',
+                      hintText: '-',
                       hintStyle: TextStyle(
                         color: _edit
                             ? Colors.black.withOpacity(0.36)
@@ -230,7 +296,7 @@ class _PredictionCardState extends State<PredictionCard> {
         ),
         SizedBox(height: 24),
         Text(
-          getFormattedTimeFromUtc(_prediction.matchId.matchTime),
+          getFormattedTimeFromUtc(widget.matchTime),
           style: TextStyle(
             color: ButtonColorPrimary,
             fontSize: 10.0,
@@ -238,9 +304,8 @@ class _PredictionCardState extends State<PredictionCard> {
             fontStyle: FontStyle.normal,
           ),
         ),
-        //todo fetch the stadium
         Text(
-          "Stadium",
+          widget.stadium ?? "Stadium",
           style: TextStyle(
             color: ButtonColorPrimary,
             fontSize: 10.0,
@@ -280,16 +345,18 @@ class _PredictionCardState extends State<PredictionCard> {
   }
 
   _handlePrediction() {
-    _model.postPrediction(_controllerA.text ?? "0", _controllerB.text ?? "0",
-        _prediction.matchId.id);
+    _model.postPrediction(
+        _controllerA.text ?? "0", _controllerB.text ?? "0", widget.matchId);
   }
 
   _handleEditPress() {
     if (_model.error != null) {
       _model.setError(null);
     }
-    setState(() {
-      _edit = !_edit;
-    });
+    if (_edit) {
+      _controllerB.clear();
+      _controllerA.clear();
+    }
+    setState(() => _edit = !_edit);
   }
 }

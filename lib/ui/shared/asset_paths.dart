@@ -32,10 +32,13 @@ class AssetPaths {
   static const IC_NO_NOTIFICATION="assets/images/ic_no_notification.png";
   static const IC_RIBBON="assets/images/ic_ribbon.svg";
   static const IC_BCK_GIFTREWARD="assets/images/ic_bck_gift_reward.png";
+  static const  GAME_WEEK_BG = "assets/images/game-week-bg.svg";
+
 
   //external URLs
   static const PRIVACY_POLICY = "https://premierhero.com/privacy-policy";
   static const TERMS_CONDITIONS =
       "https://premierhero.com/terms-and-conditions";
   static const ABOUT_US = "https://premierhero.com/about-us";
+
 }

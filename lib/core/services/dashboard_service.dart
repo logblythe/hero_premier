@@ -3,6 +3,7 @@ import 'package:hero_premier/core/models/news/news.dart';
 import 'package:hero_premier/core/models/prediction/prediction_post_response.dart';
 import 'package:hero_premier/core/models/prediction/prediction_response.dart';
 import 'package:hero_premier/core/models/table/table_response.dart';
+import 'package:hero_premier/core/models/todayList/today_response.dart';
 
 class DashboardService {
   final ApiBaseHelper _api;
@@ -10,12 +11,15 @@ class DashboardService {
   DashboardService({ApiBaseHelper api}) : this._api = api;
 
   TableResponse _tableResponse;
+  TodayResponse _todayResponse;
   PredictionResponse _predictionResponse;
   PostPredictionResponse _postPredictionResponse;
   List<News> _newsList;
   News _selectedNews;
 
   TableResponse get tableResponse => _tableResponse;
+
+  TodayResponse get todayResponse => _todayResponse;
 
   PredictionResponse get predictionResponse => _predictionResponse;
 
@@ -40,10 +44,9 @@ class DashboardService {
         _postPredictionResponse = PostPredictionResponse.fromJsonMap(value);
       });
 
-  fetchCurrentPrediction(params) => _api
-          .post("/prediction/userPredictionList/1/20", params: params)
-          .then((value) {
-        _predictionResponse = PredictionResponse.fromJsonMap(value);
+  fetchTodayPrediction(params) =>
+      _api.post("/match/todayList/1/20", params: params).then((value) {
+        _todayResponse = TodayResponse.fromJsonMap(value);
       });
 
   fetchPastPrediction(params) => _api

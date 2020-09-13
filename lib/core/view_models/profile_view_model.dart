@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hero_premier/core/models/user.dart';
+import 'package:hero_premier/core/models/individual_detail.dart';
+import 'package:hero_premier/core/models/rank/rank_response.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/services/winner_service.dart';
@@ -27,20 +28,22 @@ class ProfileViewModel extends BaseViewModel {
         this._userService = userService,
         this._winnerService = winnerService;
 
-  Future<User> getUserModel() async {
-    return _userService.getUserModel();
-  }
+  IndividualDetail get individualResponse => _userService.individualDetail;
 
-  User get user => _userService.user;
+  RankResponse get individualRank => _userService.rankResponse;
 
-  String get updatedImageUlr => _userService.imageUrl;
+  get updatedImageUrl => _userService.imageUrl;
+
+  get user =>
+      _userService.loginModel.result.local ??
+      _userService.loginModel.result.facebook;
 
   updateProfile(String name, String dob, String gender, String address,
       String contact) async {
     try {
       setLoading();
       await _userService.updateProfile({
-        "userId": await _userService.getUserId(),
+        "userId": _userService.userId,
         "name": name,
         "address": address,
         "dob": dob,
@@ -63,8 +66,7 @@ class ProfileViewModel extends BaseViewModel {
   fetchUserDetails() async {
     try {
       setLoading();
-      String _userId =
-          _winnerService.selectedWinnerId ?? await _userService.getUserId();
+      String _userId = _winnerService.selectedWinnerId;
       await _userService.fetchUserDetails(_userId);
       await _userService.fetchUserRank(_userId);
       setCompleted();
@@ -89,9 +91,8 @@ class ProfileViewModel extends BaseViewModel {
     if (file != null) {
       try {
         setLoading();
-        String _userId = await _userService.getUserId();
         await _userService
-            .uploadProfileImage({"userId": _userId, "image": file});
+            .uploadProfileImage({"userId": _userService.userId, "image": file});
         Fluttertoast.showToast(
             msg: "Image update successful.",
             toastLength: Toast.LENGTH_LONG,

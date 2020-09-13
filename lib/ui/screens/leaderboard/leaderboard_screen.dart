@@ -18,14 +18,18 @@ class LeaderboardScreen extends StatefulWidget {
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
   final ScrollController _controller = ScrollController();
+  LeaderboardViewModel _leaderboardVM;
 
   @override
   Widget build(BuildContext context) {
     return BaseWidget<LeaderboardViewModel>(
       model: LeaderboardViewModel(
         leaderboardService: Provider.of(context),
+        navigationService: Provider.of(context),
+        winnerService: Provider.of(context),
       ),
       onModelReady: (model) {
+        _leaderboardVM = model;
         model.fetchLeaderboard();
         _controller.addListener(() {
           if (_controller.position.pixels ==
@@ -62,6 +66,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                               pos: '${index + 4} th',
                               points: leaderboard.points.toString(),
                               url: leaderboard.local.image,
+                              onSelect: () =>
+                                  model.selectWinner(leaderboard.id),
                             ),
                             (index == _leaderboards.length - 1 &&
                                     model.status == Status.PAGINATING)
@@ -100,7 +106,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 width: 60,
                 height: 60,
               ),
-
             ],
           ),
         ),
@@ -121,67 +126,70 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 100,
-                margin: EdgeInsets.only(bottom: 16.0, top: 24.0),
-                child: Stack(
-                  children: [
-                    getWinnerWidget(top3[0].local.image),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          height: 32,
-                          width: 32,
-                          margin: EdgeInsets.only(top: 24.0),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.15),
-                                    blurRadius: 1.0,
-                                    offset: Offset(0, 0.5),
-                                    spreadRadius: 0.5)
-                              ]),
+          InkWell(
+            onTap: ()=>_leaderboardVM.selectWinner(top3[0].id),
+            child: Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 100,
+                  margin: EdgeInsets.only(bottom: 16.0, top: 24.0),
+                  child: Stack(
+                    children: [
+                      getWinnerWidget(top3[0].local.image),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: GestureDetector(
+                          onTap: () {},
                           child: Container(
-                            padding: EdgeInsets.only(bottom: 6.0),
-                            child: SvgPicture.asset(
-                              "assets/images/ic_medal_first.svg",
-                              width: 15.0,
-                              height: 15.0,
+                            height: 32,
+                            width: 32,
+                            margin: EdgeInsets.only(top: 24.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 1.0,
+                                      offset: Offset(0, 0.5),
+                                      spreadRadius: 0.5)
+                                ]),
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 6.0),
+                              child: SvgPicture.asset(
+                                "assets/images/ic_medal_first.svg",
+                                width: 15.0,
+                                height: 15.0,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(right: 20.0, bottom: 8.0),
-                            child: SvgPicture.asset(
-                                "assets/images/ic_left_corn.svg"),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 20.0, bottom: 8.0),
-                            child: SvgPicture.asset(
-                                "assets/images/ic_right_corn.svg"),
-                          ),
-                        ],
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(right: 20.0, bottom: 8.0),
+                              child: SvgPicture.asset(
+                                  "assets/images/ic_left_corn.svg"),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 20.0, bottom: 8.0),
+                              child: SvgPicture.asset(
+                                  "assets/images/ic_right_corn.svg"),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Text(
             top3[0].local.name,
@@ -232,7 +240,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     child: Container(
                       height: 100,
                       width: 100,
-                      child: getSecondWidget(top3[1].local.image),
+                      child: InkWell(
+                          onTap: () => _leaderboardVM.selectWinner(top3[1].id),
+                          child: getSecondWidget(top3[1].local.image)),
                     ),
                   ),
                   Align(
@@ -293,7 +303,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   Container(
                     width: 100.0,
                     height: 100.0,
-                    child: getThirdWidget(top3[2].local.image),
+                    child: InkWell(
+                        onTap: () => _leaderboardVM.selectWinner(top3[2].id),
+                        child: getThirdWidget(top3[2].local.image)),
                   ),
                   Align(
                     alignment: Alignment.centerRight,

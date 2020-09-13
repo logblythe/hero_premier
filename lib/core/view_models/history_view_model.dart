@@ -44,9 +44,8 @@ class HistoryViewModel extends BaseViewModel {
   fetchHistory() async {
     setLoading();
     try {
-      var _userId =
-          _winnerService.selectedWinnerId ?? await _userService.getUserId();
-      await _historyService.fetchHistory(1, {"userId": _userId});
+      await _historyService.fetchHistory(1,
+          {"userId": _winnerService.selectedWinnerId ?? _userService.userId});
       calculateGameWeek();
       setCompleted();
     } catch (e) {
@@ -58,9 +57,8 @@ class HistoryViewModel extends BaseViewModel {
     _page = _page + 1;
     setPaginating();
     try {
-      var _userId =
-          _winnerService.selectedWinnerId ?? await _userService.getUserId();
-      await _historyService.fetchHistory(_page, {"userId": _userId});
+      await _historyService
+          .fetchHistory(_page, {"userId": _userService.userId});
       calculateGameWeek();
       setCompleted();
     } catch (e) {

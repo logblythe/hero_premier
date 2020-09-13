@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/constants.dart';
 import '../../shared/asset_paths.dart';
-import '../../shared/asset_paths.dart';
 import '../../shared/text_styles.dart';
 import '../../widgets/custom_appbar.dart';
 

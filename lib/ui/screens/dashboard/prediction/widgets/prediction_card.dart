@@ -51,8 +51,8 @@ class _PredictionCardState extends State<PredictionCard> {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           margin: widget.editable
-              ? EdgeInsets.symmetric(vertical: 16)
-              : EdgeInsets.all(16),
+              ? EdgeInsets.symmetric(vertical: 8)
+              : EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           decoration: widget.editable
               ? BoxDecoration(color: Colors.white)
               : UIHelper.boxDecoration(context),

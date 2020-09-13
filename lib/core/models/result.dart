@@ -2,12 +2,12 @@ import 'package:hero_premier/core/models/local.dart';
 
 class Result {
 
-  Local local;
+  dynamic local;
   int points;
   String _id;
 
 	Result.fromJsonMap(Map<String, dynamic> map): 
-		local = Local.fromJsonMap(map["local"]),
+		local = Local.fromJsonMap(map["local"] ?? map['facebook']),
 		points = map["points"],
 		_id = map["_id"];
 

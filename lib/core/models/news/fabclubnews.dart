@@ -1,19 +1,6 @@
 class FavouriteClubNews {
-  String _title;
-  String _date;
+  final String title;
+  final String date;
 
-
-  FavouriteClubNews(this._title, this._date);
-
-  set title(String title) {
-    _title = title;
-  }
-
-  String get title => _title;
-
-  set date(String date) {
-    _date = date;
-  }
-
-  String get date => _date;
+  FavouriteClubNews(this.title, this.date);
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/view_models/setting_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
@@ -54,190 +53,176 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget getTopWidget() {
-    return FutureBuilder(
-      future: _settingViewModel.getUserModel(),
-      builder: (context, AsyncSnapshot<User> snapshot) {
-        User user = snapshot.data;
-        if (snapshot.hasError) {
-          return Center(
-            child: Text("Error"),
-          );
-        }
-        if (user != null) {
-          return Container(
-            padding: EdgeInsets.all(8.0),
-            margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-            decoration: UIHelper.boxDecoration(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    dynamic user = _settingViewModel.user;
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+      decoration: UIHelper.boxDecoration(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Account",
-                            style: TextStyles.TitleTextNormalStyle,
-                          ),
-                          Text(
-                            "" + user.name,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                color: Color(0xFF9EA6C9),
-                                size: 18.0,
-                              ),
-                              Text(
-                                "" + user.address == null ? "" : user.address,
-                                style: TextStyle(
-                                  color: Color(0xFF9EA6C9),
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                    Text(
+                      "Account",
+                      style: TextStyles.TitleTextNormalStyle,
+                    ),
+                    Text(
+                      "" + user.name,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    CircleImage(
-                      size: 126,
-                      path:
-                          user.image != null ? user.image : AssetPaths.IC_MAIL,
-                      onPress: _handleProfileClick,
-                    )
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Color(0xFF9EA6C9),
+                          size: 18.0,
+                        ),
+                        Text(
+                          "" + user.address ?? "",
+                          style: TextStyle(
+                            color: Color(0xFF9EA6C9),
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-                Container(
-                  margin: EdgeInsets.all(8.0),
+              ),
+              CircleImage(
+                size: 126,
+                path: user.image != null ? user.image : AssetPaths.IC_MAIL,
+                onPress: _handleProfileClick,
+              )
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Arsenal",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: 4.0,
+                    ),
+                    SvgPicture.asset(
+                      'assets/images/ic_arsenal.svg',
+                      width: 26.0,
+                      height: 26.0,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 2.0),
+                Text(
+                  "Favourite Club",
+                  style: TextStyle(
+                    color: Color(0xFF9EA6C9),
+                    fontSize: 12.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Arsenal",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 4.0,
-                          ),
-                          SvgPicture.asset(
-                            'assets/images/ic_arsenal.svg',
-                            width: 26.0,
-                            height: 26.0,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 2.0),
                       Text(
-                        "Favourite Club",
+                        "165",
                         style: TextStyle(
-                          color: Color(0xFF9EA6C9),
-                          fontSize: 12.0,
-                        ),
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "Overall pts",
+                        style: TextStyle(
+                            color: Color(0xFF9EA6C9),
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
+                  flex: 1,
                 ),
-                Container(
-                  margin: EdgeInsets.only(left: 8.0),
-                  child: Row(
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 16.0),
+                      height: 16.0,
+                      width: 1.0,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF9EA6C9),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "165",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "Overall pts",
-                              style: TextStyle(
-                                  color: Color(0xFF9EA6C9),
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        flex: 1,
+                      Text(
+                        "45",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
                       ),
-                      Expanded(
-                        child: Center(
-                          child: Container(
-                            margin: EdgeInsets.only(top: 16.0),
-                            height: 16.0,
-                            width: 1.0,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF9EA6C9),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "45",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "Overal Rank",
-                              style: TextStyle(
-                                  color: Color(0xFF9EA6C9),
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        flex: 1,
+                      Text(
+                        "Overall Rank",
+                        style: TextStyle(
+                            color: Color(0xFF9EA6C9),
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
+                  flex: 1,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 24, bottom: 28),
-                  child: SecondaryButton(
-                    label: 'LOGOUT',
-                    onPress: _handleLogout,
-                  ),
-                )
               ],
             ),
-          );
-        }
-        return Center(child: CircularProgressIndicator());
-      },
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 24, bottom: 28),
+            child: SecondaryButton(
+              label: 'LOGOUT',
+              onPress: _handleLogout,
+            ),
+          )
+        ],
+      ),
     );
   }
 

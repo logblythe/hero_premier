@@ -15,6 +15,10 @@ class SettingViewModel extends BaseViewModel {
   })  : this._userService = userService,
         this._navigationService = navigationService;
 
+  get user =>
+      _userService.loginModel.result.local ??
+      _userService.loginModel.result.facebook;
+
   logout() async {
     try {
       setLoading();
@@ -25,8 +29,6 @@ class SettingViewModel extends BaseViewModel {
       setError(e);
     }
   }
-
-  getUserModel() => _userService.getUserModel();
 
   navigateToChangePassword() =>
       _navigationService.navigateTo(RoutePaths.CHANGE_PASSWORD);

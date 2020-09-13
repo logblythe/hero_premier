@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hero_premier/core/helpers/api_helper.dart';
-import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
+import 'package:hero_premier/core/helpers/secured_storage_helper.dart';
 import 'package:hero_premier/core/models/club/club.dart';
 import 'package:hero_premier/core/models/club/clubs_response.dart';
 import 'package:hero_premier/core/models/image_upload.dart';
@@ -9,46 +9,68 @@ import 'package:hero_premier/core/models/individual_detail.dart';
 import 'package:hero_premier/core/models/login/facebook_response.dart';
 import 'package:hero_premier/core/models/login/login_model.dart';
 import 'package:hero_premier/core/models/rank/rank_response.dart';
-import 'package:hero_premier/core/models/user.dart';
 
 class UserService {
   final ApiBaseHelper _api;
-  final SharedPrefHelper _prefHelper;
+  final SecuredStorageHelper _storageHelper;
 
-  UserService({ApiBaseHelper api, SharedPrefHelper prefHelper})
+  UserService({ApiBaseHelper api, SecuredStorageHelper storageHelper})
       : _api = api,
-        _prefHelper = prefHelper;
+        _storageHelper = storageHelper;
 
+  IndividualDetail _individualDetail;
+  ImageUpload _upload;
   List<Club> _clubs;
   LoginModel _loginModel;
-  User _user = User();
-  ImageUpload _upload;
+  RankResponse _rankResponse;
   String _imageUrl;
 
-  get clubs => _clubs;
+  List<Club> get clubs => _clubs;
 
-  get loginModel => _loginModel;
+  LoginModel get loginModel => _loginModel;
 
-  get imageUrl => _imageUrl;
+  RankResponse get rankResponse => _rankResponse;
 
-  User get user => _user;
+  IndividualDetail get individualDetail => _individualDetail;
+
+  String get imageUrl => _imageUrl;
+
+  String get userId => loginModel?.result?.id ?? "5d45bc0e6f24b26dc40bd462";
+
+  storedCredentials() => _storageHelper.allValues();
+
+  changePassword(params) => _api
+      .patch("/user/changePassword", params: params)
+      .then((value) => print("the response ${jsonEncode(value)}"));
 
   checkUniqueMail(email) =>
       _api.post("/user/checkUniqueEmail", params: {"email": email});
 
-  registerUser(user) => _api.post("/user/localSignup", params: user.toJson());
-
-  login(params) => _api.post("/user/localLogin", params: params).then((value) {
-        _loginModel = LoginModel.fromJson(value);
-        _prefHelper.setString(KEY_TOKEN, loginModel.token);
-        _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));
-        _prefHelper.setBool(KEY_SESSION, true);
-        _prefHelper.setString(
-            KEY_USER, jsonEncode(loginModel.result.local.toJson()));
-        _prefHelper.setString(KEY_USER_ID, loginModel.result.id);
+  fetchClubs() => _api.get("/club/getList/1/20").then((result) {
+        ClubsResponse clubsResponse = ClubsResponse.fromJsonMap(result);
+        _clubs = clubsResponse.clubs;
       });
 
-  fbLogin(token) {
+  fetchUserDetails(String userId) =>
+      _api.get("/user/getSingleUserDetails/$userId").then((value) {
+        _individualDetail = IndividualDetail.fromJsonMap(value);
+      });
+
+  fetchUserRank(String userId) =>
+      _api.get("/user/individualRank/$userId").then((value) {
+        _rankResponse = RankResponse.fromJsonMap(value);
+      });
+
+  login(params) => _api.post("/user/localLogin", params: params).then(
+        (value) {
+          _loginModel = LoginModel.fromJson(value);
+          _storageHelper.set(key: KEY_EMAIL, value: params['email']);
+          _storageHelper.set(key: KEY_PASSWORD, value: params['password']);
+          _storageHelper.set(key: KEY_TOKEN, value: _loginModel.token);
+        },
+      );
+
+  loginFb(token) {
     _api
         .get(null,
             wholeUrl:
@@ -62,65 +84,22 @@ class UserService {
         "image": facebookResponse.picture.data.url,
         "facebookId": facebookResponse.id,
       }).then((value) {
-        LoginModel loginModel = LoginModel.fromJson(value);
-
-        _prefHelper.setString(KEY_TOKEN, loginModel.token);
-        _prefHelper.setString(KEY_LOGIN, jsonEncode(loginModel.toJson()));
-        _prefHelper.setBool(KEY_SESSION, true);
-        _prefHelper.setBool(KEY_SOCIAL, true);
-        _prefHelper.setString(
-            KEY_USER, jsonEncode(loginModel.result.facebook.toJson()));
-        _prefHelper.setString(KEY_USER_ID, loginModel.result.id);
+        _loginModel = LoginModel.fromJson(value);
+        _storageHelper.set(key: KEY_FB_TOKEN, value: token);
       });
     });
   }
 
   logout() => _api.post("/user/logout").then((value) {
-        _prefHelper.clear();
+        _storageHelper.deleteAll();
       });
+
+  registerUser(user) => _api.post("/user/localSignup", params: user.toJson());
 
   sendEmailForgotPassword(params) =>
       _api.post("/user/forgotPassword", params: params);
 
-  fetchClubs() => _api.get("/club/getList/1/20").then((result) {
-        ClubsResponse clubsResponse = ClubsResponse.fromJsonMap(result);
-        _clubs = clubsResponse.clubs;
-      });
-
-  updateProfile(params) =>
-      _api.patch("/user/updateLocalUser", params: params);
-
-  changePassword(params) => _api
-      .patch("/user/changePassword", params: params)
-      .then((value) => print("the response ${jsonEncode(value)}"));
-
-  Future<User> getUserModel() async {
-    final jsonResponse = json.decode(await _prefHelper.getString(KEY_USER));
-    User user = User.fromJsonMap(jsonResponse);
-    return user;
-  }
-
-  getUserId() async {
-    return await _prefHelper.getString(KEY_USER_ID);
-  }
-
-  Future<bool> getSession() async {
-    return await _prefHelper.getBool(KEY_SESSION);
-  }
-
-  fetchUserDetails(String userId) =>
-      _api.get("/user/getSingleUserDetails/$userId").then((value) {
-        IndividualDetail detail = IndividualDetail.fromJsonMap(value);
-        _user.name = detail.result.local.name;
-        _user.image = detail.result.local.image;
-        _user.points = detail.result.points.toString();
-      });
-
-  fetchUserRank(String userId) =>
-      _api.get("/user/individualRank/$userId").then((value) {
-        RankResponse rankResponse = RankResponse.fromJsonMap(value);
-        _user.rank = rankResponse.rank[0].rank.toString();
-      });
+  updateProfile(params) => _api.patch("/user/updateLocalUser", params: params);
 
   uploadProfileImage(params) =>
       _api.multipart("/user/updateImage", params: params).then((value) {

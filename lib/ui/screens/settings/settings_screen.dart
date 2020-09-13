@@ -346,7 +346,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           InkWell(
             onTap: () =>
-                _settingViewModel.launchInWebViewOrVC(AssetPaths.ABOUT_US),
+                _settingViewModel.launchInWebViewWithJavaScript(AssetPaths.ABOUT_US,"About us"),
+
             child: Container(
               margin: EdgeInsets.all(8.0),
               child: Column(
@@ -400,8 +401,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           InkWell(
-            onTap: () => _settingViewModel
-                .launchInWebViewOrVC(AssetPaths.PRIVACY_POLICY),
+            onTap: () =>
+            _settingViewModel.launchInWebViewWithJavaScript(AssetPaths.PRIVACY_POLICY,"Privacy Policy"),
             child: Container(
               margin: EdgeInsets.all(8.0),
               child: Column(
@@ -456,7 +457,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           InkWell(
             onTap: () => _settingViewModel
-                .launchInWebViewOrVC(AssetPaths.TERMS_CONDITIONS),
+                .launchInWebViewWithJavaScript(AssetPaths.TERMS_CONDITIONS, "Terms & Conditions"),
             child: Container(
               margin: EdgeInsets.all(8.0),
               child: Column(
@@ -488,7 +489,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             width: 8.0,
                           ),
                           Text(
-                            "Disclaimer",
+                            "Terms & Conditions",
                             style: TextStyle(
                                 color: Color(0xFF9EA6C9),
                                 fontWeight: FontWeight.bold),

@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/leaderboard/leaderboard.dart';
 import 'package:hero_premier/core/services/leaderboard_service.dart';
+import 'package:hero_premier/core/services/navigation_service.dart';
+import 'package:hero_premier/core/services/winner_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
+import 'package:hero_premier/router.dart';
 
 class LeaderboardViewModel extends BaseViewModel {
   final LeaderboardService _leaderboardService;
+  final WinnerService _winnerService;
+  final NavigationService _navigationService;
 
-  LeaderboardViewModel({@required LeaderboardService leaderboardService})
-      : this._leaderboardService = leaderboardService;
+  LeaderboardViewModel({
+    @required LeaderboardService leaderboardService,
+    @required NavigationService navigationService,
+    @required WinnerService winnerService,
+  })  : this._leaderboardService = leaderboardService,
+        this._navigationService = navigationService,
+        this._winnerService = winnerService;
 
   int _page = 1;
 
@@ -36,5 +46,10 @@ class LeaderboardViewModel extends BaseViewModel {
     } catch (e) {
       setError(e.toJson());
     }
+  }
+
+  selectWinner(String userId) {
+    _winnerService.setSelectedWinnerId(userId);
+    _navigationService.navigateTo(RoutePaths.WINNER_DETAIL);
   }
 }

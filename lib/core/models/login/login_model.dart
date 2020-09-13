@@ -1,14 +1,15 @@
-import 'package:hero_premier/core/models/login/result.dart';
+import 'package:hero_premier/core/models/login/login_result.dart';
 
 class LoginModel {
-  Result result;
+  LoginResult result;
   String message;
   String token;
 
   LoginModel({this.result, this.message, this.token});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
-    result = json['result'] != null ? Result.fromJson(json['result']) : null;
+    result =
+        json['result'] != null ? LoginResult.fromJsonMap(json['result']) : null;
     message = json['message'];
     token = json['token'];
   }

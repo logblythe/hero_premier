@@ -2,20 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
+import 'package:hero_premier/core/helpers/secured_storage_helper.dart';
 import 'package:hero_premier/utils/api_exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiBaseHelper {
   final String _baseUrl = "https://dev.premierhero.com";
   String token;
 
   Future<String> getToken() async {
-    var sharedPref = await SharedPreferences.getInstance();
-    return sharedPref.getString(KEY_TOKEN);
+    SecuredStorageHelper storage = SecuredStorageHelper();
+    return storage.get(key: KEY_TOKEN);
   }
 
   Future<dynamic> get(String url, {String wholeUrl}) async {

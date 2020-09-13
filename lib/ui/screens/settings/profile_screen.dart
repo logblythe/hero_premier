@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/models/login/local.dart';
-import 'package:hero_premier/core/models/user.dart';
 import 'package:hero_premier/core/view_models/profile_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
@@ -28,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
   TextEditingController _contactController;
   TextEditingController _emailAddressController;
   Local local;
+  dynamic _user;
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +38,13 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         winnerService: Provider.of(context),
       ),
       onModelReady: (model) async {
-        User user = await model.getUserModel();
-        _fullNameController = TextEditingController(text: user.name);
-        _dobController = TextEditingController(text: user.dob);
+        _user = model.user;
+        _fullNameController = TextEditingController(text: _user.name);
+        _dobController = TextEditingController(text: _user.dob);
         _genderController = TextEditingController();
-        _addressController = TextEditingController(text: user.address);
-        _contactController = TextEditingController(text: user.phoneNumber);
-        _emailAddressController = TextEditingController(text: user.email);
+        _addressController = TextEditingController(text: _user.address);
+        _contactController = TextEditingController(text: _user.phoneNumber);
+        _emailAddressController = TextEditingController(text: _user.email);
       },
       builder: (context, model, child) {
         _profileViewModel = model;
@@ -70,46 +70,35 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
               },
             ),
           ),
-          body: FutureBuilder(
-            future: _profileViewModel.getUserModel(),
-            builder: (context, AsyncSnapshot<User> local) {
-              if (local.hasError) {
-                return Text("Error");
-              }
-              if (local.data != null) {
-                return Stack(
-                  children: [
-                    IgnorePointer(
-                      ignoring: model.loading,
-                      child: body(local.data),
-                    ),
-                    model.error != null
-                        ? ErrorCard(
-                            error: _profileViewModel.error,
-                            onPress: () => {_profileViewModel.setError(null)},
-                          )
-                        : Container(),
-                    model.dialogContent != null
-                        ? ErrorCard(
-                            error: _profileViewModel.setDialogContent(null),
-                            onPress: () {
-                              _profileViewModel.setDialogContent(null);
-                              _profileViewModel.navigateSetting();
-                            },
-                          )
-                        : Container(),
-                  ],
-                );
-              }
-              return Center(child: CircularProgressIndicator());
-            },
+          body: Stack(
+            children: [
+              IgnorePointer(
+                ignoring: model.loading,
+                child: body(),
+              ),
+              model.error != null
+                  ? ErrorCard(
+                      error: _profileViewModel.error,
+                      onPress: () => {_profileViewModel.setError(null)},
+                    )
+                  : Container(),
+              model.dialogContent != null
+                  ? ErrorCard(
+                      error: _profileViewModel.setDialogContent(null),
+                      onPress: () {
+                        _profileViewModel.setDialogContent(null);
+                        _profileViewModel.navigateSetting();
+                      },
+                    )
+                  : Container(),
+            ],
           ),
         );
       },
     );
   }
 
-  Widget body(User user) {
+  Widget body() {
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
@@ -159,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
                       ),
                     ),
                   ),
-                  getProfileWidget(user),
+                  getProfileWidget(),
                 ],
               ),
               SizedBox(height: 24.0),
@@ -175,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
     );
   }
 
-  Widget getProfileWidget(User user) {
+  Widget getProfileWidget() {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -189,9 +178,11 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
         ),
         child: CircleImage(
           size: 126,
-          path: _profileViewModel.updatedImageUlr != null
-              ? _profileViewModel.updatedImageUlr
-              : (user.image != null && user.image.isNotEmpty)  ? user.image : AssetPaths.IC_NO_HISTORY,
+          path: _profileViewModel.updatedImageUrl != null
+              ? _profileViewModel.updatedImageUrl
+              : (_user.image != null && _user.image.isNotEmpty)
+                  ? _user.image
+                  : AssetPaths.IC_NO_HISTORY,
           onPress: () {
             _profileViewModel.pickImage(ImageSource.gallery);
           },

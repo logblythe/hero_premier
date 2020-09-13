@@ -11,7 +11,7 @@ class Local {
   Local({this.loginAttempts, this.name, this.address, this.phoneNumber, this.dob,
       this.email, this.image, this.isEmailVerified});
 
-  Local.fromJson(Map<String, dynamic> json) {
+  Local.fromJsonMap(Map<String, dynamic> json) {
     loginAttempts = json['loginAttempts'];
     name = json['name'];
     address = json['address'];

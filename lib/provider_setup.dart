@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/helpers/api_helper.dart';
-import 'package:hero_premier/core/helpers/shared_pref_helper.dart';
+import 'package:hero_premier/core/helpers/secured_storage_helper.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
 import 'package:hero_premier/core/services/history_service.dart';
 import 'package:hero_premier/core/services/leaderboard_service.dart';
@@ -18,15 +18,24 @@ List<SingleChildWidget> providers = [
 
 List<SingleChildWidget> independentServices = [
   Provider.value(value: NavigationService()),
-  Provider.value(value: SharedPrefHelper()),
   Provider.value(value: ApiBaseHelper()),
+  Provider.value(value: SecuredStorageHelper()),
 ];
 
 List<SingleChildWidget> dependentServices = [
-  ProxyProvider2<ApiBaseHelper, SharedPrefHelper, UserService>(
-    update: (BuildContext context, ApiBaseHelper api,
-            SharedPrefHelper prefHelper, UserService userService) =>
-        UserService(api: api, prefHelper: prefHelper),
+  ProxyProvider2<ApiBaseHelper, SecuredStorageHelper, UserService>(
+    update: (
+      BuildContext context,
+      ApiBaseHelper api,
+      SecuredStorageHelper storageHelper,
+      UserService userService,
+    ) {
+      return UserService(
+        api: api,
+        storageHelper: storageHelper,
+      );
+    },
+    builder: (context, child) => child,
   ),
   ProxyProvider<ApiBaseHelper, LeaderboardService>(
     update: (context, api, service) => LeaderboardService(api: api),

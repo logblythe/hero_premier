@@ -49,7 +49,7 @@ class DashboardViewModel extends BaseViewModel {
     //todo show a feedback in case of post success or failure
     setLoading();
     try {
-      var _userId = await _userService.getUserId();
+      var _userId = _userService.userId;
       await _dashboardService.postPrediction({
         "userId": _userId,
         "matchId": matchId,
@@ -65,8 +65,9 @@ class DashboardViewModel extends BaseViewModel {
   fetchCurrentPrediction() async {
     setLoading();
     try {
-      var _userId = await _userService.getUserId();
-      await _dashboardService.fetchCurrentPrediction({"userId": _userId});
+      await _dashboardService.fetchCurrentPrediction({
+        "userId": _userService.userId,
+      });
       setCompleted();
     } catch (e) {
       setError(e.toJson());
@@ -88,8 +89,8 @@ class DashboardViewModel extends BaseViewModel {
   fetchPastPrediction() async {
     setLoading();
     try {
-      var _userId = await _userService.getUserId();
-      await _dashboardService.fetchPastPrediction({"userId": _userId});
+      await _dashboardService
+          .fetchPastPrediction({"userId": _userService.userId});
       setCompleted();
     } catch (e) {
       setError(e.toJson());

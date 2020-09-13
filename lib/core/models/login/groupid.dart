@@ -5,7 +5,7 @@ class GroupId {
 
   GroupId({this.sId, this.name, this.inviteLink});
 
-  GroupId.fromJson(Map<String, dynamic> json) {
+  GroupId.fromJsonMap(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
     inviteLink = json['inviteLink'];

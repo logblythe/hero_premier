@@ -16,7 +16,13 @@ class LoginViewModel extends BaseViewModel {
 
   bool _obscureText = true;
 
+  storedCredentials() => _userService.storedCredentials();
+
   get obscureText => _obscureText;
+
+  String get username =>
+      _userService.loginModel.result.local?.name ??
+      _userService.loginModel.result.facebook.name;
 
   void toggleObscureText() {
     _obscureText = !_obscureText;
@@ -30,22 +36,20 @@ class LoginViewModel extends BaseViewModel {
       setDialogContent("username");
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e.toString());
     }
   }
 
   fbLogin(String token) async {
     try {
       setLoading();
-      await _userService.fbLogin(token);
+      await _userService.loginFb(token);
       setDialogContent("username");
       setCompleted();
     } catch (e) {
       setError(e.toJson());
     }
   }
-
-  session() => _userService.getSession();
 
   forgotPassword() => _navigationService.navigateTo(RoutePaths.FORGOT_PASSWORD);
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hero_premier/core/view_models/login_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
@@ -11,7 +12,6 @@ import 'package:hero_premier/ui/widgets/social_button.dart';
 import 'package:hero_premier/ui/widgets/welcome_modal.dart';
 import 'package:hero_premier/validator_mixin.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,12 +21,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailController =
-      TextEditingController(text: "nareshlamgade@gmail.com");
+      TextEditingController(text: "sikshyamaharjan123@gmail.com");
   TextEditingController _passwordController =
-      TextEditingController(text: "Nepal@123");
+      TextEditingController(text: "12345678");
   LoginViewModel _model;
   final facebookLogin = FacebookLogin();
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,6 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
         ),
         builder: (context, model, child) {
           _model = model;
-
           return Stack(
             children: <Widget>[
               IgnorePointer(ignoring: model.loading, child: body(model)),
@@ -53,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
                   : Container(),
               model.dialogContent != null
                   ? WelcomeModal(
+                      name: model.username.split(" ").elementAt(0),
                       onPress: () {
                         model.setDialogContent(null);
                         model.navigateHome();
@@ -255,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
   }
 
   Future<Null> _handleFacebookLogin() async {
-    facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly ;
+    facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
     final FacebookLoginResult result = await facebookLogin.logIn(['email']);
 
     switch (result.status) {

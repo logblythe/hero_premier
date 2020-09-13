@@ -6,7 +6,6 @@ import 'package:hero_premier/ui/screens/settings/settings_screen.dart';
 import 'package:hero_premier/ui/screens/winner/winner_screen.dart';
 import 'package:hero_premier/ui/widgets/custom_appbar.dart';
 import 'package:hero_premier/ui/widgets/custom_bottom_navbar.dart';
-import 'package:hero_premier/ui/widgets/welcome_modal.dart';
 
 import '../../router.dart';
 
@@ -23,11 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    /*  SharedPreferences.getInstance().then((value) {
-      if (!(value.getBool(KEY_SESSION) ?? false)) {
-        Navigator.of(context).pushReplacementNamed(RoutePaths.LOGIN);
-      }
-    });*/
   }
 
   @override
@@ -42,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
       body: _selectWidget != null ? _selectWidget : Container(),
       bottomNavigationBar: CustomBottomNavBar(
+        labelList: ["HOME", "HISTORY", "WINNER", "RANKING", "SETTING"],
         iconList: [
           "assets/images/ic_football_regular.svg",
           "assets/images/ic_history.svg",

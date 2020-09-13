@@ -57,8 +57,7 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
           return Center(child: CircularProgressIndicator());
         } else if (model.error != null) {
           return Text(model.error);
-        }
-        {
+        } else {
           return Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(color: Colors.white),
@@ -72,14 +71,14 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
                   child: Column(
                     children: [
                       CircularCachedNetworkImage(
-                        url: model.user.image ??
+                        url: model.individualResponse.result.local.image ??
                             "https://via.placeholder.com/150",
                         width: 60,
                         height: 60,
                       ),
                       SizedBox(height: 8.0),
                       Text(
-                        model.user.name,
+                        model.individualResponse.result.local.name,
                         style: TextStyles.TitleTextNormalBoldStyle,
                       ),
                       SizedBox(height: 8.0),
@@ -108,7 +107,7 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
                             ),
                             SizedBox(width: 8.0),
                             Text(
-                              getRank(model.user.rank),
+                              getRank(model.individualRank.rank[0].rank.toString()),
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14.0,
@@ -142,7 +141,7 @@ class _WinnerDetailsScreenState extends State<WinnerDetailsScreen> {
                             ),
                             SizedBox(width: 8.0),
                             Text(
-                              model.user.points,
+                              model.individualRank.rank[0].rank.toString(),
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14.0,

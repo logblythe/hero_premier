@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hero_premier/core/models/news/news.dart';
 import 'package:hero_premier/core/models/table/table_response.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
@@ -46,7 +47,6 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   postPrediction(String scoreA, String scoreB, String matchId) async {
-    //todo show a feedback in case of post success or failure
     setLoading();
     try {
       var _userId = _userService.userId;
@@ -57,8 +57,26 @@ class DashboardViewModel extends BaseViewModel {
         "secondTeamScorePrediction": scoreB
       });
       setCompleted();
+      Fluttertoast.showToast(
+          msg:
+              "Your prediction has been saved successfully",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black.withOpacity(0.8),
+          textColor: Colors.white,
+          fontSize: 16.0);
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
+      Fluttertoast.showToast(
+          msg:
+          error,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red.withOpacity(0.8),
+          textColor: Colors.white,
+          fontSize: 16.0);
     }
   }
 

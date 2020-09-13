@@ -12,9 +12,14 @@ import 'package:provider/provider.dart';
 class PredictionCard extends StatefulWidget {
   final PredictionResult prediction;
   final bool editable;
+  final bool isResult;
 
-  const PredictionCard({Key key, this.prediction, this.editable = false})
-      : super(key: key);
+  const PredictionCard({
+    Key key,
+    this.prediction,
+    this.editable = false,
+    this.isResult = false,
+  }) : super(key: key);
 
   @override
   _PredictionCardState createState() => _PredictionCardState();
@@ -50,9 +55,7 @@ class _PredictionCardState extends State<PredictionCard> {
       builder: (context, model, child) {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-          margin: widget.editable
-              ? EdgeInsets.symmetric(vertical: 8)
-              : EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          margin: const EdgeInsets.symmetric(vertical: 8),
           decoration: widget.editable
               ? BoxDecoration(color: Colors.white)
               : UIHelper.boxDecoration(context),
@@ -93,7 +96,7 @@ class _PredictionCardState extends State<PredictionCard> {
         Align(
           alignment: Alignment.center,
           child: Text(
-            "Predict & Win",
+            widget.isResult ? "Final score" : "Predict & Win",
             style: TextStyles.TitleTextNormalBoldStyle,
           ),
         ),
@@ -104,7 +107,7 @@ class _PredictionCardState extends State<PredictionCard> {
             child: IgnorePointer(
               ignoring: _model.loading,
               child: InkWell(
-                onTap: _handleEditPress,
+                onTap: _toggleEdit,
                 child: Text(
                   _edit ? "Cancel" : "Edit",
                   style: TextStyles.Subtitle2.copyWith(
@@ -279,17 +282,22 @@ class _PredictionCardState extends State<PredictionCard> {
         : Container();
   }
 
-  _handlePrediction() {
-    _model.postPrediction(_controllerA.text ?? "0", _controllerB.text ?? "0",
+  _handlePrediction() async{
+    FocusScope.of(context).requestFocus();
+    await _model.postPrediction(_controllerA.text ?? "0", _controllerB.text ?? "0",
         _prediction.matchId.id);
+    setState(() => _edit = !_edit);
+
   }
 
-  _handleEditPress() {
+  _toggleEdit() {
     if (_model.error != null) {
       _model.setError(null);
     }
-    setState(() {
-      _edit = !_edit;
-    });
+    if (_edit) {
+      _controllerA.text = _prediction.firstTeamScorePrediction.toString();
+      _controllerB.text = _prediction.secondTeamScorePrediction.toString();
+    }
+    setState(() => _edit = !_edit);
   }
 }

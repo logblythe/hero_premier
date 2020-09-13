@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/news/fabclubnews.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_screen.dart';
-import 'package:hero_premier/ui/screens/dashboard/prediction/prediction_result_screen.dart';
+import 'package:hero_premier/ui/screens/dashboard/prediction/predict_win_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/widget/favclubnews_widget.dart';
 import 'package:hero_premier/ui/screens/dashboard/widget/gift_section_widget.dart';
-import 'package:hero_premier/ui/shared/asset_paths.dart';
 
 class AllScreen extends StatelessWidget {
   @override
@@ -15,12 +14,9 @@ class AllScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            PredictWinScreen(),
             NewsScreen(showCount: 2),
             TableScreen(),
-            SizedBox(height: 82),
-            PredictionResultScreen(
-              insideScrollView: true,
-            ),
             GiftSectionWidget(),
             FavouriteClubNewsWidget(
               favclubNews: getFavClubNews(),

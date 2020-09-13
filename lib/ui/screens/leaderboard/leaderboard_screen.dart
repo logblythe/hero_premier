@@ -26,11 +26,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       model: LeaderboardViewModel(
         leaderboardService: Provider.of(context),
         navigationService: Provider.of(context),
+        userService: Provider.of(context),
         winnerService: Provider.of(context),
       ),
-      onModelReady: (model) {
+      onModelReady: (model) async {
         _leaderboardVM = model;
-        model.fetchLeaderboard();
+        await model.fetchLeaderboard();
+        await model.fetchLeaderBoardIndividual();
         _controller.addListener(() {
           if (_controller.position.pixels ==
               _controller.position.maxScrollExtent) {
@@ -50,34 +52,56 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           List<Leaderboard> _leaderboards = model.leaderboards;
           List<Leaderboard> _top3 = _leaderboards.sublist(0, 3);
           List<Leaderboard> _rest = _leaderboards.sublist(3);
-          return Container(
-            margin: EdgeInsets.all(16.0),
-            child: ListView(
-                controller: _controller,
-                children: [getWinnerWidgetMain(_top3)]..addAll(
-                    _rest.asMap().entries.map(
-                      (entry) {
-                        int index = entry.key;
-                        var leaderboard = entry.value;
-                        return Column(
-                          children: [
-                            RankCard(
-                              name: leaderboard.local.name,
-                              pos: '${index + 4} th',
-                              points: leaderboard.points.toString(),
-                              url: leaderboard.local.image,
-                              onSelect: () =>
-                                  model.selectWinner(leaderboard.id),
-                            ),
-                            (index == _leaderboards.length - 1 &&
-                                    model.status == Status.PAGINATING)
-                                ? PaginatingCard()
-                                : Container()
-                          ],
-                        );
-                      },
-                    ).toList(),
-                  )),
+          return Column(
+            children: [
+              Expanded(
+                child: ListView(
+                    shrinkWrap: true,
+                    controller: _controller,
+                    children: [getWinnerWidgetMain(_top3)]..addAll(
+                        _rest.asMap().entries.map(
+                          (entry) {
+                            int index = entry.key;
+                            var leaderboard = entry.value;
+                            return Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(16, 6, 16, 6),
+                                  child: RankCard(
+                                    name: leaderboard.local.name,
+                                    pos: '${index + 4} th',
+                                    points: leaderboard.points.toString(),
+                                    url: leaderboard.local.image,
+                                    onSelect: () =>
+                                        model.selectWinner(leaderboard.id),
+                                  ),
+                                ),
+                                (index == _leaderboards.length - 1 &&
+                                        model.status == Status.PAGINATING)
+                                    ? PaginatingCard()
+                                    : Container()
+                              ],
+                            );
+                          },
+                        ).toList(),
+                      )),
+              ),
+              model.rankResponse != null
+                  ? Container(
+                      margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
+                      child: RankCard(
+                        self: true,
+                        name: model.loginResult.local.name,
+                        pos: '${model.rankResponse?.rank[0].rank} th',
+                        points: model.rankResponse?.rank[0].totalPointEarned
+                            .toString(),
+                        url: model.loginResult.local.image,
+                        onSelect: () =>
+                            model.selectWinner(model.loginResult.id),
+                      ),
+                    )
+                  : Container()
+            ],
           );
         }
       },
@@ -127,7 +151,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           InkWell(
-            onTap: ()=>_leaderboardVM.selectWinner(top3[0].id),
+            onTap: () => _leaderboardVM.selectWinner(top3[0].id),
             child: Stack(
               children: [
                 Container(

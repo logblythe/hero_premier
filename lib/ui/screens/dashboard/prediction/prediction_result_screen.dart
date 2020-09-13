@@ -46,7 +46,7 @@ class _PredictionResultScreenState extends State<PredictionResultScreen> {
                     : null,
                 itemCount: predictions.length,
                 itemBuilder: (context, index) {
-                  return PredictionCard(prediction: predictions[index]);
+                  return PredictionCard(prediction: predictions[index],isResult: true,);
                 },
               ),
             );

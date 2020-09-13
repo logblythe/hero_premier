@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/utils/api_exceptions.dart';
 import 'package:hero_premier/utils/api_response.dart';
 
 class BaseViewModel extends ChangeNotifier {
@@ -29,7 +30,11 @@ class BaseViewModel extends ChangeNotifier {
   }
 
   setError(error) {
-    _error = error;
+    if(error is AppException){
+      _error= error.toJson()["message"];
+    }else{
+      _error = error;
+    }
     status = Status.ERROR;
     if (!_isDisposed) notifyListeners();
   }

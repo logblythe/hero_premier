@@ -21,7 +21,7 @@ class _WinnerScreenState extends State<WinnerScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 1, vsync: this);
   }
 
   @override
@@ -68,9 +68,10 @@ class _WinnerScreenState extends State<WinnerScreen>
                     child: _getTabBarView(
                       [
                         currentSeasonWinners(winners, model),
-                        Icon(Icons.settings),
-                        Icon(Icons.settings),
-                        rewardWidget(),
+                        //TODO REMOVED AS PER FEEDBACK
+                        // Icon(Icons.settings),
+                        // Icon(Icons.settings),
+                        // rewardWidget(),
                       ],
                     ),
                   ),
@@ -93,18 +94,11 @@ class _WinnerScreenState extends State<WinnerScreen>
       labelStyle: TextStyle(fontWeight: FontWeight.bold),
       unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
       tabs: <Widget>[
-        Tab(
-          text: "Weekly",
-        ),
-        Tab(
-          text: "2020/2019",
-        ),
-        Tab(
-          text: "2019/2018",
-        ),
-        Tab(
-          text: "Reward",
-        ),
+        Tab(text: "Weekly"),
+        //TODO REMOVED AS PER FEEDBACK
+        // Tab(text: "2020/2019"),
+        // Tab(text: "2019/2018"),
+        // Tab(text: "Reward"),
       ],
       controller: _tabController,
     );
@@ -154,7 +148,7 @@ class _WinnerScreenState extends State<WinnerScreen>
             icon: AssetPaths.IC_SECOND_MEDAL,
             title: "30K Cash prize for the winner",
             descripion:
-            "Hello, winner first of leaderboard get 30,000 cash in hand gift",
+                "Hello, winner first of leaderboard get 30,000 cash in hand gift",
             fontColor: Color(0xFF121212),
             buttonColor: Color(0xFFA7D2D7),
           ),
@@ -165,7 +159,7 @@ class _WinnerScreenState extends State<WinnerScreen>
             icon: AssetPaths.IC_THIRD_MEDAL,
             title: "20K Cash prize for the winner",
             descripion:
-            "Hello, winner first of leaderboard get 20,000 cash in hand gift",
+                "Hello, winner first of leaderboard get 20,000 cash in hand gift",
             fontColor: Color(0xFFFFFFFF),
             buttonColor: Color(0xFFC9A85C),
           )

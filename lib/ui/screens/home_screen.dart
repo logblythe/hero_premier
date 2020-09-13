@@ -78,6 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
   _handleSearch() {}
 
   _handleNotificationPress() {
-    Navigator.of(context).pushReplacementNamed(RoutePaths.NOTIFICATION);
+    Navigator.of(context).pushNamed(RoutePaths.NOTIFICATION);
   }
 }

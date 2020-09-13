@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
 
 class RankCard extends StatelessWidget {
@@ -6,10 +7,17 @@ class RankCard extends StatelessWidget {
   final String pos;
   final String points;
   final String url;
+  final bool self;
   final Function onSelect;
 
   const RankCard(
-      {Key key, this.name, this.pos, this.points, this.url, this.onSelect})
+      {Key key,
+      this.name,
+      this.pos,
+      this.points,
+      this.url,
+      this.onSelect,
+      this.self = false})
       : super(key: key);
 
   @override
@@ -17,13 +25,15 @@ class RankCard extends StatelessWidget {
     return InkWell(
       onTap: onSelect,
       child: Container(
-        padding: EdgeInsets.all(8.0),
-        margin: EdgeInsets.only(bottom: 8.0),
         decoration: BoxDecoration(
-          color: pos == "45th" ? Theme.of(context).accentColor : Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(8.0),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          color: self ? Theme.of(context).accentColor : Colors.white,
+          image: self
+              ? DecorationImage(
+                  image: AssetImage(AssetPaths.OWN_RANK_BG),
+                  fit: BoxFit.fitWidth,
+                )
+              : null,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +76,9 @@ class RankCard extends StatelessWidget {
                               child: Text(
                                 pos,
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
+                                  color: self
+                                      ? Colors.white
+                                      : Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.normal,
                                   fontSize: 16.0,
                                   fontFamily: "Hind Madurai",
@@ -79,7 +91,7 @@ class RankCard extends StatelessWidget {
                       Text(
                         name,
                         style: TextStyle(
-                          color: pos == "45th"
+                          color: self
                               ? Colors.white
                               : Theme.of(context).primaryColor,
                           fontSize: 16.0,
@@ -94,7 +106,7 @@ class RankCard extends StatelessWidget {
                   child: Text(
                     points,
                     style: TextStyle(
-                        color: pos == "45th" ? Colors.white : Colors.black,
+                        color: self ? Colors.white : Colors.black,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold),
                   ),

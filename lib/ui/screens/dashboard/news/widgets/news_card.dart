@@ -27,20 +27,22 @@ class NewsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SourceAuthor(
+            //todo hiding it as per feedback
+           /* SourceAuthor(
               source: news.embedded.author[0].name,
               authorUrl: news.embedded.author[0].avatarUrls.ninetySix,
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 12),*/
             Text(news.title.rendered, style: TextStyles.Subtitle1),
             SizedBox(height: 8),
-            Text(
+            //todo hiding it as per feedback
+            /* Text(
               news.date,
               style: TextStyles.Subcaption.copyWith(
                 color: Theme.of(context).hintColor,
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8),*/
             Hero(
               tag: '${news.index}',
               child: CachedNetworkImage(

@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/leaderboard/leaderboard.dart';
+import 'package:hero_premier/core/models/login/login_model.dart';
+import 'package:hero_premier/core/models/login/login_result.dart';
+import 'package:hero_premier/core/models/rank/rank_response.dart';
 import 'package:hero_premier/core/services/leaderboard_service.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
+import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/services/winner_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
 import 'package:hero_premier/router.dart';
 
 class LeaderboardViewModel extends BaseViewModel {
   final LeaderboardService _leaderboardService;
-  final WinnerService _winnerService;
   final NavigationService _navigationService;
+  final UserService _userService;
+  final WinnerService _winnerService;
 
   LeaderboardViewModel({
     @required LeaderboardService leaderboardService,
     @required NavigationService navigationService,
+    @required UserService userService,
     @required WinnerService winnerService,
   })  : this._leaderboardService = leaderboardService,
         this._navigationService = navigationService,
+        this._userService = userService,
         this._winnerService = winnerService;
 
   int _page = 1;
-
   List<Leaderboard> _leaderboards = [];
 
   List<Leaderboard> get leaderboards => _leaderboards;
+
+  RankResponse get rankResponse => _userService.rankResponse;
+
+  LoginResult get loginResult => _userService.loginModel.result;
 
   fetchLeaderboard() async {
     setLoading();
@@ -51,5 +61,15 @@ class LeaderboardViewModel extends BaseViewModel {
   selectWinner(String userId) {
     _winnerService.setSelectedWinnerId(userId);
     _navigationService.navigateTo(RoutePaths.WINNER_DETAIL);
+  }
+
+  fetchLeaderBoardIndividual() {
+    setLoading();
+    try {
+      _userService.fetchUserRank(_userService.userId);
+      setCompleted();
+    } catch (e) {
+      setError(e.toString());
+    }
   }
 }

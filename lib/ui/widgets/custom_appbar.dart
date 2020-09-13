@@ -4,14 +4,14 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 class CustomAppBar extends AppBar {
   CustomAppBar(String title)
       : super(
-    elevation: 1.0,
-    centerTitle: true,
-    title: Text(
-      title,
-      style: TextStyle(color: TextColorGrey),
-    ),
-    backgroundColor: Colors.white,
-  );
+          elevation: 1.0,
+          centerTitle: true,
+          title: Text(
+            title,
+            style: TextStyle(color: TextColorGrey),
+          ),
+          backgroundColor: Colors.white,
+        );
 
   static AppBar getAppBar(String title, {onNotificationPress, onSearchPress}) {
     return AppBar(
@@ -24,13 +24,14 @@ class CustomAppBar extends AppBar {
       ),
       backgroundColor: Colors.white,
       actions: <Widget>[
-        IconButton(
+        //todo add this in future maybe
+        /*  IconButton(
           icon: const Icon(
             Icons.search,
             color: TextColorGrey,
           ),
           onPressed: onSearchPress,
-        ),
+        ),*/
         IconButton(
           icon: const Icon(
             Icons.notifications,
@@ -65,14 +66,12 @@ class CustomAppBar extends AppBar {
   }
 
   static AppBar getAppBarWithBack(String title, BuildContext context) {
-   return AppBar(
+    return AppBar(
       toolbarHeight: 75.0,
       title: Text(
         title,
         style: TextStyle(
-            color: Theme
-                .of(context)
-                .primaryColor,
+            color: Theme.of(context).primaryColor,
             fontSize: 18.0,
             fontWeight: FontWeight.bold),
       ),
@@ -81,12 +80,9 @@ class CustomAppBar extends AppBar {
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back_ios,
-          color: Theme
-              .of(context)
-              .primaryColor,
+          color: Theme.of(context).primaryColor,
         ),
-        onPressed: () {
-        },
+        onPressed: () =>Navigator.pop(context),
       ),
     );
   }

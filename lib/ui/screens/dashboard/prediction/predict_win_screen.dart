@@ -56,8 +56,9 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                     child: Text(
                       "Next Prediction",
                       style: TextStyles.Heading5.copyWith(
-                          color: Theme.of(context).hintColor,
-                          fontWeight: FontWeight.w700),
+                        color: Theme.of(context).hintColor,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                   ListView.builder(
@@ -65,8 +66,12 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                     shrinkWrap: true,
                     itemCount: _restPredictions.length,
                     itemBuilder: (context, index) {
-                      return PredictionCard(
-                        prediction: _restPredictions[index],
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 12),
+                        child: PredictionCard(
+                          prediction: _restPredictions[index],
+                          editable: true,
+                        ),
                       );
                     },
                   )

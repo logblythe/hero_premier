@@ -23,16 +23,17 @@ class AssetPaths {
   static const IC_NO_HISTORY = "assets/images/ic_no_history.png";
   static const IC_FACEBOOK = "assets/images/ic_facebook.svg";
   static const IC_BACKGROUND_REWARD = "assets/images/img_pattern.png";
-  static const IC_FIRST_MEDAL="assets/images/ic_medal_first.svg";
-  static const IC_SECOND_MEDAL="assets/images/ic_medal_second.svg";
-  static const IC_THIRD_MEDAL="assets/images/ic_medal_third.svg";
-  static const IC_GIFT="assets/images/ic_gift.svg";
-  static const IC_DISCOUNT="assets/images/ic_discount_card.svg";
-  static const IC_TICKETS="assets/images/ic_tickets.svg";
-  static const IC_POINTS="assets/images/ic_points_gift.svg";
-  static const IC_NO_NOTIFICATION="assets/images/ic_no_notification.png";
-  static const IC_RIBBON="assets/images/ic_ribbon.svg";
-  static const IC_BCK_GIFTREWARD="assets/images/ic_bck_gift_reward.png";
+  static const IC_FIRST_MEDAL = "assets/images/ic_medal_first.svg";
+  static const IC_SECOND_MEDAL = "assets/images/ic_medal_second.svg";
+  static const IC_THIRD_MEDAL = "assets/images/ic_medal_third.svg";
+  static const IC_GIFT = "assets/images/ic_gift.svg";
+  static const IC_DISCOUNT = "assets/images/ic_discount_card.svg";
+  static const IC_TICKETS = "assets/images/ic_tickets.svg";
+  static const IC_POINTS = "assets/images/ic_points_gift.svg";
+  static const IC_NO_NOTIFICATION = "assets/images/ic_no_notification.png";
+  static const IC_RIBBON = "assets/images/ic_ribbon.svg";
+  static const IC_BCK_GIFTREWARD = "assets/images/ic_bck_gift_reward.png";
+  static const OWN_RANK_BG = "assets/images/own_rank_background.png";
 
   //external URLs
   static const PRIVACY_POLICY = "https://premierhero.com/privacy-policy";

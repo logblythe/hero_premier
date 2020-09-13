@@ -3,7 +3,8 @@ import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/core/services/user_service.dart';
 import 'package:hero_premier/core/view_models/base_view_model.dart';
 import 'package:hero_premier/router.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../../router.dart';
 
 class SettingViewModel extends BaseViewModel {
   UserService _userService;
@@ -38,15 +39,11 @@ class SettingViewModel extends BaseViewModel {
   navigateToCreateGroup() =>
       _navigationService.navigateTo(RoutePaths.CREATE_GROUP);
 
-  launchInWebViewOrVC(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: false,
-        forceWebView: false,
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
+  launchInWebViewWithJavaScript(String url, String title) async {
+    List<String> args = List();
+    args.add(url);
+    args.add(title);
+
+    _navigationService.navigateTo(RoutePaths.WEBVIEW, arguments: args);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/leaderboard/leaderboard.dart';
-import 'package:hero_premier/core/models/login/login_model.dart';
 import 'package:hero_premier/core/models/login/login_result.dart';
 import 'package:hero_premier/core/models/rank/rank_response.dart';
 import 'package:hero_premier/core/services/leaderboard_service.dart';

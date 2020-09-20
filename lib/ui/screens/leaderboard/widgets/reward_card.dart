@@ -32,9 +32,7 @@ class RewardCardWidget extends StatelessWidget {
       margin: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(8.0),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
       ),
       child: Container(
         decoration: BoxDecoration(

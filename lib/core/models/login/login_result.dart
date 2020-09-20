@@ -39,7 +39,7 @@ class LoginResult {
         loggedFrom = map["loggedFrom"],
         __v = map["__v"],
         modifiedAt = map["modifiedAt"],
-        groupId = GroupId.fromJsonMap(map["groupId"]),
+        groupId = map["groupId"]!=null?GroupId.fromJsonMap(map["groupId"]):null,
         isGroupCreater = map["isGroupCreater"];
 
   Map<String, dynamic> toJson() {

@@ -12,16 +12,19 @@ class GiftScreen extends StatefulWidget {
 class _GiftScreenState extends State<GiftScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        giftWidget(),
-        rewardWidget(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(height: 300, child: giftWidget()),
+          Container(height: 300, child: rewardWidget()),
+        ],
+      ),
     );
   }
 
   Widget giftWidget() {
     return ListView(
+      shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       children: [
         GiftCard(

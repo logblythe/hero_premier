@@ -11,7 +11,6 @@ import 'package:hero_premier/utils/api_response.dart';
 import 'package:hero_premier/utils/constants.dart';
 import 'package:provider/provider.dart';
 
-//design fixes
 class HistoryScreen extends StatefulWidget {
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
@@ -58,7 +57,6 @@ class _HistoryScreenState extends State<HistoryScreen>
   }
 
   Widget body(HistoryViewModel model) {
-    Map<String, List<HistoryResult>> _gameWeekMap = model.gameWeekMap;
     return Container(
       color: Colors.white,
       width: MediaQuery.of(context).size.width,
@@ -74,8 +72,8 @@ class _HistoryScreenState extends State<HistoryScreen>
               height: MediaQuery.of(context).size.height,
               child: _getTabBarView(
                 [
-                  currentSeasonHistory(_gameWeekMap, model),
-                  currentSeasonHistory(_gameWeekMap, model),
+                  seasonHistory(model.currentGameWeekMap, model),
+                  seasonHistory(model.pastGameWeekMap, model),
                 ],
               ),
             ),
@@ -96,7 +94,7 @@ class _HistoryScreenState extends State<HistoryScreen>
       unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
       tabs: <Widget>[
         Tab(text: "Current Season"),
-        Tab(text: "2019/2020")
+        Tab(text: "2020/2021")
         //TODO REMOVED AS PER FEEDBACK
         // Tab(text: "2020/2019"),
         // Tab(text: "2019/2018"),
@@ -113,7 +111,7 @@ class _HistoryScreenState extends State<HistoryScreen>
     );
   }
 
-  Widget currentSeasonHistory(gameWeekMap, model) {
+  Widget seasonHistory(gameWeekMap, model) {
     return gameWeekMap.length == 0
         ? HistoryDefaultWidget(type: EmptyList.HISTORY)
         : ListView.builder(

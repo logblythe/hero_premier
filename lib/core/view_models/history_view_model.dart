@@ -27,16 +27,37 @@ class HistoryViewModel extends BaseViewModel {
       _historyService.historyResponse.historyResult;
 
   Map<String, List<HistoryResult>> _gameWeekMap = {};
+  Map<String, List<HistoryResult>> _currentGameWeekMap = {};
+  Map<String, List<HistoryResult>> _pastGameWeekMap = {};
+
+  Map<String, List<HistoryResult>> get currentGameWeekMap =>
+      _currentGameWeekMap;
+
+  Map<String, List<HistoryResult>> get pastGameWeekMap => _pastGameWeekMap;
 
   Map<String, List<HistoryResult>> get gameWeekMap => _gameWeekMap;
 
   calculateGameWeek() {
-    historyResult.forEach((e) {
-      if (_gameWeekMap.containsKey(e.matchId.weekNo)) {
-        _gameWeekMap[e.matchId.weekNo].add(e);
+    List<HistoryResult> _currentHistories = historyResult.where((history) =>
+        DateTime.parse(history.matchId.matchTime)
+            .isAfter(DateTime(2020, 09, 01))).toList();
+    List<HistoryResult> _previousHistories = historyResult.where((history) =>
+        DateTime.parse(history.matchId.matchTime)
+            .isBefore(DateTime(2020, 09, 01))).toList();
+    _currentHistories.forEach((e) {
+      if (_currentGameWeekMap.containsKey(e.matchId.weekNo)) {
+        _currentGameWeekMap[e.matchId.weekNo].add(e);
       } else {
-        _gameWeekMap[e.matchId.weekNo] = [];
-        _gameWeekMap[e.matchId.weekNo].add(e);
+        _currentGameWeekMap[e.matchId.weekNo] = [];
+        _currentGameWeekMap[e.matchId.weekNo].add(e);
+      }
+    });
+    _previousHistories.forEach((e) {
+      if (_pastGameWeekMap.containsKey(e.matchId.weekNo)) {
+        _pastGameWeekMap[e.matchId.weekNo].add(e);
+      } else {
+        _pastGameWeekMap[e.matchId.weekNo] = [];
+        _pastGameWeekMap[e.matchId.weekNo].add(e);
       }
     });
   }
@@ -49,7 +70,7 @@ class HistoryViewModel extends BaseViewModel {
       calculateGameWeek();
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e.toString());
     }
   }
 

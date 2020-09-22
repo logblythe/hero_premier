@@ -21,9 +21,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailController =
-      TextEditingController(text: "sikshyamaharjan123@gmail.com");
+      TextEditingController(text: "nareshlamgade@gmail.com");
   TextEditingController _passwordController =
-      TextEditingController(text: "12345678");
+      TextEditingController(text: "Nepal@123");
   LoginViewModel _model;
   final facebookLogin = FacebookLogin();
 

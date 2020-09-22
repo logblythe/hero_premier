@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hero_premier/core/models/news/fabclubnews.dart';
+import 'package:hero_premier/core/models/news/favClubnews.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/prediction/predict_win_screen.dart';
@@ -18,11 +18,12 @@ class AllScreen extends StatelessWidget {
             NewsScreen(showCount: 2),
             TableScreen(),
             GiftSectionWidget(),
-            FavouriteClubNewsWidget(
-              favclubNews: getFavClubNews(),
+           //TODO: REMOVED PER FEEDBACK
+           /* FavouriteClubNewsWidget(
+              favClubNews: getFavClubNews(),
               favIconUrl: "assets/images/ic_arsenal.svg",
               favClubName: "Arsenal",
-            ),
+            ),*/
           ],
         ),
       ),

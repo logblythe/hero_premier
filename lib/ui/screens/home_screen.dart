@@ -80,4 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
   _handleNotificationPress() {
     Navigator.of(context).pushNamed(RoutePaths.NOTIFICATION);
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

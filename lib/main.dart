@@ -1,6 +1,4 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
-import 'package:hero_premier/ad/ad_manager.dart';
 import 'package:hero_premier/core/services/navigation_service.dart';
 import 'package:hero_premier/provider_setup.dart';
 import 'package:hero_premier/router.dart';

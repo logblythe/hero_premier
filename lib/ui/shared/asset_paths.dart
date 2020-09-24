@@ -40,4 +40,6 @@ class AssetPaths {
   static const TERMS_CONDITIONS =
       "https://premierhero.com/terms-and-conditions";
   static const ABOUT_US = "https://premierhero.com/about-us";
+
+  static const TUBORG ="assets/images/tuborg.png";
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ad/ad_banner.dart';
 import 'package:hero_premier/core/models/history/history_result.dart';
 import 'package:hero_premier/core/view_models/history_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
@@ -132,6 +133,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                     historyResult: histories,
                     totalObtainedScore: totalObtainedScore,
                   ),
+                  (index == 0)?AdBanner():Container(),
                   (index == gameWeekMap.length - 1 &&
                           model.status == Status.PAGINATING)
                       ? PaginatingCard()

@@ -13,92 +13,95 @@ class NewsDetails extends StatelessWidget {
     return Scaffold(
       body: BaseWidget<DashboardViewModel>(
         model: DashboardViewModel(
-          dashboardService: Provider.of(context),
-          navigationService: Provider.of(context),
-          userService: Provider.of(context),
-        ),
+            dashboardService: Provider.of(context),
+            navigationService: Provider.of(context),
+            userService: Provider.of(context),
+            adService: Provider.of(context)),
         onModelReady: (model) {
           model.fetchNews();
         },
         builder: (context, model, child) {
           News _news = model.selectedNews;
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Stack(
-                  children: <Widget>[
-                    Hero(
-                      tag: '${_news.index}',
-                      child: CachedNetworkImage(
-                        imageUrl: _news.embedded.featureMedia[0].mediaDetails
-                            .sizes.medium.sourceUrl,
-                        width: double.infinity,
-                        height: 300,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    Container(
-                      height: 300,
-                      width: double.infinity,
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      child: Container(
-                        width: 400,
-                        padding: const EdgeInsets.fromLTRB(34, 0, 104, 16),
-                        child: Text(
-                          "${_news.title.rendered}",
-                          style: TextStyles.Subtitle1.copyWith(
-                              color: Colors.white),
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 64.0),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Stack(
+                    children: <Widget>[
+                      Hero(
+                        tag: '${_news.index}',
+                        child: CachedNetworkImage(
+                          imageUrl: _news.embedded.featureMedia[0].mediaDetails
+                              .sizes.medium.sourceUrl,
+                          width: double.infinity,
+                          height: 300,
+                          fit: BoxFit.fill,
                         ),
                       ),
-                    ),
-                    Positioned(
-                      top: 24,
-                      left: 0,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios),
-                        color: Colors.white,
-                        onPressed: () => Navigator.pop(context),
+                      Container(
+                        height: 300,
+                        width: double.infinity,
+                        color: Colors.black.withOpacity(0.1),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(32, 28, 42, 28),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 32),
-                            width: 32,
-                            height: 4,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).hintColor,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                      Positioned(
+                        bottom: 0,
+                        child: Container(
+                          width: 400,
+                          padding: const EdgeInsets.fromLTRB(34, 0, 104, 16),
+                          child: Text(
+                            "${_news.title.rendered}",
+                            style: TextStyles.Subtitle1.copyWith(
+                                color: Colors.white),
                           ),
-                          //TODO: not sure if this is required
-                          // Html(data: _news.excerpt.rendered),
-                          // Text(
-                          //   _news.excerpt.rendered,
-                          //   style: TextStyles.Subtitle1.copyWith(
-                          //       color: Theme.of(context).primaryColor),
-                          // ),
-                          // SizedBox(height: 80),
-                          Html(data: _news.content.rendered),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                      Positioned(
+                        top: 24,
+                        left: 0,
+                        child: IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          color: Colors.white,
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(32, 28, 42, 28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 32),
+                              width: 32,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).hintColor,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            //TODO: not sure if this is required
+                            // Html(data: _news.excerpt.rendered),
+                            // Text(
+                            //   _news.excerpt.rendered,
+                            //   style: TextStyles.Subtitle1.copyWith(
+                            //       color: Theme.of(context).primaryColor),
+                            // ),
+                            // SizedBox(height: 80),
+                            Html(data: _news.content.rendered),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),

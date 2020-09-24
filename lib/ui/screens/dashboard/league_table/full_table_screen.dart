@@ -18,7 +18,10 @@ class FullTableScreen extends StatelessWidget {
           },
         ),
       ),
-      body: TableScreen(fullTable: true),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom:20.0),
+        child: TableScreen(fullTable: true),
+      ),
     );
   }
 }

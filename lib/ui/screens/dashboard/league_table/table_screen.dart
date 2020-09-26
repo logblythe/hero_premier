@@ -20,7 +20,6 @@ class TableScreen extends StatefulWidget {
 
 class _TableScreenState extends State<TableScreen> {
   bool _fullTable;
-  BuildContext _context;
   List<TableData> _table;
 
   @override
@@ -31,14 +30,12 @@ class _TableScreenState extends State<TableScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return BaseWidget<DashboardViewModel>(
       model: DashboardViewModel(
-        dashboardService: Provider.of(context),
-        navigationService: Provider.of(context),
-        userService: Provider.of(context),
-        adService: Provider.of(context)
-      ),
+          dashboardService: Provider.of(context),
+          navigationService: Provider.of(context),
+          userService: Provider.of(context),
+          adService: Provider.of(context)),
       onModelReady: (model) {
         model.fetchTables();
       },

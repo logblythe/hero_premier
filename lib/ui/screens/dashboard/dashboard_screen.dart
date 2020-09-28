@@ -18,7 +18,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 6, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -44,7 +44,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                   AllScreen(),
                   PredictWinScreen(),
                   NewsScreen(),
-                  PredictionResultScreen(),
+                  //FIXME: no result api for now
+                  // PredictionResultScreen(),
                   TableScreen(),
                   GiftScreen(),
                 ],
@@ -71,11 +72,12 @@ class _DashboardScreenState extends State<DashboardScreen>
       unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
       tabs: <Widget>[
         Tab(text: "All"),
-        Tab(text: "Predict & win"),
+        Tab(text: "Predict"),
         Tab(text: "News"),
-        Tab(text: "Results"),
+        //FIXME: no result api for now
+        // Tab(text: "Results"),
         Tab(text: "Tables"),
-        Tab(text: "Gift"),
+        Tab(text: "Reward"),
       ],
       controller: _tabController,
     );

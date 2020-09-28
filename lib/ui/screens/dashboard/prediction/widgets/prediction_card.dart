@@ -96,7 +96,7 @@ class _PredictionCardState extends State<PredictionCard> {
         Align(
           alignment: Alignment.center,
           child: Text(
-            widget.isResult ? "Final score" : "Predict & Win",
+            widget.isResult ? "Final score" : "Predict your score",
             style: TextStyles.TitleTextNormalBoldStyle,
           ),
         ),

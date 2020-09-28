@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hero_premier/core/models/news/fabclubnews.dart';
+import 'package:hero_premier/core/models/news/favClubnews.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/shared/ui_helpers.dart';
 
 class FavouriteClubNewsWidget extends StatelessWidget {
-  final List<FavouriteClubNews> favclubNews;
+  final List<FavouriteClubNews> favClubNews;
   final String favIconUrl;
   final String favClubName;
   final Function press;
 
   FavouriteClubNewsWidget({
     Key key,
-    this.favclubNews,
+    this.favClubNews,
     this.favIconUrl,
     this.favClubName,
     this.press,
@@ -85,7 +85,7 @@ class FavouriteClubNewsWidget extends StatelessWidget {
               ),
             ],
           ),
-          getNewsWidget(favclubNews, context),
+          getNewsWidget(favClubNews, context),
           Center(
             child: InkWell(
               onTap: () => press ?? print('clicked'),

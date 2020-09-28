@@ -34,6 +34,7 @@ class AssetPaths {
   static const IC_RIBBON = "assets/images/ic_ribbon.svg";
   static const IC_BCK_GIFTREWARD = "assets/images/ic_bck_gift_reward.png";
   static const OWN_RANK_BG = "assets/images/own_rank_background.png";
+  static const NO_INTERNET_CONNECTION = "assets/images/img_no_internet.svg";
 
   //external URLs
   static const PRIVACY_POLICY = "https://premierhero.com/privacy-policy";

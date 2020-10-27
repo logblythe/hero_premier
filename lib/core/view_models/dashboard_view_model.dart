@@ -48,7 +48,7 @@ class DashboardViewModel extends BaseViewModel {
         await _dashboardService.fetchTables();
         setCompleted();
       } catch (e) {
-        setError(e.toJson());
+        setError(e);
       }
     }
   }
@@ -93,7 +93,7 @@ class DashboardViewModel extends BaseViewModel {
       });
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 
@@ -104,7 +104,7 @@ class DashboardViewModel extends BaseViewModel {
         await _dashboardService.fetchNews();
         setCompleted();
       } catch (e) {
-        setError(e.toString());
+        setError(e);
       }
     }
   }
@@ -116,7 +116,7 @@ class DashboardViewModel extends BaseViewModel {
           .fetchPastPrediction({"userId": _userService.userId});
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 

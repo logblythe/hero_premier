@@ -6,7 +6,6 @@ import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/leaderboard/widgets/rank_card.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/widgets/circular_cached_network_image.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/paginating_card.dart';
 import 'package:hero_premier/utils/api_response.dart';
 import 'package:provider/provider.dart';
@@ -43,11 +42,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       builder: (context, model, child) {
         if (model.loading) {
           return Center(child: CircularProgressIndicator());
-        } else if (model.error != null) {
-          return ErrorCard(
-            error: model.error,
-            onPress: model.fetchLeaderboard,
-          );
         } else {
           List<Leaderboard> _leaderboards = model.leaderboards;
           List<Leaderboard> _top3 = _leaderboards.sublist(0, 3);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hero_premier/core/view_models/forgot_password_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:hero_premier/ui/widgets/dialog_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
 import 'package:hero_premier/validator_mixin.dart';
@@ -37,17 +37,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                 ignoring: model.loading,
                 child: body(_model),
               ),
-              _model.error != null
-                  ? ErrorCard(
-                      error: _model.error,
-                      onPress: () => {_model.setError(null)},
-                    )
-                  : Container(),
               _model.dialogContent != null
-                  ? ErrorCard(
+                  ? DialogCard(
                       error: _model.dialogContent,
                       onPress: () {
-                        _model.setDialogContent(null);
+                        _model.setShowDialog(null);
                         _model.navigateHome();
                       },
                     )

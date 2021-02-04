@@ -4,7 +4,6 @@ import 'package:hero_premier/ui/screens/dashboard/gift/gift.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/prediction/predict_win_screen.dart';
-import 'package:hero_premier/ui/screens/dashboard/prediction/prediction_result_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -14,7 +13,6 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen>
     with TickerProviderStateMixin {
   TabController _tabController;
-
   @override
   void initState() {
     super.initState();
@@ -36,20 +34,16 @@ class _DashboardScreenState extends State<DashboardScreen>
         children: [
           _getTabBar(),
           Expanded(
-            child: Container(
-              color: Colors.grey.withOpacity(0.05),
-              width: MediaQuery.of(context).size.width,
-              child: _getTabBarView(
-                <Widget>[
-                  AllScreen(),
-                  PredictWinScreen(),
-                  NewsScreen(),
-                  //FIXME: no result api for now
-                  // PredictionResultScreen(),
-                  TableScreen(),
-                  GiftScreen(),
-                ],
-              ),
+            child: _getTabBarView(
+              <Widget>[
+                AllScreen(),
+                PredictWinScreen(),
+                NewsScreen(),
+                //FIXME: no result api for now
+                // PredictionResultScreen(),
+                TableScreen(),
+                GiftScreen(),
+              ],
             ),
           ),
         ],

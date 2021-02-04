@@ -20,10 +20,10 @@ class ForgotPasswordViewModel extends BaseViewModel {
     try{
       setLoading();
       var response=await _userService.sendEmailForgotPassword({"email":email});
-      setDialogContent(response);
+      setShowDialog(response);
       setCompleted();
     }catch(e){
-      setError(e.toJson());
+      setError(e);
     }
   }
 

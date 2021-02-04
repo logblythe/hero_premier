@@ -53,13 +53,7 @@ class RankCard extends StatelessWidget {
                             height: 90,
                             margin: EdgeInsets.only(left: 16.0),
                             child: Row(
-                              children: [
-                                CircularCachedNetworkImage(
-                                  url: url,
-                                  height: 60,
-                                  width: 60,
-                                )
-                              ],
+                              children: [CircularCachedNetworkImage(url: url)],
                             ),
                           ),
                           Align(

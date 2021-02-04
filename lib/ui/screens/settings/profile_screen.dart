@@ -5,7 +5,7 @@ import 'package:hero_premier/core/view_models/profile_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/settings/widget/circle_image.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:hero_premier/ui/widgets/dialog_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
 import 'package:hero_premier/validator_mixin.dart';
@@ -76,17 +76,11 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationMixing {
                 ignoring: model.loading,
                 child: body(),
               ),
-              model.error != null
-                  ? ErrorCard(
-                      error: _profileViewModel.error,
-                      onPress: () => {_profileViewModel.setError(null)},
-                    )
-                  : Container(),
               model.dialogContent != null
-                  ? ErrorCard(
-                      error: _profileViewModel.setDialogContent(null),
+                  ? DialogCard(
+                      error: _profileViewModel.setShowDialog(null),
                       onPress: () {
-                        _profileViewModel.setDialogContent(null);
+                        _profileViewModel.setShowDialog(null);
                         _profileViewModel.navigateSetting();
                       },
                     )

@@ -25,6 +25,7 @@ class _PredictionResultScreenState extends State<PredictionResultScreen> {
         dashboardService: Provider.of(context),
         navigationService: Provider.of(context),
         userService: Provider.of(context),
+        adService: Provider.of(context),
       ),
       onModelReady: (model) {
         model.fetchPastPrediction();

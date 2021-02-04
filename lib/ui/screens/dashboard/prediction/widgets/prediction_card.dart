@@ -13,12 +13,14 @@ class PredictionCard extends StatefulWidget {
   final PredictionResult prediction;
   final bool editable;
   final bool isResult;
+  final bool showHeaderText;
 
   const PredictionCard({
     Key key,
     this.prediction,
     this.editable = false,
     this.isResult = false,
+    this.showHeaderText = false,
   }) : super(key: key);
 
   @override
@@ -48,6 +50,7 @@ class _PredictionCardState extends State<PredictionCard> {
         dashboardService: Provider.of(context),
         navigationService: Provider.of(context),
         userService: Provider.of(context),
+        adService: Provider.of(context),
       ),
       onModelReady: (model) {
         _model = model;
@@ -93,13 +96,13 @@ class _PredictionCardState extends State<PredictionCard> {
   Widget header() {
     return Stack(
       children: [
-        Align(
+        widget.showHeaderText?Align(
           alignment: Alignment.center,
           child: Text(
             widget.isResult ? "Final score" : "Predict your score",
             style: TextStyles.TitleTextNormalBoldStyle,
           ),
-        ),
+        ):Container(),
         Visibility(
           visible: widget.editable && _controllerA.text != null,
           child: Align(
@@ -282,12 +285,11 @@ class _PredictionCardState extends State<PredictionCard> {
         : Container();
   }
 
-  _handlePrediction() async{
+  _handlePrediction() async {
     FocusScope.of(context).requestFocus();
-    await _model.postPrediction(_controllerA.text ?? "0", _controllerB.text ?? "0",
-        _prediction.matchId.id);
+    await _model.postPrediction(_controllerA.text ?? "0",
+        _controllerB.text ?? "0", _prediction.matchId.id);
     setState(() => _edit = !_edit);
-
   }
 
   _toggleEdit() {

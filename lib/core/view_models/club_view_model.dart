@@ -22,7 +22,7 @@ class ClubViewModel extends BaseViewModel {
       await _userService.fetchClubs();
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 

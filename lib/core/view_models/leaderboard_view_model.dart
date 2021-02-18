@@ -41,7 +41,7 @@ class LeaderboardViewModel extends BaseViewModel {
       _leaderboards = _leaderboardService.leaderboardResponse.result;
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 
@@ -53,7 +53,7 @@ class LeaderboardViewModel extends BaseViewModel {
       _leaderboards.addAll(_leaderboardService.leaderboardResponse.result);
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 
@@ -68,7 +68,7 @@ class LeaderboardViewModel extends BaseViewModel {
       _userService.fetchUserRank(_userService.userId);
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e);
     }
   }
 }

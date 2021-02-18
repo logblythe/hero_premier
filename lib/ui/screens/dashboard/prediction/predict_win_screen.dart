@@ -23,6 +23,7 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
         dashboardService: Provider.of(context),
         navigationService: Provider.of(context),
         userService: Provider.of(context),
+        adService: Provider.of(context),
       ),
       onModelReady: (model) {
         model.fetchCurrentPrediction();
@@ -51,6 +52,7 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                   PredictionCard(
                    predictionToday: _firstPrediction,
                     editable: true,
+                    showHeaderText: true,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),

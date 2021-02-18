@@ -6,7 +6,7 @@ import 'package:hero_premier/ui/screens/register/widgets/register_first.dart';
 import 'package:hero_premier/ui/screens/register/widgets/register_second.dart';
 import 'package:hero_premier/ui/screens/register/widgets/register_third.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:hero_premier/ui/widgets/dialog_card.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -83,17 +83,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               vm.loading
                   ? Center(child: CircularProgressIndicator())
                   : Container(),
-              vm.error != null
-                  ? ErrorCard(
-                      error: vm.error,
-                      onPress: () => {vm.setError(null)},
-                    )
-                  : Container(),
               vm.dialogContent != null
-                  ? ErrorCard(
+                  ? DialogCard(
                       error: vm.dialogContent,
                       onPress: () {
-                        vm.setDialogContent(null);
+                        vm.setShowDialog(null);
                         vm.navigateClubSelect();
                       },
                     )

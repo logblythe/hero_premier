@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ad/ad_banner.dart';
 import 'package:hero_premier/core/models/news/favClubnews.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/table_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/news/news_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/prediction/predict_win_screen.dart';
 import 'package:hero_premier/ui/screens/dashboard/widget/gift_section_widget.dart';
+import 'package:hero_premier/ui/shared/ui_helpers.dart';
 
 class AllScreen extends StatelessWidget {
   @override
@@ -13,12 +15,14 @@ class AllScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            PredictWinScreen(),
             NewsScreen(showCount: 2),
             TableScreen(),
+            UIHelper.verticalSpaceSmall,
+            AdBanner(),
+            PredictWinScreen(),
             GiftSectionWidget(),
-           //TODO: REMOVED PER FEEDBACK
-           /* FavouriteClubNewsWidget(
+            //TODO: REMOVED PER FEEDBACK
+            /* FavouriteClubNewsWidget(
               favClubNews: getFavClubNews(),
               favIconUrl: "assets/images/ic_arsenal.svg",
               favClubName: "Arsenal",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hero_premier/ad/ad_service.dart';
 import 'package:hero_premier/core/models/news/news.dart';
 import 'package:hero_premier/core/models/table/table_response.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
@@ -12,14 +13,17 @@ class DashboardViewModel extends BaseViewModel {
   DashboardService _dashboardService;
   NavigationService _navigationService;
   UserService _userService;
+  AdService _adService;
 
   DashboardViewModel({
     @required DashboardService dashboardService,
     @required NavigationService navigationService,
     @required UserService userService,
+    @required AdService adService,
   })  : this._dashboardService = dashboardService,
         this._navigationService = navigationService,
-        this._userService = userService;
+        this._userService = userService,
+        this._adService = adService;
 
   TableResponse get tableResponse => _dashboardService.tableResponse;
 
@@ -33,7 +37,10 @@ class DashboardViewModel extends BaseViewModel {
 
   selectNews(index) {
     _dashboardService.selectNews(index);
-    _navigationService.navigateTo(RoutePaths.NEWS_DETAILS);
+    _adService.showBottomBannerAd();
+    _navigationService
+        .navigateTo(RoutePaths.NEWS_DETAILS)
+        .then((value) => _adService.hideBottomBannerAd());
   }
 
   fetchTables() async {
@@ -43,7 +50,7 @@ class DashboardViewModel extends BaseViewModel {
         await _dashboardService.fetchTables();
         setCompleted();
       } catch (e) {
-        setError(e.toJson());
+        setError(e);
       }
     }
   }
@@ -88,7 +95,7 @@ class DashboardViewModel extends BaseViewModel {
       });
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 
@@ -99,7 +106,7 @@ class DashboardViewModel extends BaseViewModel {
         await _dashboardService.fetchNews();
         setCompleted();
       } catch (e) {
-        setError(e.toString());
+        setError(e);
       }
     }
   }
@@ -111,9 +118,16 @@ class DashboardViewModel extends BaseViewModel {
           .fetchPastPrediction({"userId": _userService.userId});
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 
   navigateFullTable() => _navigationService.navigateTo(RoutePaths.FULL_TABLE);
+
+  showFullTable() {
+    _adService.showBottomBannerAd();
+    _navigationService
+        .navigateTo(RoutePaths.FULL_TABLE)
+        .then((value) => _adService.hideBottomBannerAd());
+  }
 }

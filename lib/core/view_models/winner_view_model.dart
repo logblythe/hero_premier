@@ -23,7 +23,7 @@ class WinnerViewModel extends BaseViewModel {
       await _winnerService.fetchWinners();
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 

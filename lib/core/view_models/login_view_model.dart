@@ -33,10 +33,10 @@ class LoginViewModel extends BaseViewModel {
     try {
       setLoading();
       await _userService.login({"email": email, "password": password});
-      setDialogContent("username");
+      setShowDialog("username");
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e);
     }
   }
 
@@ -44,10 +44,10 @@ class LoginViewModel extends BaseViewModel {
     try {
       setLoading();
       await _userService.loginFb(token);
-      setDialogContent("username");
+      setShowDialog("username");
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 

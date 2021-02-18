@@ -111,9 +111,7 @@ class FavouriteClubNewsWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 16.0,
-          ),
+          SizedBox(height: 16.0),
         ],
       ),
     );

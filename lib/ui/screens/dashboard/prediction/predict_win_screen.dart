@@ -52,7 +52,7 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                   PredictionCard(
                    predictionToday: _firstPrediction,
                     editable: true,
-                    showHeaderText: true,
+                    // showHeaderText: true,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),

@@ -25,6 +25,7 @@ class _PredictionResultScreenState extends State<PredictionResultScreen> {
         dashboardService: Provider.of(context),
         navigationService: Provider.of(context),
         userService: Provider.of(context),
+        adService: Provider.of(context),
       ),
       onModelReady: (model) {
         model.fetchPastPrediction();
@@ -46,7 +47,8 @@ class _PredictionResultScreenState extends State<PredictionResultScreen> {
                     : null,
                 itemCount: predictions.length,
                 itemBuilder: (context, index) {
-                  return PredictionCard(prediction: predictions[index],isResult: true,);
+                  return Container();
+                  // return PredictionCard(prediction: predictions[index],isResult: true,);
                 },
               ),
             );

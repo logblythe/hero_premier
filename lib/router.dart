@@ -32,7 +32,7 @@ class RoutePaths {
   static const String WEBVIEW="/webview";
 }
 
-class Router {
+class RouterService {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutePaths.LOGIN:

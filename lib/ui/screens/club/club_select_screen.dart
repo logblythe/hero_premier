@@ -4,7 +4,7 @@ import 'package:hero_premier/core/view_models/club_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/club/widgets/club_card.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
+import 'package:hero_premier/ui/widgets/dialog_card.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
 import 'package:hero_premier/ui/widgets/text_button.dart';
 import 'package:hero_premier/utils/api_response.dart';
@@ -41,17 +41,11 @@ class _ClubSelectScreenState extends State<ClubSelectScreen> {
                   vm.loading
                       ? Center(child: CircularProgressIndicator())
                       : Container(),
-                  vm.error != null
-                      ? ErrorCard(
-                          error: vm.error,
-                          onPress: () => {vm.setError(null)},
-                        )
-                      : Container(),
                   vm.dialogContent != null
-                      ? ErrorCard(
+                      ? DialogCard(
                           error: vm.dialogContent,
                           onPress: () {
-                            vm.setDialogContent(null);
+                            vm.setShowDialog(null);
                           },
                         )
                       : Container(),
@@ -133,7 +127,7 @@ class _ClubSelectScreenState extends State<ClubSelectScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                TextButton(
+                TextButtonWidget(
                   label: 'Skip',
                   onPress: _handleSkip,
                 ),

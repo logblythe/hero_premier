@@ -134,7 +134,7 @@ class _RegisterSecondState extends State<RegisterSecond>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButton(
+          TextButtonWidget(
             label: 'Back',
             onPress: widget.onBack,
           ),

@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:hero_premier/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:hero_premier/ui/screens/history/history_screen.dart';
@@ -6,6 +7,8 @@ import 'package:hero_premier/ui/screens/settings/settings_screen.dart';
 import 'package:hero_premier/ui/screens/winner/winner_screen.dart';
 import 'package:hero_premier/ui/widgets/custom_appbar.dart';
 import 'package:hero_premier/ui/widgets/custom_bottom_navbar.dart';
+import 'package:hero_premier/ui/widgets/no-internet.dart';
+import 'package:provider/provider.dart';
 
 import '../../router.dart';
 
@@ -34,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onSearchPress: _handleSearch,
               onNotificationPress: _handleNotificationPress,
             ),
-      body: _selectWidget != null ? _selectWidget : Container(),
+      body: buildBody(),
       bottomNavigationBar: CustomBottomNavBar(
         labelList: ["HOME", "HISTORY", "WINNER", "RANKING", "SETTING"],
         iconList: [
@@ -79,5 +82,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _handleNotificationPress() {
     Navigator.of(context).pushNamed(RoutePaths.NOTIFICATION);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  buildBody() {
+    ConnectivityResult connectivity = Provider.of<ConnectivityResult>(context);
+    if (connectivity == ConnectivityResult.none) {
+      return NoInternet();
+    }
+    return _selectWidget != null ? _selectWidget : Container();
   }
 }

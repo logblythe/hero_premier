@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ad/ad_banner.dart';
 import 'package:hero_premier/core/models/history/history_result.dart';
 import 'package:hero_premier/core/view_models/history_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/history/widgets/history_card.dart';
 import 'package:hero_premier/ui/screens/history/widgets/history_default_widget.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/paginating_card.dart';
 import 'package:hero_premier/utils/api_response.dart';
 import 'package:hero_premier/utils/constants.dart';
@@ -47,8 +47,6 @@ class _HistoryScreenState extends State<HistoryScreen>
       builder: (context, model, child) {
         if (model.loading) {
           return Center(child: CircularProgressIndicator());
-        } else if (model.error != null) {
-          return ErrorCard(error: model.error);
         } else {
           return body(model);
         }
@@ -132,6 +130,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                     historyResult: histories,
                     totalObtainedScore: totalObtainedScore,
                   ),
+                  (index == 0)?AdBanner():Container(),
                   (index == gameWeekMap.length - 1 &&
                           model.status == Status.PAGINATING)
                       ? PaginatingCard()

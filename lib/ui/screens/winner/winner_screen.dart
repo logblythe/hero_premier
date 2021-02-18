@@ -4,7 +4,6 @@ import 'package:hero_premier/core/view_models/winner_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/winner/widgets/winner_card.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:provider/provider.dart';
 
 class WinnerScreen extends StatefulWidget {
@@ -43,12 +42,7 @@ class _WinnerScreenState extends State<WinnerScreen>
           return Center(
             child: CircularProgressIndicator(),
           );
-        } else if (model.error != null) {
-          return ErrorCard(
-            error: model.error,
-            onPress: model.fetchWinners(),
-          );
-        } else {
+        }  else {
           List<WinnerResult> winners = model.winners;
           return Container(
             color: Colors.white,

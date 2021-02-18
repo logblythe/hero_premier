@@ -18,7 +18,7 @@ class Local {
     phoneNumber = json['phoneNumber'];
     dob = json['dob'];
     email = json['email'];
-    image = json['image'];
+    image = json['image'] ?? "https://via.placeholder.com/150";
     isEmailVerified = json['isEmailVerified'];
   }
 

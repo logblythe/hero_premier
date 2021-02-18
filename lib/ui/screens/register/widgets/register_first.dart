@@ -135,7 +135,7 @@ class _RegisterFirstState extends State<RegisterFirst>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButton(
+          TextButtonWidget(
             label: 'Login Now',
             onPress: widget.onBack,
           ),

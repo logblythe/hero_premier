@@ -5,7 +5,6 @@ import 'package:hero_premier/core/view_models/login_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/shared/asset_paths.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
-import 'package:hero_premier/ui/widgets/error_card.dart';
 import 'package:hero_premier/ui/widgets/floating_input.dart';
 import 'package:hero_premier/ui/widgets/primary_button.dart';
 import 'package:hero_premier/ui/widgets/social_button.dart';
@@ -43,21 +42,15 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixing {
               model.loading
                   ? Center(child: CircularProgressIndicator())
                   : Container(),
-              model.error != null
-                  ? ErrorCard(
-                      error: model.error,
-                      onPress: () => {model.setError(null)},
-                    )
-                  : Container(),
               model.dialogContent != null
                   ? WelcomeModal(
                       name: model.username.split(" ").elementAt(0),
                       onPress: () {
-                        model.setDialogContent(null);
+                        model.setShowDialog(null);
                         model.navigateHome();
                       },
                     )
-                  : Container()
+                  : Container(),
             ],
           );
         },

@@ -3,11 +3,11 @@ import 'package:hero_premier/ui/shared/text_styles.dart';
 import 'package:hero_premier/ui/shared/ui_helpers.dart';
 import 'package:hero_premier/ui/widgets/secondary_button.dart';
 
-class ErrorCard extends StatelessWidget {
+class DialogCard extends StatelessWidget {
   final dynamic error;
   final Function onPress;
 
-  const ErrorCard({Key key, this.error, this.onPress}) : super(key: key);
+  const DialogCard({Key key, this.error, this.onPress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

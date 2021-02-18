@@ -70,7 +70,7 @@ class HistoryViewModel extends BaseViewModel {
       calculateGameWeek();
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e);
     }
   }
 
@@ -83,7 +83,7 @@ class HistoryViewModel extends BaseViewModel {
       calculateGameWeek();
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 }

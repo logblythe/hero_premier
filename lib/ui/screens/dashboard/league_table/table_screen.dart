@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hero_premier/core/models/table/table_data.dart';
 import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
-import 'package:hero_premier/router.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/dashboard/league_table/widgets/center_text.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
@@ -21,7 +20,6 @@ class TableScreen extends StatefulWidget {
 
 class _TableScreenState extends State<TableScreen> {
   bool _fullTable;
-  BuildContext _context;
   List<TableData> _table;
 
   @override
@@ -32,13 +30,12 @@ class _TableScreenState extends State<TableScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return BaseWidget<DashboardViewModel>(
       model: DashboardViewModel(
-        dashboardService: Provider.of(context),
-        navigationService: Provider.of(context),
-        userService: Provider.of(context),
-      ),
+          dashboardService: Provider.of(context),
+          navigationService: Provider.of(context),
+          userService: Provider.of(context),
+          adService: Provider.of(context)),
       onModelReady: (model) {
         model.fetchTables();
       },
@@ -53,10 +50,7 @@ class _TableScreenState extends State<TableScreen> {
           else
             _table = model.tableResponse.table.sublist(0, 5);
           return Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(top: 16),
             padding: const EdgeInsets.only(bottom: 32),
             decoration: BoxDecoration(color: Colors.white),
@@ -85,13 +79,13 @@ class _TableScreenState extends State<TableScreen> {
                   _fullTable
                       ? Container()
                       : Container(
-                    margin: const EdgeInsets.only(top: 24),
-                    width: 160,
-                    child: PrimaryButton(
-                      label: 'FULL TABLE',
-                      onPress: _handleFullTable,
-                    ),
-                  ),
+                          margin: const EdgeInsets.only(top: 24),
+                          width: 160,
+                          child: PrimaryButton(
+                            label: 'FULL TABLE',
+                            onPress: model.showFullTable,
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -131,12 +125,10 @@ class _TableScreenState extends State<TableScreen> {
               CenterText('Pts'),
             ],
           ),
-        ]
-          ..addAll(
+        ]..addAll(
             _table
                 .map(
-                  (data) =>
-                  TableRow(
+                  (data) => TableRow(
                     children: [
                       CenterText(
                         data.position.toString(),
@@ -161,9 +153,7 @@ class _TableScreenState extends State<TableScreen> {
                         child: Text(
                           data.team.code,
                           style: TextStyleTable.copyWith(
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor),
+                              color: Theme.of(context).primaryColor),
                         ),
                       ),
                       CenterText(data.playedGames.toString()),
@@ -177,7 +167,7 @@ class _TableScreenState extends State<TableScreen> {
                       ),
                     ],
                   ),
-            )
+                )
                 .toList(),
           ),
       ),
@@ -208,12 +198,10 @@ class _TableScreenState extends State<TableScreen> {
                 CenterText('Pts'),
               ],
             ),
-          ]
-            ..addAll(
+          ]..addAll(
               _table
                   .map(
-                    (data) =>
-                    TableRow(
+                    (data) => TableRow(
                       children: [
                         CenterText(
                           data.position.toString(),
@@ -245,9 +233,7 @@ class _TableScreenState extends State<TableScreen> {
                           child: Text(
                             data.team.short,
                             style: TextStyleTable.copyWith(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor),
+                                color: Theme.of(context).primaryColor),
                           ),
                         ),
                         CenterText(data.playedGames.toString()),
@@ -258,15 +244,11 @@ class _TableScreenState extends State<TableScreen> {
                         ),
                       ],
                     ),
-              )
+                  )
                   .toList(),
             ),
         ),
       ),
     );
-  }
-
-  void _handleFullTable() {
-    Navigator.of(_context).pushNamed(RoutePaths.FULL_TABLE);
   }
 }

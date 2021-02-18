@@ -1,6 +1,9 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:hero_premier/ad/ad_service.dart';
 import 'package:hero_premier/core/helpers/api_helper.dart';
 import 'package:hero_premier/core/helpers/secured_storage_helper.dart';
+import 'package:hero_premier/core/services/connectivity_service.dart';
 import 'package:hero_premier/core/services/dashboard_service.dart';
 import 'package:hero_premier/core/services/history_service.dart';
 import 'package:hero_premier/core/services/leaderboard_service.dart';
@@ -20,6 +23,7 @@ List<SingleChildWidget> independentServices = [
   Provider.value(value: NavigationService()),
   Provider.value(value: ApiBaseHelper()),
   Provider.value(value: SecuredStorageHelper()),
+  Provider.value(value: AdService()),
 ];
 
 List<SingleChildWidget> dependentServices = [
@@ -51,4 +55,10 @@ List<SingleChildWidget> dependentServices = [
   ),
 ];
 
-List<SingleChildWidget> uiConsumableProviders = [];
+List<SingleChildWidget> uiConsumableProviders = [
+  StreamProvider<ConnectivityResult>.value(
+    value: ConnectivityService().connectionStatusController.stream,
+    initialData: ConnectivityResult.wifi,
+    updateShouldNotify: (prev, current) => true,
+  )
+];

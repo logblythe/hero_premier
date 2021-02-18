@@ -59,7 +59,7 @@ class ProfileViewModel extends BaseViewModel {
           fontSize: 16.0);
       setCompleted();
     } catch (e) {
-      setError(e.toString());
+      setError(e);
     }
   }
 
@@ -71,7 +71,7 @@ class ProfileViewModel extends BaseViewModel {
       await _userService.fetchUserRank(_userId);
       setCompleted();
     } catch (e) {
-      setError(e.toJson());
+      setError(e);
     }
   }
 
@@ -103,7 +103,7 @@ class ProfileViewModel extends BaseViewModel {
             fontSize: 16.0);
         setCompleted();
       } catch (e) {
-        setError(e.toString());
+        setError(e);
       }
     } else {
       setError('error');

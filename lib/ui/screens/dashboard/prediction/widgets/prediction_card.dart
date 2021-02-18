@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/prediction/prediction_result.dart';
+import 'package:hero_premier/core/models/today/today_response.dart';
 import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
@@ -10,13 +11,13 @@ import 'package:hero_premier/utils/utilities.dart';
 import 'package:provider/provider.dart';
 
 class PredictionCard extends StatefulWidget {
-  final PredictionResult prediction;
+  final Result predictionToday;
   final bool editable;
   final bool isResult;
 
   const PredictionCard({
     Key key,
-    this.prediction,
+    this.predictionToday,
     this.editable = false,
     this.isResult = false,
   }) : super(key: key);
@@ -30,15 +31,15 @@ class _PredictionCardState extends State<PredictionCard> {
   final _controllerB = TextEditingController();
 
   bool _edit = false;
-  PredictionResult _prediction;
+  Result _prediction;
   DashboardViewModel _model;
 
   @override
   void initState() {
     super.initState();
-    _prediction = widget.prediction;
-    _controllerA.text = _prediction.firstTeamScorePrediction.toString();
-    _controllerB.text = _prediction.secondTeamScorePrediction.toString();
+    _prediction = widget.predictionToday;
+    // _controllerA.text = _prediction.firstTeamScorePrediction?.toString();
+    // _controllerB.text = _prediction.secondTeamScorePrediction?.toString();
   }
 
   @override
@@ -48,6 +49,7 @@ class _PredictionCardState extends State<PredictionCard> {
         dashboardService: Provider.of(context),
         navigationService: Provider.of(context),
         userService: Provider.of(context),
+        adService: Provider.of(context)
       ),
       onModelReady: (model) {
         _model = model;
@@ -66,8 +68,8 @@ class _PredictionCardState extends State<PredictionCard> {
               Row(
                 children: [
                   clubNameImage(
-                    imageUrl: _prediction.matchId.firstTeamId.image,
-                    name: _prediction.matchId.firstTeamId.name,
+                    imageUrl: _prediction.firstTeamId.image,
+                    name: _prediction.firstTeamId.name,
                   ),
                   Expanded(
                     child: Container(
@@ -76,8 +78,8 @@ class _PredictionCardState extends State<PredictionCard> {
                     ),
                   ),
                   clubNameImage(
-                    imageUrl: _prediction.matchId.secondTeamId.image,
-                    name: _prediction.matchId.secondTeamId.name,
+                    imageUrl: _prediction.secondTeamId.image,
+                    name: _prediction.secondTeamId.name,
                   ),
                 ],
               ),
@@ -233,7 +235,7 @@ class _PredictionCardState extends State<PredictionCard> {
         ),
         SizedBox(height: 24),
         Text(
-          getFormattedTimeFromUtc(_prediction.matchId.matchTime),
+          getFormattedTimeFromUtc(_prediction.matchTime),
           style: TextStyle(
             color: ButtonColorPrimary,
             fontSize: 10.0,
@@ -285,7 +287,7 @@ class _PredictionCardState extends State<PredictionCard> {
   _handlePrediction() async{
     FocusScope.of(context).requestFocus();
     await _model.postPrediction(_controllerA.text ?? "0", _controllerB.text ?? "0",
-        _prediction.matchId.id);
+        _prediction.sId);
     setState(() => _edit = !_edit);
 
   }
@@ -294,10 +296,10 @@ class _PredictionCardState extends State<PredictionCard> {
     if (_model.error != null) {
       _model.setError(null);
     }
-    if (_edit) {
-      _controllerA.text = _prediction.firstTeamScorePrediction.toString();
-      _controllerB.text = _prediction.secondTeamScorePrediction.toString();
-    }
+   /* if (_edit) {
+      _controllerA.text = _prediction.firstTeamScorePrediction?.toString();
+      _controllerB.text = _prediction.secondTeamScorePrediction?.toString();
+    }*/
     setState(() => _edit = !_edit);
   }
 }

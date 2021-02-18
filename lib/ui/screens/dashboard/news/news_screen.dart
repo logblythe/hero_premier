@@ -17,6 +17,7 @@ class NewsScreen extends StatelessWidget {
           dashboardService: Provider.of(context),
           navigationService: Provider.of(context),
           userService: Provider.of(context),
+          adService: Provider.of(context),
         ),
         onModelReady: (model) {
           model.fetchNews();

@@ -125,7 +125,7 @@ class _RegisterThirdState extends State<RegisterThird>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButton(
+          TextButtonWidget(
             label: 'Back',
             onPress: widget.onBack,
           ),

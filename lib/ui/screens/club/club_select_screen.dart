@@ -133,7 +133,7 @@ class _ClubSelectScreenState extends State<ClubSelectScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                TextButton(
+                TextButtonWidget(
                   label: 'Skip',
                   onPress: _handleSkip,
                 ),

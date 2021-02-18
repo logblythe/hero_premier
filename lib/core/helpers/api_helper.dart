@@ -9,7 +9,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 
 class ApiBaseHelper {
-  final String _baseUrl = "https://dev.premierhero.com";
+  final String _baseUrl = "https://premierhero.com";
   String token;
 
   Future<String> getToken() async {
@@ -30,10 +30,6 @@ class ApiBaseHelper {
 
   Future<dynamic> post(String url, {Map<String, dynamic> params}) async {
     var token = await getToken();
-    print('the params $params');
-    print('the token $token');
-    /*var token =
-        "Bearer eyJhbGciOi16b12aJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNDViYzBlNmYyNGIyNmRjNDBiZDQ2MiI16b12asInJvbGUiOiJDTElFTlQiLCJsb2dnZWRGcm9tIjoiTE9DQUwiLCJpYXQiOjE16b12a1OTg3NjkxNDYsImV4cCI6MTU5ODg1NTU0Nn0.F0dk19WgY6ne1zBt4iMPIZ2Nq8xfsXQskA9OcBone7E";*/
     var responseJson;
     try {
       final response = await http.post(

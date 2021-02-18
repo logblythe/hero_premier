@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         navigatorKey: navigatorKey,
-        onGenerateRoute: (settings) => Router.generateRoute(settings),
+        onGenerateRoute: (settings) => RouterService.generateRoute(settings),
         home: IntermediaryScreen(),
       ),
     );

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/ui/shared/text_styles.dart';
 
-class TextButton extends StatelessWidget {
+class TextButtonWidget extends StatelessWidget {
   final String label;
   final Function onPress;
 
-  TextButton({this.label, this.onPress});
+  const TextButtonWidget({Key key, this.label, this.onPress}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hero_premier/core/models/prediction/prediction_result.dart';
+import 'package:hero_premier/core/models/today/today_response.dart';
 import 'package:hero_premier/core/view_models/dashboard_view_model.dart';
 import 'package:hero_premier/ui/base_widget.dart';
 import 'package:hero_premier/ui/screens/dashboard/prediction/widgets/prediction_card.dart';
@@ -32,10 +33,10 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
         } else if (model.error != null) {
           return Text(model.error.toString());
         } else {
-          if (model.predictions != null && model.predictions.length > 0) {
-            List<PredictionResult> predictions = model.predictions;
-            PredictionResult _firstPrediction = predictions[0];
-            List<PredictionResult> _restPredictions = predictions.sublist(1);
+          if (model.todayPredictions != null && model.todayPredictions.length > 0) {
+            List<Result> predictions = model.todayPredictions;
+            Result _firstPrediction = predictions[0];
+            List<Result> _restPredictions = predictions.sublist(1);
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,11 +45,11 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: DeadlineTimer(
-                      DateTime.parse(_firstPrediction.matchId.matchTime),
+                      DateTime.parse(_firstPrediction.matchTime),
                     ),
                   ),
                   PredictionCard(
-                    prediction: _firstPrediction,
+                   predictionToday: _firstPrediction,
                     editable: true,
                   ),
                   Padding(
@@ -69,7 +70,7 @@ class _PredictWinScreenState extends State<PredictWinScreen> {
                       return Container(
                         margin: const EdgeInsets.symmetric(horizontal: 12),
                         child: PredictionCard(
-                          prediction: _restPredictions[index],
+                         predictionToday: _restPredictions[index],
                           editable: true,
                         ),
                       );

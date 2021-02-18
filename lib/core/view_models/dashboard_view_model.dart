@@ -25,6 +25,8 @@ class DashboardViewModel extends BaseViewModel {
 
   get predictions => _dashboardService.predictionResponse.result;
 
+  get todayPredictions => _dashboardService.todayResponse.result;
+
   List<News> get newsList => _dashboardService.newsList;
 
   get selectedNews => _dashboardService.selectedNews;
@@ -58,8 +60,7 @@ class DashboardViewModel extends BaseViewModel {
       });
       setCompleted();
       Fluttertoast.showToast(
-          msg:
-              "Your prediction has been saved successfully",
+          msg: "Your prediction has been saved successfully",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -69,8 +70,7 @@ class DashboardViewModel extends BaseViewModel {
     } catch (e) {
       setError(e);
       Fluttertoast.showToast(
-          msg:
-          error,
+          msg: error,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -83,7 +83,7 @@ class DashboardViewModel extends BaseViewModel {
   fetchCurrentPrediction() async {
     setLoading();
     try {
-      await _dashboardService.fetchCurrentPrediction({
+      await _dashboardService.fetchTodayPrediction({
         "userId": _userService.userId,
       });
       setCompleted();

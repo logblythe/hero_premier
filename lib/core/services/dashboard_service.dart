@@ -3,6 +3,7 @@ import 'package:hero_premier/core/models/news/news.dart';
 import 'package:hero_premier/core/models/prediction/prediction_post_response.dart';
 import 'package:hero_premier/core/models/prediction/prediction_response.dart';
 import 'package:hero_premier/core/models/table/table_response.dart';
+import 'package:hero_premier/core/models/today/today_response.dart';
 
 class DashboardService {
   final ApiBaseHelper _api;
@@ -10,6 +11,7 @@ class DashboardService {
   DashboardService({ApiBaseHelper api}) : this._api = api;
 
   TableResponse _tableResponse;
+  TodayResponse _todayResponse;
   PredictionResponse _predictionResponse;
   PostPredictionResponse _postPredictionResponse;
   List<News> _newsList;
@@ -21,9 +23,12 @@ class DashboardService {
 
   PostPredictionResponse get postPredictionResponse => _postPredictionResponse;
 
+  TodayResponse get todayResponse => _todayResponse;
+
   List<News> get newsList => _newsList;
 
   News get selectedNews => _selectedNews;
+
 
   selectNews(index) {
     _selectedNews = _newsList.elementAt(index);
@@ -40,10 +45,16 @@ class DashboardService {
         _postPredictionResponse = PostPredictionResponse.fromJsonMap(value);
       });
 
-  fetchCurrentPrediction(params) => _api
-          .post("/prediction/userPredictionList/1/20", params: params)
-          .then((value) {
-        _predictionResponse = PredictionResponse.fromJsonMap(value);
+  // fetchCurrentPrediction(params) => _api
+  //         .post("/prediction/userPredictionList/1/20", params: params)
+  //         .then((value) {
+  //       _predictionResponse = PredictionResponse.fromJsonMap(value);
+  //     });
+
+  fetchTodayPrediction(params) => _api.post("/match/todayList/1/20", params: {
+        "leagueCategoryId": "5d4d47c10ebd18405142e82d"
+      }).then((value) {
+        _todayResponse = TodayResponse.fromJson(value);
       });
 
   fetchPastPrediction(params) => _api

@@ -21,7 +21,7 @@ class CircularCachedNetworkImage extends StatelessWidget {
         useOldImageOnUrlChange: false,
         placeholder: (context, url) => Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CircularProgressIndicator(strokeWidth: 2),
+          child: CircularProgressIndicator(strokeWidth: 0.5),
         ),
         errorWidget: (context, url, error) {
           return Image.asset(AssetPaths.LOGO);
